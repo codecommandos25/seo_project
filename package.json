@@ -1,0 +1,20 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "start": "npm-run-all --parallel start:*",
+    "start:project1": "cd admin && npm run start",
+    "start:project2": "cd backend-api && npm run start:dev",
+    "start:project3": "cd frontend && npm run dev",
+    "build": "npm-run-all --parallel build:*",
+    "build:project1": "cd admin && npm run build",
+    "build:project2": "cd backend-api && npm run build",
+    "build:project3": "cd frontend && npm run build"
+  },
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
