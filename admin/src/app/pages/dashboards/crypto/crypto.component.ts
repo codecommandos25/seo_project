@@ -4,9 +4,10 @@ import { Portfolio, marketChart, revenueChart } from 'src/app/shared/chartColor'
 
 
 @Component({
-  selector: 'app-crypto',
-  templateUrl: './crypto.component.html',
-  styleUrls: ['./crypto.component.scss']
+    selector: 'app-crypto',
+    templateUrl: './crypto.component.html',
+    styleUrls: ['./crypto.component.scss'],
+    standalone: false
 })
 
 /**

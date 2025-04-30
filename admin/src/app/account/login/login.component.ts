@@ -12,9 +12,10 @@ import { Store } from '@ngrx/store';
 import { login } from 'src/app/store/Authentication/authentication.actions';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.scss'],
+    standalone: false
 })
 
 /**

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { DealTypeCharts, simpleDonutChart } from 'src/app/shared/chartColor';
 
 @Component({
-  selector: 'app-statistics',
-  templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.scss']
+    selector: 'app-statistics',
+    templateUrl: './statistics.component.html',
+    styleUrls: ['./statistics.component.scss'],
+    standalone: false
 })
 export class StatisticsComponent implements OnInit {
 

@@ -10,7 +10,8 @@ import { marketplaceChart, popularityChart } from 'src/app/shared/chartColor';
 @Component({
     selector: 'app-nft',
     templateUrl: './nft.component.html',
-    styleUrls: ['./nft.component.scss']
+    styleUrls: ['./nft.component.scss'],
+    standalone: false
 })
 
 /**

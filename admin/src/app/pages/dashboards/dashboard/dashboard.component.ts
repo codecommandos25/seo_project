@@ -8,9 +8,10 @@ import { BestSelling, Recentelling, TopSelling, statData } from 'src/app/core/da
 import { SalesCategoryChart, revenueChart } from 'src/app/shared/chartColor';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+    selector: 'app-dashboard',
+    templateUrl: './dashboard.component.html',
+    styleUrls: ['./dashboard.component.scss'],
+    standalone: false
 })
 
 /**

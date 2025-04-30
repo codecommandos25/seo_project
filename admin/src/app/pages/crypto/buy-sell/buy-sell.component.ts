@@ -5,9 +5,10 @@ import { marketChart } from 'src/app/shared/chartColor';
 import { MarketModel } from 'src/app/store/Crypto/crypto_model';
 
 @Component({
-  selector: 'app-buy-sell',
-  templateUrl: './buy-sell.component.html',
-  styleUrls: ['./buy-sell.component.scss'],
+    selector: 'app-buy-sell',
+    templateUrl: './buy-sell.component.html',
+    styleUrls: ['./buy-sell.component.scss'],
+    standalone: false
 })
 
 /**

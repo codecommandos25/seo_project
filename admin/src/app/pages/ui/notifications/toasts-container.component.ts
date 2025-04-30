@@ -3,8 +3,8 @@ import { Component, TemplateRef } from '@angular/core';
 import { ToastService } from './toast-service';
 
 @Component({
-  selector: 'app-toasts',
-  template: `
+    selector: 'app-toasts',
+    template: `
    @for(toast of toastService.toasts;track $index){
     <ngb-toast
           [class]="toast.classname"
@@ -19,7 +19,8 @@ import { ToastService } from './toast-service';
       <ng-template #text>{{ toast.textOrTpl }}</ng-template>
     </ngb-toast>}
   `,
-  host: { '[class.ngb-toasts]': 'true' }
+    host: { '[class.ngb-toasts]': 'true' },
+    standalone: false
 })
 export class ToastsContainer {
   constructor(public toastService: ToastService) { }

@@ -7,9 +7,10 @@ import { fetchCrmDealData } from 'src/app/store/CRM/crm_action';
 import { selectCRMLoading, selectDealData } from 'src/app/store/CRM/crm_selector';
 
 @Component({
-  selector: 'app-deals',
-  templateUrl: './deals.component.html',
-  styleUrls: ['./deals.component.scss']
+    selector: 'app-deals',
+    templateUrl: './deals.component.html',
+    styleUrls: ['./deals.component.scss'],
+    standalone: false
 })
 
 /**

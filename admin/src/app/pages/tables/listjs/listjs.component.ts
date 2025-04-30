@@ -14,11 +14,11 @@ import { NgbdListSortableHeader, listSortEvent } from './listjs-sortable.directi
 import { FuzzyList, dataattribute, existingList, paginationlist } from 'src/app/core/data';
 
 @Component({
-  selector: 'app-listjs',
-  templateUrl: './listjs.component.html',
-  styleUrls: ['./listjs.component.scss'],
-  providers: [OrdersService, DecimalPipe]
-
+    selector: 'app-listjs',
+    templateUrl: './listjs.component.html',
+    styleUrls: ['./listjs.component.scss'],
+    providers: [OrdersService, DecimalPipe],
+    standalone: false
 })
 
 /**

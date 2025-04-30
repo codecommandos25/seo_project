@@ -13,9 +13,10 @@ import { Store } from '@ngrx/store';
 import { productListModel } from 'src/app/store/Ecommerce/ecommerce_model';
 
 @Component({
-  selector: 'app-product-detail',
-  templateUrl: './product-detail.component.html',
-  styleUrls: ['./product-detail.component.scss']
+    selector: 'app-product-detail',
+    templateUrl: './product-detail.component.html',
+    styleUrls: ['./product-detail.component.scss'],
+    standalone: false
 })
 
 /**

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-  selector: 'app-orders-details',
-  templateUrl: './orders-details.component.html',
-  styleUrls: ['./orders-details.component.scss']
+    selector: 'app-orders-details',
+    templateUrl: './orders-details.component.html',
+    styleUrls: ['./orders-details.component.scss'],
+    standalone: false
 })
 
 /**
