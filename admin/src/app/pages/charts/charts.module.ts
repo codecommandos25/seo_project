@@ -1,15 +1,22 @@
-
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 // Apex Chart
-import { NgApexchartsModule } from "ng-apexcharts";
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 import { BaseChartDirective } from 'ng2-charts';
 import { NgxEchartsModule } from 'ngx-echarts';
+// import echarts core
+// import necessary echarts components
+import { BarChart } from 'echarts/charts';
+import { GridComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
+
+import * as echarts from 'echarts/core';
+echarts.use([BarChart, GridComponent, CanvasRenderer]);
 
 // Component Pages
-import { ChartsRoutingModule } from "./charts-routing.module";
+import { ChartsRoutingModule } from './charts-routing.module';
 import { SharedModule } from '../../shared/shared.module';
 import { LineComponent } from './Apexcharts/line/line.component';
 import { AreaComponent } from './Apexcharts/area/area.component';
@@ -53,7 +60,7 @@ import { FunnelComponent } from './Apexcharts/funnel/funnel.component';
     ChartjsComponent,
     EchartComponent,
     RangeAreaComponent,
-    FunnelComponent
+    FunnelComponent,
   ],
   imports: [
     CommonModule,
@@ -61,10 +68,8 @@ import { FunnelComponent } from './Apexcharts/funnel/funnel.component';
     BaseChartDirective,
     ChartsRoutingModule,
     SharedModule,
-    NgxEchartsModule.forRoot({
-      echarts: () => import('echarts')
-    })
+    NgxEchartsModule.forRoot({ echarts }),
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class ChartsModule { }
+export class ChartsModule {}
