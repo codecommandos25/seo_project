@@ -7,9 +7,10 @@ import { bank, candidate, hotproducts, otherWidgets, tileBoxs1, tileBoxs2, tileB
 import { AudiencesMetrics, countries_charts } from 'src/app/shared/chartColor';
 
 @Component({
-  selector: 'app-widgets',
-  templateUrl: './widgets.component.html',
-  styleUrls: ['./widgets.component.scss']
+    selector: 'app-widgets',
+    templateUrl: './widgets.component.html',
+    styleUrls: ['./widgets.component.scss'],
+    standalone: false
 })
 
 /**

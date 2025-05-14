@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 
 @Component({
-  selector: 'app-mixed',
-  templateUrl: './mixed.component.html',
-  styleUrls: ['./mixed.component.scss']
+    selector: 'app-mixed',
+    templateUrl: './mixed.component.html',
+    styleUrls: ['./mixed.component.scss'],
+    standalone: false
 })
 
 /**

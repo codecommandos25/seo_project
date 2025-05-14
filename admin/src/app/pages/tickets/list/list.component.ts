@@ -20,9 +20,10 @@ import { PaginationService } from 'src/app/core/services/pagination.service';
 import { TicketListModel } from 'src/app/store/Ticket/ticket_model';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+    selector: 'app-list',
+    templateUrl: './list.component.html',
+    styleUrls: ['./list.component.scss'],
+    standalone: false
 })
 
 /**

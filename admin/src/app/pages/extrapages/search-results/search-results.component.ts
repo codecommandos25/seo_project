@@ -7,9 +7,10 @@ import { swiperModel, GalleryModel, NewsModel, VideoModel } from './search-resul
 import { gallery, news, swiper, video } from 'src/app/core/data';
 
 @Component({
-  selector: 'app-search-results',
-  templateUrl: './search-results.component.html',
-  styleUrls: ['./search-results.component.scss']
+    selector: 'app-search-results',
+    templateUrl: './search-results.component.html',
+    styleUrls: ['./search-results.component.scss'],
+    standalone: false
 })
 
 /**

@@ -9,9 +9,10 @@ import { PaginationService } from 'src/app/core/services/pagination.service';
 import { dashedLineChart } from 'src/app/shared/chartColor';
 
 @Component({
-  selector: 'app-job',
-  templateUrl: './job.component.html',
-  styleUrls: ['./job.component.scss'],
+    selector: 'app-job',
+    templateUrl: './job.component.html',
+    styleUrls: ['./job.component.scss'],
+    standalone: false
 })
 export class JobComponent implements OnInit {
 

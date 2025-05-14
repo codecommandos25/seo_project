@@ -4,9 +4,10 @@ import { companieslist } from 'src/app/core/data';
 
 
 @Component({
-  selector: 'app-companies-list',
-  templateUrl: './companies-list.component.html',
-  styleUrls: ['./companies-list.component.scss']
+    selector: 'app-companies-list',
+    templateUrl: './companies-list.component.html',
+    styleUrls: ['./companies-list.component.scss'],
+    standalone: false
 })
 export class CompaniesListComponent implements OnInit {
 

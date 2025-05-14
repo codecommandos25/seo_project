@@ -4,8 +4,8 @@ import { ToastService } from './toast-service';
 
 
 @Component({
-  selector: 'app-toastss',
-  template: `
+    selector: 'app-toastss',
+    template: `
    @for(toast of toastService.toasts;track $index){
     <ngb-toast
       [class]="toast.classname"
@@ -21,7 +21,8 @@ import { ToastService } from './toast-service';
     </ngb-toast>
    }
   `,
-  host: { 'class': 'toast-container position-fixed top-0 end-0 p-3', 'style': 'z-index: 1200' }
+    host: { 'class': 'toast-container position-fixed top-0 end-0 p-3', 'style': 'z-index: 1200' },
+    standalone: false
 })
 export class ToastsContainerallicon {
   constructor(public toastService: ToastService) { }

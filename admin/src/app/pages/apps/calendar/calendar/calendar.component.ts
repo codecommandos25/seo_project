@@ -22,9 +22,10 @@ import { calendarEvents, category } from 'src/app/core/data';
 import { createEventId } from 'src/app/core/data/calendar';
 
 @Component({
-  selector: 'app-calendar',
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+    selector: 'app-calendar',
+    templateUrl: './calendar.component.html',
+    styleUrls: ['./calendar.component.scss'],
+    standalone: false
 })
 
 /**

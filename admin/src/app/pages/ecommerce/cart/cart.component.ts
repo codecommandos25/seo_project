@@ -9,9 +9,10 @@ import { CartModel } from 'src/app/store/Ecommerce/ecommerce_model';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-cart',
-  templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+    selector: 'app-cart',
+    templateUrl: './cart.component.html',
+    styleUrls: ['./cart.component.scss'],
+    standalone: false
 })
 
 /**

@@ -11,9 +11,10 @@ import { Lightbox } from 'ngx-lightbox';
 import { MessagesData, chatData, chatMessagesData, contactData, groupData } from 'src/app/core/data';
 
 @Component({
-  selector: 'app-chat',
-  templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.scss']
+    selector: 'app-chat',
+    templateUrl: './chat.component.html',
+    styleUrls: ['./chat.component.scss'],
+    standalone: false
 })
 
 /**

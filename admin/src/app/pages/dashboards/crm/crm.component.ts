@@ -7,7 +7,8 @@ import { DealTypeChart, salesForecastChart, splineAreaChart } from 'src/app/shar
 @Component({
     selector: 'app-crm',
     templateUrl: './crm.component.html',
-    styleUrls: ['./crm.component.scss']
+    styleUrls: ['./crm.component.scss'],
+    standalone: false
 })
 
 /**

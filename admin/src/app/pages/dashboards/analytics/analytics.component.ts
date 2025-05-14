@@ -8,7 +8,8 @@ import { AudiencesMetrics, basicHeatmapChart, countries_charts, simpleDonutChart
 @Component({
     selector: 'app-analytics',
     templateUrl: './analytics.component.html',
-    styleUrls: ['./analytics.component.scss']
+    styleUrls: ['./analytics.component.scss'],
+    standalone: false
 })
 
 /**

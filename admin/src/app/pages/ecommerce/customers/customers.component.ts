@@ -22,9 +22,10 @@ import { PaginationService } from 'src/app/core/services/pagination.service';
 import { cloneDeep } from 'lodash';
 
 @Component({
-  selector: 'app-customers',
-  templateUrl: './customers.component.html',
-  styleUrls: ['./customers.component.scss'],
+    selector: 'app-customers',
+    templateUrl: './customers.component.html',
+    styleUrls: ['./customers.component.scss'],
+    standalone: false
 })
 
 /**

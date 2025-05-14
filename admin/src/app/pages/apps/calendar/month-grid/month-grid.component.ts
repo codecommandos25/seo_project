@@ -15,9 +15,10 @@ import { restApiService } from "../../../../core/services/rest-api.service";
 import { calendarEvents, category, createEventId } from 'src/app/core/data/calendar';
 
 @Component({
-  selector: 'app-month-grid',
-  templateUrl: './month-grid.component.html',
-  styleUrls: ['./month-grid.component.scss']
+    selector: 'app-month-grid',
+    templateUrl: './month-grid.component.html',
+    styleUrls: ['./month-grid.component.scss'],
+    standalone: false
 })
 export class MonthGridComponent {
   // bread crumb items

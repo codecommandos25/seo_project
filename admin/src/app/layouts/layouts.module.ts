@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbDropdownModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import { SimplebarAngularModule } from 'simplebar-angular';
 import { LanguageService } from '../core/services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
@@ -20,8 +19,7 @@ import { HorizontalComponent } from './horizontal/horizontal.component';
 import { HorizontalTopbarComponent } from './horizontal-topbar/horizontal-topbar.component';
 import { TwoColumnComponent } from './two-column/two-column.component';
 import { TwoColumnSidebarComponent } from './two-column-sidebar/two-column-sidebar.component';
-
-
+import { SearchBarComponent } from './topbar/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -35,21 +33,19 @@ import { TwoColumnSidebarComponent } from './two-column-sidebar/two-column-sideb
     HorizontalTopbarComponent,
     TwoColumnComponent,
     TwoColumnSidebarComponent,
-
   ],
   imports: [
     CommonModule,
     RouterModule,
     NgbDropdownModule,
     NgbNavModule,
-    SimplebarAngularModule,
     TranslateModule,
     NgbCollapseModule,
-    FormsModule, ReactiveFormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    SearchBarComponent,
   ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ],
-  providers: [LanguageService]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [LanguageService],
 })
-export class LayoutsModule { }
+export class LayoutsModule {}

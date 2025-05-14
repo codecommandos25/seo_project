@@ -8,9 +8,10 @@ import { getBackgroundImage, getLayoutMode, getLayoutPosition, getLayoutTheme, g
 import { changeBackgrounImage, changeDataPreloader, changeLayoutPosition, changeLayoutWidth, changeMode, changeSidebarColor, changeSidebarImage, changeSidebarSize, changeSidebarView, changeSidebarVisibility, changeTheme, changeThemeColor, changeTopbar, changelayout } from 'src/app/store/layouts/layout-action';
 
 @Component({
-  selector: 'app-rightsidebar',
-  templateUrl: './rightsidebar.component.html',
-  styleUrls: ['./rightsidebar.component.scss']
+    selector: 'app-rightsidebar',
+    templateUrl: './rightsidebar.component.html',
+    styleUrls: ['./rightsidebar.component.scss'],
+    standalone: false
 })
 
 /**

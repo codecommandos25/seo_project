@@ -3,9 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { jobcategories } from 'src/app/core/data';
 
 @Component({
-  selector: 'app-job-categories',
-  templateUrl: './job-categories.component.html',
-  styleUrls: ['./job-categories.component.scss']
+    selector: 'app-job-categories',
+    templateUrl: './job-categories.component.html',
+    styleUrls: ['./job-categories.component.scss'],
+    standalone: false
 })
 export class JobCategoriesComponent implements OnInit {
 

@@ -8,9 +8,10 @@ import { WalletModel } from 'src/app/store/Crypto/crypto_model';
 
 
 @Component({
-  selector: 'app-wallet',
-  templateUrl: './wallet.component.html',
-  styleUrls: ['./wallet.component.scss']
+    selector: 'app-wallet',
+    templateUrl: './wallet.component.html',
+    styleUrls: ['./wallet.component.scss'],
+    standalone: false
 })
 
 /**

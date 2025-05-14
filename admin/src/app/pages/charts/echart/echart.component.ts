@@ -3,7 +3,8 @@ import { Component, OnInit } from '@angular/core';
 @Component({
     selector: 'app-echart',
     templateUrl: './echart.component.html',
-    styleUrls: ['./echart.component.scss']
+    styleUrls: ['./echart.component.scss'],
+    standalone: false
 })
 
 /**

@@ -3,9 +3,10 @@ import { SlickCarouselComponent } from 'ngx-slick-carousel';
 
 
 @Component({
-  selector: 'app-swiper',
-  templateUrl: './swiper.component.html',
-  styleUrls: ['./swiper.component.scss']
+    selector: 'app-swiper',
+    templateUrl: './swiper.component.html',
+    styleUrls: ['./swiper.component.scss'],
+    standalone: false
 })
 
 /**
