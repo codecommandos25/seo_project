@@ -14,9 +14,9 @@
     "build:project2": "cd backend-api && npm run build",
     "build:project3": "cd frontend && npm run build",
     "install": "npm-run-all --parallel install:*",
-    "install:project1": "cd admin && npm install",
-    "install:project2": "cd backend-api && npm install",
-    "install:project3": "cd frontend && npm install"
+    "install:project1": "cd admin && npm install --force",
+    "install:project2": "cd backend-api && npm install --force",
+    "install:project3": "cd frontend && npm install --force"
   },
   "devDependencies": {
     "npm-run-all": "^4.1.5"
