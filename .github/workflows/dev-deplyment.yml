@@ -22,15 +22,6 @@ jobs:
         working-directory: ./backend-api
         run: npm run build
 
-      - name: Ensure target directory exists
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          script: |
-            mkdir -p backend-api
-
       # transfer build to ec2 server by scp except node_modules and src
       - name: Deploy build to EC2
         uses: appleboy/scp-action@master
@@ -39,5 +30,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
           source: 'backend-api/dist,backend-api/package*.json'
-          target: 'backend-api'
-          strip_components: 0
+          target: '.'
+          strip_components: 1
