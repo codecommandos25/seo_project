@@ -15,9 +15,12 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 18
-      - run: cd backend-api
-      - run: npm install
-      - run: npm run build
+      - name: Install dependencies
+        working-directory: ./backend-api
+        run: npm install
+      - name: Build
+        working-directory: ./backend-api
+        run: npm run build
 
       - name: Ensure target directory exists
         uses: appleboy/ssh-action@master
