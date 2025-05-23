@@ -1,11 +1,11 @@
 name: dev-deplyment
-
 on:
   push:
     branches:
       - main
     paths:
       - 'backend-api/src/**'
+  workflow_dispatch:
 
 jobs:
   deploy:
