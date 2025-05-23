@@ -38,7 +38,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          source: |
-            backend-api/dist
-            backend-api/package*.json
-          target: backend-api
+          source: 'backend-api/dist,backend-api/package*.json'
+          target: 'backend-api'
+          strip_components: 0
