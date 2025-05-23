@@ -17,7 +17,7 @@ jobs:
           node-version: 18
       - name: Install dependencies
         working-directory: ./backend-api
-        run: npm install
+        run: npm install --force
       - name: Build
         working-directory: ./backend-api
         run: npm run build
