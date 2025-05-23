@@ -1,0 +1,32 @@
+name: dev-deplyment
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend-api/src/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 18
+      - run: cd backend-api
+      - run: npm install
+      - run: npm run build
+
+      # transfer build to ec2 server by scp except node_modules and src
+      - name: Deploy build to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          source: |
+            backend-api/dist
+            backend-api/package*.json
+          target: backend-api
