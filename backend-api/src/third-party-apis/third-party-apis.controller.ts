@@ -14,6 +14,7 @@ import { TrafficGraphDto } from './dto/traffic_by_time.dto';
 import { TrafficByTimeResponse } from './models/traffic_by_time.response';
 import { TrafficByTimeDto } from './dto/traffic_data_graph.dto';
 import { TrafficGraphResponse } from './models/traffic_by_time.response copy';
+import { CompetitorsDomainDto } from './dto/competitors_domain.dto';
 
 @ApiTags('Third Party Apis')
 @Controller('third-party-apis')
@@ -21,9 +22,9 @@ export class ThirdPartyApisController {
   constructor(private readonly thirdPartyApisService: ThirdPartyApisService) {}
 
   @Post('competitors_domain')
-  @ApiBody({ type: [DomainAnalyticsDto] })
+  @ApiBody({ type: [CompetitorsDomainDto] })
   async get_competitors_domain(
-    @Body() payload: DomainAnalyticsDto[],
+    @Body() payload: CompetitorsDomainDto[],
   ): Promise<CompetitorsDomainResponse> {
     return await this.thirdPartyApisService.get_competitors_domain(payload);
   }

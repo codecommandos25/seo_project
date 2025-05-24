@@ -5,6 +5,7 @@ import { PageInsightsDto } from './dto/page_insights.dto';
 import { RankedKeywordsDto } from './dto/ranked_keywords.dto';
 import { TrafficGraphDto } from './dto/traffic_by_time.dto';
 import { TrafficByTimeDto } from './dto/traffic_data_graph.dto';
+import { CompetitorsDomainDto } from './dto/competitors_domain.dto';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -24,7 +25,7 @@ export class ThirdPartyApisService {
     return await response.json();
   }
 
-  async get_competitors_domain(payload: DomainAnalyticsDto[]) {
+  async get_competitors_domain(payload: CompetitorsDomainDto[]) {
     try {
       const url =
         'https://sandbox.dataforseo.com/v3/dataforseo_labs/google/competitors_domain/live';
@@ -102,8 +103,6 @@ export class ThirdPartyApisService {
 
   async get_traffic_data_graph(payload: TrafficGraphDto[]) {
     try {
-      console.log(payload);
-
       const url = `https://api.dataforseo.com/v3/dataforseo_labs/google/historical_bulk_traffic_estimation/live`;
       return await this.api_request(url, {
         body: JSON.stringify(payload),
