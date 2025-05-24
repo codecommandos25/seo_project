@@ -45,7 +45,7 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
             cd backend-api
-            npm install --production
+            npm install --production --force
             npm install -g pm2
             pm2 stop nest-app || true
             pm2 start dist/main.js --name nest-app
