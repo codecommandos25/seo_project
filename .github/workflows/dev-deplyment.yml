@@ -33,7 +33,7 @@ jobs:
           target: '~/backend-api'
           strip_components: 1
 
-      # setup nodejs and install dependencies on ec2 server
+      # install deps and restart server on ec2
       - name: Setup Node.js on EC2
         uses: appleboy/ssh-action@master
         with:
@@ -42,6 +42,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd backend-api
+            npm -v
             npm install --production
             npm install -g pm2
             pm2 stop nest-app || true
