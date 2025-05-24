@@ -34,7 +34,7 @@ jobs:
           strip_components: 1
 
       # setup nodejs and install dependencies on ec2 server
-      - name: Ensure target directory exists
+      - name: Setup Node.js on EC2
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
