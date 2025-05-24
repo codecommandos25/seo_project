@@ -1,7 +1,8 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { CompetitorsDomain } from './dto/competitors_domain.dto';
-import { DomainAnalytics } from './dto/domain_analytics.dto';
-import { RankedKeywords } from './dto/ranked_keywords.dto';
+import { CompetitorsDomainListDto } from './dto/competitors_domain.dto';
+import { RankedKeywordsListDto } from './dto/ranked_keywords.dto';
+import { DomainAnalyticsListDto } from './dto/domain_analytics.dto';
+import { PageInsightsDto } from './dto/page_insights.dto';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -30,40 +31,40 @@ export class ThirdPartyApisService {
     return await response.json();
   }
 
-  async get_competitors_domain(payload: CompetitorsDomain[]) {
+  async get_competitors_domain(payload: CompetitorsDomainListDto) {
     try {
       return await this.api_request(this.competitors_domain, {
-        body: JSON.stringify(payload),
+        body: JSON.stringify(payload.domains),
       });
     } catch (error) {
       throw new HttpException(error, 500);
     }
   }
 
-  async get_ranked_keywords(payload: RankedKeywords[]) {
+  async get_ranked_keywords(payload: RankedKeywordsListDto) {
     try {
       return await this.api_request(this.ranked_keywords, {
-        body: JSON.stringify(payload),
+        body: JSON.stringify(payload.domains),
       });
     } catch (error) {
       throw new HttpException(error, 500);
     }
   }
 
-  async get_domain_analytics(payload: DomainAnalytics[]) {
+  async get_domain_analytics(payload: DomainAnalyticsListDto) {
     try {
       return await this.api_request(this.domain_analytics, {
-        body: JSON.stringify(payload),
+        body: JSON.stringify(payload.domains),
       });
     } catch (error) {
       throw new HttpException(error, 500);
     }
   }
 
-  async get_page_insights(url: string) {
+  async get_page_insights(payload: PageInsightsDto) {
     try {
       const params = new URLSearchParams({
-        url: url,
+        url: payload.url,
         key: process.env.API_KEY,
         category: 'PERFORMANCE',
       });
