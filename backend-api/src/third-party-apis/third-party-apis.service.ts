@@ -1,11 +1,9 @@
 import { HttpException, Injectable } from '@nestjs/common';
+import { CompetitorsDomainDto } from './dto/competitors_domain.dto';
 import { DomainAnalyticsDto } from './dto/domain_analytics.dto';
-import { LighthouseScoreDto } from './dto/lighthouse_score.dto';
 import { PageInsightsDto } from './dto/page_insights.dto';
 import { RankedKeywordsDto } from './dto/ranked_keywords.dto';
 import { TrafficGraphDto } from './dto/traffic_by_time.dto';
-import { TrafficByTimeDto } from './dto/traffic_data_graph.dto';
-import { CompetitorsDomainDto } from './dto/competitors_domain.dto';
 import { PageInsightsResponse } from './models/page_insights.response';
 
 @Injectable()
@@ -107,28 +105,6 @@ export class ThirdPartyApisService {
         numberOfRequests,
         issues,
       };
-    } catch (error) {
-      throw new HttpException(error, 500);
-    }
-  }
-
-  async get_lighthouse_score(payload: LighthouseScoreDto[]) {
-    try {
-      const url = `https://sandbox.dataforseo.com/v3/on_page/lighthouse/live/json`;
-      return await this.api_request(url, {
-        body: JSON.stringify(payload),
-      });
-    } catch (error) {
-      throw new HttpException(error, 500);
-    }
-  }
-
-  async get_traffic_by_time(payload: TrafficByTimeDto[]) {
-    try {
-      const url = `https://sandbox.dataforseo.com/v3/traffic_analytics/overview/live`;
-      return await this.api_request(url, {
-        body: JSON.stringify(payload),
-      });
     } catch (error) {
       throw new HttpException(error, 500);
     }

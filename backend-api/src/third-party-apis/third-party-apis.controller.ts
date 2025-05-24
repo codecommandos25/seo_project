@@ -2,18 +2,14 @@ import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
 import { CompetitorsDomainDto } from './dto/competitors_domain.dto';
 import { DomainAnalyticsDto } from './dto/domain_analytics.dto';
-import { LighthouseScoreDto } from './dto/lighthouse_score.dto';
 import { PageInsightsDto } from './dto/page_insights.dto';
 import { RankedKeywordsDto } from './dto/ranked_keywords.dto';
 import { TrafficGraphDto } from './dto/traffic_by_time.dto';
-import { TrafficByTimeDto } from './dto/traffic_data_graph.dto';
 import { CompetitorsDomainResponse } from './models/competitors_domain.response';
 import { DomainAnalyticsResponse } from './models/domain_analytics.response';
-import { LighthouseScoreResponse } from './models/lighthouse_score.response';
 import { PageInsightsCustomResponse } from './models/page_insights.response';
 import { RankedKeywordsResponse } from './models/ranked_keywords.response';
-import { TrafficByTimeResponse } from './models/traffic_by_time.response';
-import { TrafficGraphResponse } from './models/traffic_by_time.response copy';
+import { TrafficGraphResponse } from './models/traffic_by_time.response';
 import { ThirdPartyApisService } from './third-party-apis.service';
 
 @ApiTags('Third Party Apis')
@@ -50,22 +46,6 @@ export class ThirdPartyApisController {
     @Query() params: PageInsightsDto,
   ): Promise<PageInsightsCustomResponse> {
     return await this.thirdPartyApisService.get_page_insights(params);
-  }
-
-  @Post('lighthouse_score')
-  @ApiBody({ type: [LighthouseScoreDto] })
-  async get_lighthouse_score(
-    @Body() payload: LighthouseScoreDto[],
-  ): Promise<LighthouseScoreResponse> {
-    return await this.thirdPartyApisService.get_lighthouse_score(payload);
-  }
-
-  @Post('traffic_by_time')
-  @ApiBody({ type: [TrafficByTimeDto] })
-  async get_traffic_by_time(
-    @Body() payload: TrafficByTimeDto[],
-  ): Promise<TrafficByTimeResponse> {
-    return await this.thirdPartyApisService.get_traffic_by_time(payload);
   }
 
   @Post('traffic_data_graph')
