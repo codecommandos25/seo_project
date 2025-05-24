@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { CompetitorsDomain } from './dto/competitors_domain.dto';
-import { RankedKeywords } from './dto/ranked_keywords.dto';
 import { DomainAnalytics } from './dto/domain_analytics.dto';
+import { RankedKeywords } from './dto/ranked_keywords.dto';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -55,6 +55,21 @@ export class ThirdPartyApisService {
       return await this.api_request(this.domain_analytics, {
         body: JSON.stringify(payload),
       });
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async get_page_insights(url: string) {
+    try {
+      const params = new URLSearchParams({
+        url: url,
+        key: process.env.API_KEY,
+        category: 'PERFORMANCE',
+      });
+
+      const pageInsights = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?${params.toString()}`;
+      return this.api_request(pageInsights, { method: 'GET' });
     } catch (error) {
       throw new HttpException(error, 500);
     }

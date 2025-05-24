@@ -1,12 +1,13 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { CompetitorsDomain } from './dto/competitors_domain.dto';
-import { ThirdPartyApisService } from './third-party-apis.service';
-import { RankedKeywords } from './dto/ranked_keywords.dto';
-import { RankedKeywordsResponse } from './models/ranked_keywords.response';
-import { CompetitorsDomainResponse } from './models/competitors_domain.response';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { CompetitorsDomain } from './dto/competitors_domain.dto';
 import { DomainAnalytics } from './dto/domain_analytics.dto';
-import { DomainAnalyticsResponse } from './models/ranked_keywords.response copy';
+import { RankedKeywords } from './dto/ranked_keywords.dto';
+import { CompetitorsDomainResponse } from './models/competitors_domain.response';
+import { RankedKeywordsResponse } from './models/ranked_keywords.response';
+import { DomainAnalyticsResponse } from './models/domain_analytics.response';
+import { ThirdPartyApisService } from './third-party-apis.service';
+import { PageInsightsResponse } from './models/page_insights.response';
 
 @ApiTags('Third Party Apis')
 @Controller('third-party-apis')
@@ -32,5 +33,12 @@ export class ThirdPartyApisController {
     @Body() payload: DomainAnalytics[],
   ): Promise<DomainAnalyticsResponse> {
     return await this.thirdPartyApisService.get_domain_analytics(payload);
+  }
+
+  @Get('page_insights')
+  async get_page_insights(
+    @Query() params: { url: string },
+  ): Promise<PageInsightsResponse> {
+    return await this.thirdPartyApisService.get_page_insights(params.url);
   }
 }
