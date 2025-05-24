@@ -40,13 +40,3 @@ export class CompetitorsDomainDto {
   @IsOptional()
   limit: number;
 }
-
-export class CompetitorsDomainListDto {
-  @ApiProperty({
-    description: 'List of domains to compare against',
-    type: [CompetitorsDomainDto],
-  })
-  @IsArray()
-  @IsString({ each: true })
-  domains: CompetitorsDomainDto[];
-}

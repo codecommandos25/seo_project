@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsBoolean, IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsNumber, IsString } from 'class-validator';
 
 export class RankedKeywordsDto {
   @ApiProperty({
@@ -43,14 +43,4 @@ export class RankedKeywordsDto {
   })
   @IsNumber()
   limit: number;
-}
-
-export class RankedKeywordsListDto {
-  @ApiProperty({
-    description: 'List of domains to compare against',
-    type: [RankedKeywordsDto],
-  })
-  @IsArray()
-  @IsString({ each: true })
-  domains: RankedKeywordsDto[];
 }
