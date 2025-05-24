@@ -6,6 +6,7 @@ import { RankedKeywordsDto } from './dto/ranked_keywords.dto';
 import { TrafficGraphDto } from './dto/traffic_by_time.dto';
 import { TrafficByTimeDto } from './dto/traffic_data_graph.dto';
 import { CompetitorsDomainDto } from './dto/competitors_domain.dto';
+import { PageInsightsResponse } from './models/page_insights.response';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -73,7 +74,39 @@ export class ThirdPartyApisService {
       });
 
       const url = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?${params.toString()}`;
-      return this.api_request(url, { method: 'GET' });
+      const response: PageInsightsResponse = await this.api_request(url, {
+        method: 'GET',
+      });
+
+      const { categories, audits } = response.lighthouseResult;
+      const performanceScore = categories.performance.score * 100;
+      const speedIndex = audits['speed-index'].displayValue;
+      const pageSize = audits['total-byte-weight'].displayValue;
+      const lcp = audits['largest-contentful-paint'].displayValue;
+      const tti = audits['interactive'].displayValue;
+      const numberOfRequests = audits['network-requests'].details.items.length;
+      const issues = [];
+
+      for (const [key, audit] of Object.entries(audits)) {
+        if (audit.score === 0) {
+          issues.push({
+            id: key,
+            title: audit.title,
+            description: audit.description,
+            displayMode: audit.scoreDisplayMode,
+          });
+        }
+      }
+
+      return {
+        performanceScore,
+        speedIndex,
+        pageSize,
+        lcp,
+        tti,
+        numberOfRequests,
+        issues,
+      };
     } catch (error) {
       throw new HttpException(error, 500);
     }

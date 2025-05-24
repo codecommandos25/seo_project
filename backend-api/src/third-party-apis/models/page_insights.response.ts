@@ -1,3 +1,13 @@
+export interface PageInsightsCustomResponse {
+  performanceScore: number;
+  speedIndex: string;
+  pageSize: string;
+  lcp: string;
+  tti: string;
+  numberOfRequests: number;
+  issues: any[];
+}
+
 export interface PageInsightsResponse {
   captchaResult: string;
   kind: string;
