@@ -10,6 +10,10 @@ import { RankedKeywordsResponse } from './models/ranked_keywords.response';
 import { ThirdPartyApisService } from './third-party-apis.service';
 import { RankedKeywordsDto } from './dto/ranked_keywords.dto';
 import { LighthouseScoreDto } from './dto/lighthouse_score.dto';
+import { TrafficGraphDto } from './dto/traffic_by_time.dto';
+import { TrafficByTimeResponse } from './models/traffic_by_time.response';
+import { TrafficByTimeDto } from './dto/traffic_data_graph.dto';
+import { TrafficGraphResponse } from './models/traffic_by_time.response copy';
 
 @ApiTags('Third Party Apis')
 @Controller('third-party-apis')
@@ -53,5 +57,21 @@ export class ThirdPartyApisController {
     @Body() payload: LighthouseScoreDto[],
   ): Promise<LighthouseScoreResponse> {
     return await this.thirdPartyApisService.get_lighthouse_score(payload);
+  }
+
+  @Post('traffic_by_time')
+  @ApiBody({ type: [TrafficByTimeDto] })
+  async get_traffic_by_time(
+    @Body() payload: TrafficByTimeDto[],
+  ): Promise<TrafficByTimeResponse> {
+    return await this.thirdPartyApisService.get_traffic_by_time(payload);
+  }
+
+  @Post('traffic_data_graph')
+  @ApiBody({ type: [TrafficGraphDto] })
+  async get_traffic_data_graph(
+    @Body() payload: TrafficGraphDto[],
+  ): Promise<TrafficGraphResponse> {
+    return await this.thirdPartyApisService.get_traffic_data_graph(payload);
   }
 }
