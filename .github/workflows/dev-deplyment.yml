@@ -42,4 +42,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd backend-api
-            npm install
+            npm install --production
+            npm install -g pm2
+            pm2 stop nest-app || true
+            pm2 start dist/main.js --name nest-app
