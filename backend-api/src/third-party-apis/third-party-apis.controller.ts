@@ -5,6 +5,8 @@ import { RankedKeywords } from './dto/ranked_keywords.dto';
 import { RankedKeywordsResponse } from './models/ranked_keywords.response';
 import { CompetitorsDomainResponse } from './models/competitors_domain.response';
 import { ApiTags } from '@nestjs/swagger';
+import { DomainAnalytics } from './dto/domain_analytics.dto';
+import { DomainAnalyticsResponse } from './models/ranked_keywords.response copy';
 
 @ApiTags('Third Party Apis')
 @Controller('third-party-apis')
@@ -23,5 +25,12 @@ export class ThirdPartyApisController {
     @Body() payload: RankedKeywords[],
   ): Promise<RankedKeywordsResponse> {
     return await this.thirdPartyApisService.get_ranked_keywords(payload);
+  }
+
+  @Post('domain_analytics')
+  async get_domain_analytics(
+    @Body() payload: DomainAnalytics[],
+  ): Promise<DomainAnalyticsResponse> {
+    return await this.thirdPartyApisService.get_domain_analytics(payload);
   }
 }
