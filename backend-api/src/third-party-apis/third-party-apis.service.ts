@@ -65,19 +65,15 @@ export class ThirdPartyApisService {
 
   async get_page_insights(payload: PageInsightsDto) {
     try {
-      const params = new URLSearchParams({
-        url: payload.url,
-        key: process.env.API_KEY,
-        category: 'PERFORMANCE',
-      });
-
-      const url = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?${params.toString()}`;
+      const url = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(payload.url)}&key=${process.env.API_KEY}&category=PERFORMANCE&category=SEO`;
       const response: PageInsightsResponse = await this.api_request(url, {
         method: 'GET',
       });
 
       const { categories, audits } = response.lighthouseResult;
+
       const performanceScore = categories.performance.score * 100;
+      const seoScore = categories.seo.score * 100;
       const speedIndex = audits['speed-index'].displayValue;
       const pageSize = audits['total-byte-weight'].displayValue;
       const lcp = audits['largest-contentful-paint'].displayValue;
@@ -104,8 +100,10 @@ export class ThirdPartyApisService {
         tti,
         numberOfRequests,
         issues,
+        seoScore,
       };
     } catch (error) {
+      console.log(error);
       throw new HttpException(error, 500);
     }
   }

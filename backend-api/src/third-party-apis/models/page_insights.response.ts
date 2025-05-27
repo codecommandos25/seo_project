@@ -39,89 +39,100 @@ export interface LighthouseResult {
 }
 
 export interface Audits {
-  'lcp-phases-insight': CacheInsight;
+  'crawlable-anchors': CacheInsight;
   'duplicated-javascript': DuplicatedJavascript;
-  'unsized-images': CacheInsight;
-  viewport: DOMSizeInsight;
-  'layout-shifts': DOMSizeInsight;
-  'cls-culprits-insight': ClsCulpritsInsight;
-  'max-potential-fid': CumulativeLayoutShift;
-  'forced-reflow-insight': CacheInsight;
-  'modern-image-formats': DuplicatedJavascript;
-  'lcp-discovery-insight': CacheInsight;
-  'uses-text-compression': DuplicatedJavascript;
-  'render-blocking-insight': CacheInsight;
-  'screenshot-thumbnails': CacheInsight;
-  'user-timings': CacheInsight;
-  redirects: CumulativeLayoutShift;
-  'third-parties-insight': CacheInsight;
-  'final-screenshot': CacheInsight;
-  metrics: CumulativeLayoutShift;
-  'legacy-javascript-insight': CacheInsight;
-  'main-thread-tasks': CacheInsight;
-  'font-display-insight': CacheInsight;
-  'unminified-javascript': CriticalRequestChains;
-  'resource-summary': DOMSizeInsight;
-  'render-blocking-resources': BootupTime;
-  'dom-size': DOMSize;
-  'unminified-css': CriticalRequestChains;
-  'uses-long-cache-ttl': CumulativeLayoutShift;
-  'font-display': DOMSizeInsight;
-  'viewport-insight': DOMSizeInsight;
-  'third-party-summary': DOMSizeInsight;
-  'image-delivery-insight': CacheInsight;
-  'network-requests': CacheInsight;
   'long-tasks': BootupTime;
-  'mainthread-work-breakdown': CriticalRequestChains;
-  'cache-insight': CacheInsight;
-  'unused-css-rules': CriticalRequestChains;
-  'document-latency-insight': DocumentLatencyInsight;
-  'prioritize-lcp-image': CacheInsight;
-  'uses-optimized-images': DuplicatedJavascript;
-  'total-blocking-time': DuplicatedJavascript;
-  'network-dependency-tree-insight': CacheInsight;
-  'efficient-animated-content': DuplicatedJavascript;
-  'first-contentful-paint': BootupTime;
-  'total-byte-weight': DuplicatedJavascript;
-  'network-rtt': BootupTime;
-  'third-party-facades': DOMSizeInsight;
-  'uses-responsive-images': CumulativeLayoutShift;
-  'uses-passive-event-listeners': CacheInsight;
-  'first-meaningful-paint': CacheInsight;
-  'non-composited-animations': DOMSizeInsight;
-  'duplicated-javascript-insight': CacheInsight;
-  'critical-request-chains': CriticalRequestChains;
-  'unused-javascript': CriticalRequestChains;
-  'largest-contentful-paint-element': CriticalRequestChains;
-  'interaction-to-next-paint-insight': CacheInsight;
-  'offscreen-images': DuplicatedJavascript;
-  interactive: CriticalRequestChains;
-  'largest-contentful-paint': CriticalRequestChains;
+  'unsized-images': CriticalRequestChains;
   'uses-rel-preconnect': UsesRelPreconnect;
-  'no-document-write': DOMSizeInsight;
-  'cumulative-layout-shift': CumulativeLayoutShift;
-  'network-server-latency': CriticalRequestChains;
-  'lcp-lazy-loaded': CacheInsight;
-  'server-response-time': BootupTime;
-  'bootup-time': BootupTime;
-  diagnostics: CacheInsight;
-  'dom-size-insight': DOMSizeInsight;
+  viewport: CacheInsight;
+  'interaction-to-next-paint-insight': CacheInsight;
   'script-treemap-data': CacheInsight;
+  'main-thread-tasks': CacheInsight;
+  'render-blocking-resources': DuplicatedJavascript;
+  redirects: CriticalRequestChains;
+  'document-latency-insight': DocumentLatencyInsight;
+  'render-blocking-insight': CacheInsight;
+  'dom-size-insight': CacheInsight;
+  'lcp-discovery-insight': CacheInsight;
+  diagnostics: CacheInsight;
+  'third-parties-insight': CriticalRequestChains;
+  'mainthread-work-breakdown': CriticalRequestChains;
+  'critical-request-chains': CriticalRequestChains;
+  'network-rtt': DuplicatedJavascript;
+  'robots-txt': CriticalRequestChains;
+  'bootup-time': BootupTime;
+  'is-crawlable': CacheInsight;
+  'dom-size': DOMSize;
+  'unused-css-rules': CriticalRequestChains;
+  'layout-shifts': CacheInsight;
+  'uses-text-compression': DuplicatedJavascript;
+  canonical: CacheInsight;
+  'cumulative-layout-shift': CumulativeLayoutShift;
+  'http-status-code': CacheInsight;
+  'modern-image-formats': DuplicatedJavascript;
+  'first-meaningful-paint': CacheInsight;
+  'duplicated-javascript-insight': CacheInsight;
+  interactive: CriticalRequestChains;
+  'total-blocking-time': DOMSize;
+  'third-party-facades': BootupTime;
+  'legacy-javascript-insight': CacheInsight;
+  'no-document-write': CacheInsight;
+  'largest-contentful-paint-element': CriticalRequestChains;
+  'forced-reflow-insight': CacheInsight;
+  metrics: BootupTime;
+  'max-potential-fid': DuplicatedJavascript;
+  'user-timings': DOMSize;
+  'cache-insight': CacheInsight;
+  'lcp-lazy-loaded': CacheInsight;
+  'resource-summary': CriticalRequestChains;
+  'document-title': CacheInsight;
+  'efficient-animated-content': DuplicatedJavascript;
+  'viewport-insight': CacheInsight;
+  'image-delivery-insight': CacheInsight;
+  'prioritize-lcp-image': CriticalRequestChains;
+  'network-server-latency': CriticalRequestChains;
+  'unminified-css': DOMSize;
+  'final-screenshot': CacheInsight;
+  'uses-responsive-images': CriticalRequestChains;
+  'offscreen-images': DuplicatedJavascript;
+  'first-contentful-paint': BootupTime;
+  'unminified-javascript': DOMSize;
+  'cls-culprits-insight': ClsCulpritsInsight;
+  'structured-data': CriticalRequestChains;
+  'third-party-summary': BootupTime;
+  'font-display': CacheInsight;
+  'uses-optimized-images': DuplicatedJavascript;
+  'unused-javascript': CriticalRequestChains;
+  'meta-description': CacheInsight;
+  'uses-long-cache-ttl': DuplicatedJavascript;
+  'largest-contentful-paint': CriticalRequestChains;
+  'lcp-phases-insight': CacheInsight;
+  'image-alt': CacheInsight;
+  'network-dependency-tree-insight': CacheInsight;
+  'link-text': CacheInsight;
+  'font-display-insight': CacheInsight;
+  'network-requests': CacheInsight;
+  'uses-passive-event-listeners': CriticalRequestChains;
+  hreflang: CacheInsight;
+  'server-response-time': DuplicatedJavascript;
+  'non-composited-animations': CacheInsight;
+  'screenshot-thumbnails': CriticalRequestChains;
   'legacy-javascript': DuplicatedJavascript;
-  'speed-index': DOMSize;
+  'total-byte-weight': DOMSize;
+  'speed-index': CumulativeLayoutShift;
 }
 
 export interface BootupTime {
   id: string;
   title: string;
   description: string;
-  score: number;
-  scoreDisplayMode: ScoreDisplayMode;
+  score: number | null;
+  scoreDisplayMode: BootupTimeScoreDisplayMode;
   displayValue?: string;
   metricSavings?: BootupTimeMetricSavings;
   details?: BootupTimeDetails;
   numericValue?: number;
-  numericUnit?: string;
+  numericUnit?: NumericUnit;
 }
 
 export interface BootupTimeDetails {
@@ -129,34 +140,34 @@ export interface BootupTimeDetails {
   summary?: PurpleSummary;
   type: string;
   sortedBy?: string[];
-  headings: NodeHeading[];
-  debugData?: PurpleDebugData;
+  headings?: DetailsHeading[];
   skipSumming?: string[];
-  overallSavingsMs?: number;
+  debugData?: PurpleDebugData;
+  isEntityGrouped?: boolean;
 }
 
 export interface PurpleDebugData {
-  urls: string[];
   type: DebugDataType;
   tasks: Task[];
+  urls: string[];
 }
 
 export interface Task {
   duration: number;
-  scriptEvaluation?: number;
-  startTime: number;
   urlIndex: number;
+  startTime: number;
   other: number;
+  scriptEvaluation?: number;
 }
 
 export enum DebugDataType {
   Debugdata = 'debugdata',
 }
 
-export interface NodeHeading {
+export interface DetailsHeading {
   key: null | string;
-  label: string;
-  valueType: ValueTypeEnum;
+  valueType: ScoreDisplayMode;
+  label?: string;
   granularity?: number;
   subItemsHeading?: SubItemsHeading;
   displayUnit?: string;
@@ -164,45 +175,111 @@ export interface NodeHeading {
 
 export interface SubItemsHeading {
   key: string;
-  valueType?: ValueTypeEnum;
+  valueType?: ScoreDisplayMode;
 }
 
-export enum ValueTypeEnum {
+export enum ScoreDisplayMode {
   Bytes = 'bytes',
   Code = 'code',
   MS = 'ms',
   Node = 'node',
   Numeric = 'numeric',
-  SourceLocation = 'source-location',
   Text = 'text',
   TimespanMS = 'timespanMs',
   URL = 'url',
 }
 
 export interface PurpleItem {
-  total?: number;
   scriptParseCompile?: number;
   scripting?: number;
   url?: string;
+  total?: number;
   startTime?: number;
   duration?: number;
-  rtt?: number;
-  origin?: string;
-  responseTime?: number;
+  observedNavigationStart?: number;
+  observedTimeOrigin?: number;
+  observedFirstContentfulPaintAllFrames?: number;
+  observedFirstContentfulPaintTs?: number;
+  observedSpeedIndex?: number;
+  observedSpeedIndexTs?: number;
+  observedLastVisualChangeTs?: number;
+  observedLargestContentfulPaintAllFrames?: number;
+  observedNavigationStartTs?: number;
+  observedLargestContentfulPaintTs?: number;
+  observedLoadTs?: number;
+  interactive?: number;
+  observedFirstVisualChange?: number;
+  cumulativeLayoutShiftMainFrame?: number;
+  observedFirstVisualChangeTs?: number;
+  observedTraceEndTs?: number;
+  observedLoad?: number;
+  cumulativeLayoutShift?: number;
+  largestContentfulPaint?: number;
+  observedDomContentLoaded?: number;
+  observedLargestContentfulPaint?: number;
+  observedLastVisualChange?: number;
+  speedIndex?: number;
+  observedCumulativeLayoutShift?: number;
+  observedFirstPaintTs?: number;
+  observedTraceEnd?: number;
+  observedFirstContentfulPaintAllFramesTs?: number;
+  timeToFirstByte?: number;
+  observedDomContentLoadedTs?: number;
+  maxPotentialFID?: number;
+  firstContentfulPaint?: number;
+  observedFirstContentfulPaint?: number;
+  observedLargestContentfulPaintAllFramesTs?: number;
+  observedTimeOriginTs?: number;
+  observedCumulativeLayoutShiftMainFrame?: number;
+  totalBlockingTime?: number;
+  observedFirstPaint?: number;
+  lcpInvalidated?: boolean;
+  entity?: Name;
+  mainThreadTime?: number;
+  transferSize?: number;
+  tbtImpact?: number;
+  blockingTime?: number;
+  subItems?: PurpleSubItems;
+}
+
+export enum Name {
+  GoogleCDN = 'Google CDN',
+  GoogleCOM = 'google.com',
+  GoogleFonts = 'Google Fonts',
+  OtherGoogleAPIsSDKs = 'Other Google APIs/SDKs',
+}
+
+export interface PurpleSubItems {
+  items: FluffyItem[];
+  type: string;
+}
+
+export interface FluffyItem {
+  transferSize: number;
+  tbtImpact: number;
+  blockingTime: number;
+  url: string;
+  mainThreadTime: number;
 }
 
 export interface PurpleSummary {
   wastedMs: number;
+  wastedBytes?: number;
 }
 
 export interface BootupTimeMetricSavings {
-  TBT?: number;
-  LCP?: number;
-  FCP?: number;
+  TBT: number;
 }
 
-export enum ScoreDisplayMode {
+export enum NumericUnit {
+  Byte = 'byte',
+  Millisecond = 'millisecond',
+}
+
+export enum BootupTimeScoreDisplayMode {
+  Binary = 'binary',
   Informative = 'informative',
+  Manual = 'manual',
   MetricSavings = 'metricSavings',
   NotApplicable = 'notApplicable',
   Numeric = 'numeric',
@@ -213,27 +290,29 @@ export interface CacheInsight {
   title: string;
   description: string;
   score: number | null;
-  scoreDisplayMode: ScoreDisplayMode;
+  scoreDisplayMode: BootupTimeScoreDisplayMode;
   details?: CacheInsightDetails;
   metricSavings?: CacheInsightMetricSavings;
+  warnings?: any[];
   displayValue?: string;
+  explanation?: string;
 }
 
 export interface CacheInsightDetails {
+  items?: TentacledItem[];
   type: string;
-  items?: FluffyItem[];
-  timestamp?: number;
-  data?: string;
+  headings?: DetailsHeading[];
   timing?: number;
-  headings?: NodeHeading[];
-  chains?: {
-    [key: string]: FluffyChains;
-  };
+  data?: string;
+  timestamp?: number;
   longestChain?: PurpleLongestChain;
+  chains?: PurpleChains;
   debugData?: FluffyDebugData;
-  scale?: number;
   nodes?: NodeElement[];
-  isEntityGrouped?: boolean;
+}
+
+export interface PurpleChains {
+  data: any;
 }
 
 export interface FluffyDebugData {
@@ -241,93 +320,92 @@ export interface FluffyDebugData {
   networkStartTimeTs: number;
 }
 
-export interface FluffyItem {
-  numTasks?: number;
-  numScripts?: number;
-  numStylesheets?: number;
-  numTasksOver50ms?: number;
-  throughput?: number;
-  maxServerLatency?: number;
+export interface TentacledItem {
   mainDocumentTransferSize?: number;
-  totalByteWeight?: number;
-  numTasksOver10ms?: number;
-  numTasksOver25ms?: number;
+  numScripts?: number;
   numFonts?: number;
-  maxRtt?: number;
   numRequests?: number;
+  maxRtt?: number;
+  numTasksOver50ms?: number;
+  numTasksOver10ms?: number;
+  totalTaskTime?: number;
+  throughput?: number;
+  numStylesheets?: number;
+  rtt?: number;
+  numTasksOver25ms?: number;
   numTasksOver500ms?: number;
   numTasksOver100ms?: number;
-  totalTaskTime?: number;
-  rtt?: number;
-  items?: TentacledItem[];
-  type?: ItemType;
-  headings?: NodeHeading[];
-  lhId?: string;
+  maxServerLatency?: number;
+  totalByteWeight?: number;
+  numTasks?: number;
+  statistic?: string;
+  value?: Value;
+  node?: PurpleNode;
+  type?: NodeType;
+  items?: NodeItem[];
+  headings?: DetailsHeading[];
+  score?: number;
+  path?: string;
   snippet?: string;
-  selector?: string;
   nodeLabel?: string;
   boundingRect?: NodeValue;
-  path?: string;
-  duration?: number;
+  selector?: string;
+  lhId?: string;
   startTime?: number;
-  networkRequestTime?: number;
-  mimeType?: string;
+  duration?: number;
+  experimentalFromMainFrame?: boolean;
+  finished?: boolean;
+  url?: string;
+  networkEndTime?: number;
   entity?: Name;
   statusCode?: number;
-  transferSize?: number;
-  finished?: boolean;
-  priority?: Priority;
   resourceSize?: number;
-  networkEndTime?: number;
   sessionTargetType?: SessionTargetType;
-  url?: string;
-  rendererStartTime?: number;
+  mimeType?: string;
   protocol?: Protocol;
-  experimentalFromMainFrame?: boolean;
+  priority?: Priority;
+  networkRequestTime?: number;
+  rendererStartTime?: number;
+  transferSize?: number;
   resourceType?: string;
   isLinkPreload?: boolean;
+  subItems?: FluffySubItems;
   totalBytes?: number;
-  timestamp?: number;
-  data?: string;
-  timing?: number;
-  subItems?: PurpleSubItems;
-  mainThreadTime?: number;
-  timingType?: TimingType;
-  name?: string;
 }
 
 export interface NodeValue {
-  right: number;
-  width: number;
-  top: number;
-  left: number;
-  height: number;
   bottom: number;
+  height: number;
+  left: number;
+  top: number;
+  width: number;
+  right: number;
   id?: string;
 }
 
-export enum Name {
-  GoogleCDN = 'Google CDN',
-  GoogleCOM = 'google.com',
-  GoogleFonts = 'Google Fonts',
-  OtherGoogleAPIsSDKs = 'Other Google APIs/SDKs',
+export interface NodeItem {
+  duration: number;
+  label: string;
+  phase: string;
 }
 
-export interface TentacledItem {
-  source?: Source;
-  reflowTime?: number;
-  duration?: number;
-  phase?: string;
-  label?: string;
-}
-
-export interface Source {
-  line?: number;
-  column?: number;
-  type: ValueTypeEnum;
-  urlProvider?: string;
-  url?: string;
+export interface PurpleNode {
   value?: string;
+  type: NodeType;
+  nodeLabel?: string;
+  snippet?: string;
+  selector?: string;
+  boundingRect?: NodeValue;
+  path?: string;
+  lhId?: string;
+  headings?: DetailsHeading[];
+  items?: NodeItem[];
+}
+
+export enum NodeType {
+  Node = 'node',
+  Table = 'table',
+  Text = 'text',
 }
 
 export enum Priority {
@@ -347,26 +425,20 @@ export enum SessionTargetType {
   Page = 'page',
 }
 
-export interface PurpleSubItems {
-  items: StickyItem[];
+export interface FluffySubItems {
   type: string;
+  items: StickyItem[];
 }
 
 export interface StickyItem {
-  transferSize: number;
-  mainThreadTime: number;
-  url: string;
+  animation: string;
+  failureReason: string;
 }
 
-export enum TimingType {
-  Mark = 'Mark',
-  Measure = 'Measure',
-}
-
-export enum ItemType {
-  Node = 'node',
-  Table = 'table',
-  Text = 'text',
+export interface Value {
+  type: ScoreDisplayMode;
+  value: number;
+  granularity: number;
 }
 
 export interface PurpleLongestChain {
@@ -374,9 +446,9 @@ export interface PurpleLongestChain {
 }
 
 export interface NodeElement {
-  children?: ChildElement[];
   resourceBytes: number;
   encodedBytes: number;
+  children?: ChildElement[];
   unusedBytes: number;
   name: string;
 }
@@ -388,8 +460,9 @@ export interface ChildElement {
 }
 
 export interface CacheInsightMetricSavings {
-  LCP?: number;
+  INP?: number;
   CLS?: number;
+  LCP?: number;
 }
 
 export interface ClsCulpritsInsight {
@@ -397,7 +470,7 @@ export interface ClsCulpritsInsight {
   title: string;
   description: string;
   score: number;
-  scoreDisplayMode: ScoreDisplayMode;
+  scoreDisplayMode: BootupTimeScoreDisplayMode;
   metricSavings: ClsCulpritsInsightMetricSavings;
   details: ClsCulpritsInsightDetails;
 }
@@ -408,56 +481,58 @@ export interface ClsCulpritsInsightDetails {
 }
 
 export interface IndigoItem {
-  headings: PurpleHeading[];
-  type: string;
+  type: PurpleType;
   items: IndecentItem[];
+  headings: PurpleHeading[];
   overallSavingsMs?: number;
   isEntityGrouped?: boolean;
 }
 
 export interface PurpleHeading {
+  valueType: ScoreDisplayMode;
+  key: string;
   label?: string;
-  valueType: ValueTypeEnum;
-  key: null | string;
   subItemsHeading?: SubItemsHeading;
   granularity?: number;
 }
 
 export interface IndecentItem {
-  node?: PurpleNode;
   score?: number;
+  node?: PurpleNode;
   requestCount?: number;
-  transferSize?: number;
   resourceType?: string;
+  transferSize?: number;
   label?: string;
   url?: string;
   responseTime?: number;
-  subItems?: PurpleSubItems;
   mainThreadTime?: number;
+  subItems?: TentacledSubItems;
   entity?: Name;
-  startTime?: number;
-  timingType?: TimingType;
   duration?: number;
+  timingType?: TimingType;
   name?: string;
+  startTime?: number;
 }
 
-export interface PurpleNode {
-  value?: string;
-  type: ItemType;
-  boundingRect?: NodeValue;
-  lhId?: string;
-  path?: string;
-  selector?: string;
-  nodeLabel?: string;
-  snippet?: string;
-  items?: NodeItem[];
-  headings?: NodeHeading[];
+export interface TentacledSubItems {
+  items: HilariousItem[];
+  type: string;
 }
 
-export interface NodeItem {
-  duration: number;
-  phase: string;
-  label: string;
+export interface HilariousItem {
+  transferSize: number;
+  url: string;
+  mainThreadTime: number;
+}
+
+export enum TimingType {
+  Mark = 'Mark',
+  Measure = 'Measure',
+}
+
+export enum PurpleType {
+  Opportunity = 'opportunity',
+  Table = 'table',
 }
 
 export interface ClsCulpritsInsightMetricSavings {
@@ -468,42 +543,43 @@ export interface CriticalRequestChains {
   id: string;
   title: string;
   description: string;
-  score: number;
-  scoreDisplayMode: ScoreDisplayMode;
+  score: number | null;
+  scoreDisplayMode: BootupTimeScoreDisplayMode;
   displayValue?: string;
   details?: CriticalRequestChainsDetails;
   numericValue?: number;
-  numericUnit?: string;
-  metricSavings?: BootupTimeMetricSavings;
-  warnings?: any[];
+  numericUnit?: NumericUnit;
+  metricSavings?: CriticalRequestChainsMetricSavings;
 }
 
 export interface CriticalRequestChainsDetails {
+  longestChain?: FluffyLongestChain;
   chains?: FluffyChains;
   type: string;
-  longestChain?: FluffyLongestChain;
-  items?: HilariousItem[];
-  headings?: NodeHeading[];
+  items?: AmbitiousItem[];
   sortedBy?: string[];
+  headings?: DetailsHeading[];
   overallSavingsMs?: number;
+  scale?: number;
+  isEntityGrouped?: boolean;
   debugData?: TentacledDebugData;
   overallSavingsBytes?: number;
 }
 
 export interface FluffyChains {
-  '03C004885528E14E5B0147E842D4B116': The03C004885528E14E5B0147E842D4B116;
+  A1F35AD1494B1CFCE0C4C7493A3B1FCA: A1F35Ad1494B1Cfce0C4C7493A3B1Fca;
 }
 
-export interface The03C004885528E14E5B0147E842D4B116 {
+export interface A1F35Ad1494B1Cfce0C4C7493A3B1Fca {
   request: Request;
   children: Children;
 }
 
 export interface Children {
-  '03C004885528E14E5B0147E842D4B116:redirect': The03C004885528E14E5B0147E842D4B116Redirect;
+  'A1F35AD1494B1CFCE0C4C7493A3B1FCA:redirect': A1F35AD1494B1CFCE0C4C7493A3B1FCARedirect;
 }
 
-export interface The03C004885528E14E5B0147E842D4B116Redirect {
+export interface A1F35AD1494B1CFCE0C4C7493A3B1FCARedirect {
   request: Request;
   children: { [key: string]: ChildValue };
 }
@@ -513,11 +589,11 @@ export interface ChildValue {
 }
 
 export interface Request {
-  responseReceivedTime: number;
-  transferSize: number;
-  url: string;
-  endTime: number;
   startTime: number;
+  url: string;
+  transferSize: number;
+  responseReceivedTime: number;
+  endTime: number;
 }
 
 export interface TentacledDebugData {
@@ -530,32 +606,50 @@ export interface DebugDataMetricSavings {
   FCP: number;
 }
 
-export interface HilariousItem {
-  items?: AmbitiousItem[];
-  type?: ItemType;
-  headings?: NodeHeading[];
-  group?: string;
-  duration?: number;
+export interface AmbitiousItem {
+  type?: NodeType;
+  headings?: DetailsHeading[];
+  items?: CunningItem[];
   groupLabel?: string;
-  origin?: string;
+  duration?: number;
+  group?: string;
   serverResponseTime?: number;
-  wastedBytes?: number;
-  totalBytes?: number;
-  wastedPercent?: number;
+  origin?: string;
   url?: string;
+  wastedMs?: number;
+  requestCount?: number;
+  resourceType?: string;
+  transferSize?: number;
+  label?: string;
+  timing?: number;
+  timestamp?: number;
+  data?: string;
+  mainThreadTime?: number;
+  subItems?: TentacledSubItems;
+  entity?: Name;
+  wastedPercent?: number;
+  totalBytes?: number;
+  wastedBytes?: number;
 }
 
-export interface AmbitiousItem {
+export interface CunningItem {
   node?: PurpleNode;
-  timing?: number;
   percent?: string;
+  timing?: number;
   phase?: string;
 }
 
 export interface FluffyLongestChain {
+  duration: number;
   length: number;
   transferSize: number;
-  duration: number;
+}
+
+export interface CriticalRequestChainsMetricSavings {
+  LCP?: number;
+  TBT?: number;
+  FCP?: number;
+  CLS?: number;
 }
 
 export interface CumulativeLayoutShift {
@@ -564,66 +658,21 @@ export interface CumulativeLayoutShift {
   description: string;
   score: number;
   scoreDisplayMode: ScoreDisplayMode;
-  displayValue?: string;
+  displayValue: string;
   details?: CumulativeLayoutShiftDetails;
   numericValue: number;
   numericUnit: string;
-  metricSavings?: DebugDataMetricSavings;
 }
 
 export interface CumulativeLayoutShiftDetails {
-  type: string;
-  items: CunningItem[];
-  headings?: NodeHeading[];
-  overallSavingsMs?: number;
-  debugData?: TentacledDebugData;
-  overallSavingsBytes?: number;
-  sortedBy?: string[];
+  items: MagentaItem[];
+  type: DebugDataType;
 }
 
-export interface CunningItem {
-  newEngineResult?: NewEngineResult;
-  newEngineResultDiffered?: boolean;
-  cumulativeLayoutShiftMainFrame?: number;
-  observedTraceEnd?: number;
-  firstContentfulPaint?: number;
-  observedLastVisualChangeTs?: number;
-  observedFirstPaint?: number;
-  observedSpeedIndex?: number;
-  observedLargestContentfulPaintAllFrames?: number;
-  observedLoad?: number;
-  observedNavigationStart?: number;
-  observedLargestContentfulPaint?: number;
-  observedCumulativeLayoutShiftMainFrame?: number;
-  maxPotentialFID?: number;
-  observedFirstContentfulPaintTs?: number;
-  largestContentfulPaint?: number;
-  observedNavigationStartTs?: number;
-  observedDomContentLoadedTs?: number;
-  observedLoadTs?: number;
-  observedSpeedIndexTs?: number;
-  observedDomContentLoaded?: number;
-  observedLastVisualChange?: number;
-  observedCumulativeLayoutShift?: number;
-  timeToFirstByte?: number;
-  speedIndex?: number;
-  observedTraceEndTs?: number;
-  observedFirstContentfulPaint?: number;
-  observedTimeOriginTs?: number;
-  observedFirstVisualChange?: number;
-  observedLargestContentfulPaintTs?: number;
-  observedFirstContentfulPaintAllFramesTs?: number;
-  observedFirstPaintTs?: number;
-  cumulativeLayoutShift?: number;
-  observedTimeOrigin?: number;
-  observedFirstVisualChangeTs?: number;
-  observedFirstContentfulPaintAllFrames?: number;
-  interactive?: number;
-  observedLargestContentfulPaintAllFramesTs?: number;
-  totalBlockingTime?: number;
-  lcpInvalidated?: boolean;
-  wastedMs?: number;
-  url?: string;
+export interface MagentaItem {
+  newEngineResult: NewEngineResult;
+  newEngineResultDiffered: boolean;
+  cumulativeLayoutShiftMainFrame: number;
 }
 
 export interface NewEngineResult {
@@ -636,14 +685,14 @@ export interface DocumentLatencyInsight {
   title: string;
   description: string;
   score: number;
-  scoreDisplayMode: ScoreDisplayMode;
+  scoreDisplayMode: BootupTimeScoreDisplayMode;
   metricSavings: DebugDataMetricSavings;
   details: DocumentLatencyInsightDetails;
 }
 
 export interface DocumentLatencyInsightDetails {
-  items: Items;
   type: string;
+  items: Items;
 }
 
 export interface Items {
@@ -662,97 +711,41 @@ export interface DOMSize {
   title: string;
   description: string;
   score: number;
-  scoreDisplayMode: ScoreDisplayMode;
-  displayValue: string;
+  scoreDisplayMode: BootupTimeScoreDisplayMode;
+  displayValue?: string;
   metricSavings?: DOMSizeMetricSavings;
   details?: DOMSizeDetails;
-  numericValue: number;
-  numericUnit: string;
+  numericValue?: number;
+  numericUnit?: string;
+  warnings?: any[];
 }
 
 export interface DOMSizeDetails {
-  headings: NodeHeading[];
-  type: ItemType;
-  items: MagentaItem[];
-}
-
-export interface MagentaItem {
-  value: Value;
-  statistic: string;
-  node?: PurpleNode;
-}
-
-export interface Value {
-  value: number;
-  type: ValueTypeEnum;
-  granularity: number;
-}
-
-export interface DOMSizeMetricSavings {
-  TBT: number;
-}
-
-export interface DOMSizeInsight {
-  id: string;
-  title: string;
-  description: string;
-  score: number | null;
-  scoreDisplayMode: ScoreDisplayMode;
-  metricSavings?: DOMSizeInsightMetricSavings;
-  details?: DOMSizeInsightDetails;
-  warnings?: any[];
-  displayValue?: string;
-  explanation?: string;
-}
-
-export interface DOMSizeInsightDetails {
-  type: ItemType;
+  headings: DetailsHeading[];
+  type: PurpleType;
   items: FriskyItem[];
-  headings: PurpleHeading[];
-  summary?: FluffySummary;
-  isEntityGrouped?: boolean;
+  sortedBy?: string[];
+  overallSavingsBytes?: number;
+  overallSavingsMs?: number;
+  debugData?: TentacledDebugData;
 }
 
 export interface FriskyItem {
-  value?: Value;
   statistic?: string;
+  value?: Value;
   node?: PurpleNode;
-  score?: number;
-  subItems?: FluffySubItems;
-  requestCount?: number;
-  transferSize?: number;
-  resourceType?: string;
-  label?: string;
-  entity?: Name;
-  tbtImpact?: number;
-  mainThreadTime?: number;
-  blockingTime?: number;
-}
-
-export interface FluffySubItems {
-  items: MischievousItem[];
-  type: string;
-}
-
-export interface MischievousItem {
-  animation?: string;
-  failureReason?: string;
   url?: string;
-  tbtImpact?: number;
-  transferSize?: number;
-  blockingTime?: number;
-  mainThreadTime?: number;
+  totalBytes?: number;
+  duration?: number;
+  timingType?: TimingType;
+  name?: string;
+  startTime?: number;
 }
 
-export interface FluffySummary {
-  wastedMs: number;
-  wastedBytes: number;
-}
-
-export interface DOMSizeInsightMetricSavings {
-  INP?: number;
-  CLS?: number;
+export interface DOMSizeMetricSavings {
   TBT?: number;
+  LCP?: number;
+  FCP?: number;
 }
 
 export interface DuplicatedJavascript {
@@ -760,28 +753,30 @@ export interface DuplicatedJavascript {
   title: string;
   description: string;
   score: number;
-  scoreDisplayMode: ScoreDisplayMode;
+  scoreDisplayMode: BootupTimeScoreDisplayMode;
   metricSavings?: DebugDataMetricSavings;
   details?: DuplicatedJavascriptDetails;
   numericValue: number;
-  numericUnit: string;
+  numericUnit: NumericUnit;
   warnings?: any[];
   displayValue?: string;
 }
 
 export interface DuplicatedJavascriptDetails {
+  sortedBy?: string[];
+  items: MischievousItem[];
   overallSavingsMs?: number;
-  type: string;
+  type: PurpleType;
   overallSavingsBytes?: number;
-  headings: NodeHeading[];
   debugData?: TentacledDebugData;
-  items: BraggadociousItem[];
-  sortedBy: string[];
+  headings: DetailsHeading[];
 }
 
-export interface BraggadociousItem {
-  totalBytes: number;
-  url: string;
+export interface MischievousItem {
+  origin?: string;
+  rtt?: number;
+  url?: string;
+  responseTime?: number;
 }
 
 export interface UsesRelPreconnect {
@@ -789,32 +784,37 @@ export interface UsesRelPreconnect {
   title: string;
   description: string;
   score: number;
-  scoreDisplayMode: ScoreDisplayMode;
+  scoreDisplayMode: BootupTimeScoreDisplayMode;
   metricSavings: DebugDataMetricSavings;
   details: UsesRelPreconnectDetails;
   warnings: any[];
   numericValue: number;
-  numericUnit: string;
+  numericUnit: NumericUnit;
 }
 
 export interface UsesRelPreconnectDetails {
-  items: Item1[];
-  summary?: PurpleSummary;
-  type: string;
+  items: BraggadociousItem[];
+  summary?: FluffySummary;
+  type: PurpleType;
   sortedBy: string[];
-  headings: NodeHeading[];
+  headings: DetailsHeading[];
   overallSavingsMs?: number;
 }
 
-export interface Item1 {
-  total: number;
+export interface BraggadociousItem {
   scriptParseCompile: number;
   scripting: number;
   url: string;
+  total: number;
+}
+
+export interface FluffySummary {
+  wastedMs: number;
 }
 
 export interface Categories {
   performance: Performance;
+  seo: SEO;
 }
 
 export interface Performance {
@@ -827,7 +827,7 @@ export interface Performance {
 export interface AuditRef {
   id: string;
   weight: number;
-  group: Group;
+  group?: Group;
   acronym?: string;
 }
 
@@ -835,27 +835,38 @@ export enum Group {
   Diagnostics = 'diagnostics',
   Hidden = 'hidden',
   Metrics = 'metrics',
+  SEOContent = 'seo-content',
+  SEOCrawl = 'seo-crawl',
+}
+
+export interface SEO {
+  id: string;
+  title: string;
+  description: string;
+  score: number;
+  manualDescription: string;
+  auditRefs: AuditRef[];
 }
 
 export interface CategoryGroups {
-  diagnostics: A11YAria;
-  'seo-mobile': A11YAria;
   'a11y-color-contrast': A11YAria;
-  metrics: BestPracticesBrowserCompat;
-  'a11y-language': A11YAria;
-  'a11y-tables-lists': A11YAria;
-  'a11y-names-labels': A11YAria;
-  'a11y-aria': A11YAria;
-  'a11y-navigation': A11YAria;
-  'seo-crawl': A11YAria;
-  'best-practices-browser-compat': BestPracticesBrowserCompat;
   'best-practices-trust-safety': BestPracticesBrowserCompat;
-  insights: A11YAria;
-  'best-practices-general': BestPracticesBrowserCompat;
-  'best-practices-ux': BestPracticesBrowserCompat;
-  'a11y-audio-video': A11YAria;
-  'seo-content': A11YAria;
+  'a11y-navigation': A11YAria;
+  'a11y-aria': A11YAria;
   'a11y-best-practices': A11YAria;
+  'a11y-tables-lists': A11YAria;
+  'best-practices-ux': BestPracticesBrowserCompat;
+  'seo-mobile': A11YAria;
+  'a11y-names-labels': A11YAria;
+  'seo-content': A11YAria;
+  'best-practices-browser-compat': BestPracticesBrowserCompat;
+  'seo-crawl': A11YAria;
+  'a11y-language': A11YAria;
+  'best-practices-general': BestPracticesBrowserCompat;
+  diagnostics: A11YAria;
+  'a11y-audio-video': A11YAria;
+  metrics: BestPracticesBrowserCompat;
+  insights: A11YAria;
 }
 
 export interface A11YAria {
@@ -888,6 +899,11 @@ export interface Environment {
   networkUserAgent: string;
   hostUserAgent: string;
   benchmarkIndex: number;
+  credits: Credits;
+}
+
+export interface Credits {
+  'axe-core': string;
 }
 
 export interface FullPageScreenshot {
@@ -896,9 +912,9 @@ export interface FullPageScreenshot {
 }
 
 export interface Screenshot {
-  data: string;
   height: number;
   width: number;
+  data: string;
 }
 
 export interface I18N {
