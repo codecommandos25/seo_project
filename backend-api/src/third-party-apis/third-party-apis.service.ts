@@ -1,4 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
+import { BacklinksAnchorsDto } from './dto/backlinks_anchors.dto';
+import { BacklinksDomainsDto } from './dto/backlinks_domains.dto';
 import { CompetitorsDomainDto } from './dto/competitors_domain.dto';
 import { DomainAnalyticsDto } from './dto/domain_analytics.dto';
 import { PageInsightsDto } from './dto/page_insights.dto';
@@ -111,6 +113,28 @@ export class ThirdPartyApisService {
   async get_traffic_data_graph(payload: TrafficGraphDto[]) {
     try {
       const url = `https://api.dataforseo.com/v3/dataforseo_labs/google/historical_bulk_traffic_estimation/live`;
+      return await this.api_request(url, {
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async get_backlinks_domains(payload: BacklinksDomainsDto[]) {
+    try {
+      const url = `https://sandbox.dataforseo.com/v3/backlinks/referring_domains/live`;
+      return await this.api_request(url, {
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async get_backlinks_anchors(payload: BacklinksAnchorsDto[]) {
+    try {
+      const url = `https://sandbox.dataforseo.com/v3/backlinks/anchors/live`;
       return await this.api_request(url, {
         body: JSON.stringify(payload),
       });

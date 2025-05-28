@@ -1,10 +1,13 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
+import { BacklinksAnchorsDto } from './dto/backlinks_anchors.dto';
+import { BacklinksDomainsDto } from './dto/backlinks_domains.dto';
 import { CompetitorsDomainDto } from './dto/competitors_domain.dto';
 import { DomainAnalyticsDto } from './dto/domain_analytics.dto';
 import { PageInsightsDto } from './dto/page_insights.dto';
 import { RankedKeywordsDto } from './dto/ranked_keywords.dto';
 import { TrafficGraphDto } from './dto/traffic_by_time.dto';
+import { BacklinksAnchorsResponse } from './models/backlinks_anchors.response';
 import { CompetitorsDomainResponse } from './models/competitors_domain.response';
 import { DomainAnalyticsResponse } from './models/domain_analytics.response';
 import { PageInsightsCustomResponse } from './models/page_insights.response';
@@ -54,5 +57,21 @@ export class ThirdPartyApisController {
     @Body() payload: TrafficGraphDto[],
   ): Promise<TrafficGraphResponse> {
     return await this.thirdPartyApisService.get_traffic_data_graph(payload);
+  }
+
+  @Post('get_backlinks_domains')
+  @ApiBody({ type: [BacklinksDomainsDto] })
+  async get_backlinks_domains(
+    @Body() payload: BacklinksDomainsDto[],
+  ): Promise<BacklinksDomainsDto> {
+    return await this.thirdPartyApisService.get_backlinks_domains(payload);
+  }
+
+  @Post('get_backlinks_anchors')
+  @ApiBody({ type: [BacklinksAnchorsDto] })
+  async get_backlinks_anchors(
+    @Body() payload: BacklinksAnchorsDto[],
+  ): Promise<BacklinksAnchorsResponse> {
+    return await this.thirdPartyApisService.get_backlinks_anchors(payload);
   }
 }
