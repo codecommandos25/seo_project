@@ -112,7 +112,7 @@ export class ThirdPartyApisService {
 
   async get_traffic_data_graph(payload: TrafficGraphDto[]) {
     try {
-      const url = `https://api.dataforseo.com/v3/dataforseo_labs/google/historical_bulk_traffic_estimation/live`;
+      const url = `https://sandbox.dataforseo.com/v3/dataforseo_labs/google/historical_bulk_traffic_estimation/live`;
       return await this.api_request(url, {
         body: JSON.stringify(payload),
       });
