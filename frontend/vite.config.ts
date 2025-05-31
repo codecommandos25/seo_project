@@ -15,4 +15,18 @@ export default defineConfig({
       '@tabler/icons-react': '@tabler/icons-react/dist/esm/icons/index.mjs',
     },
   },
+
+  server: {
+    proxy: {
+      '/api/dataforseo': {
+        target: 'https://sandbox.dataforseo.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/dataforseo/, ''),
+        // headers: {
+        //   // Add your authentication headers here
+        //   'Authorization': 'Basic ' + btoa('your-email:your-password')
+        // }
+      },
+    },
+  },
 })

@@ -13,6 +13,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion"
+import { useGetPageInsights } from "@/service/seo"
 
 // This is a simple radial progress component
 function RadialProgress({ value, label, icon, color }: { value: number, label: string, icon: React.ReactNode, color: string }) {
@@ -55,12 +56,21 @@ function RadialProgress({ value, label, icon, color }: { value: number, label: s
 
 export function SpeedSection() {
     // Sample data - replace with actual data
+    const { data,isSuccess } = useGetPageInsights({url:"https://google.com"},{
+        onSuccess(data) {
+            console.log("web data",data)
+        },
+    });
     const performanceData = {
         performanceScore: 76,
         loadTime: 2.4, // seconds
         pageSize: 1.2, // MB
         requests: 45,
     }
+    if(isSuccess){
+            console.log("web data",data)
+    }
+
 
     const issues = [
         {
@@ -79,6 +89,19 @@ export function SpeedSection() {
             solution: "Consider using a CDN, optimizing your database queries, and implementing server-side caching."
         }
     ]
+
+    function convertPageSizeToMB(pageSizeString: string): string {
+  // Extract the numeric value from the string
+  const sizeMatch = pageSizeString.match(/\d+/);
+  if (!sizeMatch) return '0 MB';
+
+  // Convert KiB to MB (1 KiB = 0.0009765625 MB)
+  const sizeInKiB = parseFloat(sizeMatch[0]);
+  const sizeInMB = sizeInKiB * 0.0009765625;
+
+  // Format to 2 decimal places
+  return `Total size was ${sizeInMB.toFixed(2)} MB`;
+}
 
     return (
         <Card>
@@ -113,22 +136,23 @@ export function SpeedSection() {
                             />
 
                             <RadialProgress
-                                value={Math.min(100, Math.max(0, 100 - (performanceData.loadTime * 20)))}
-                                label={`Load Time (${performanceData.loadTime}s)`}
+                                // value={Math.min(100, Math.max(0, 100 - (performanceData.loadTime * 20)))}
+                                 value={data?.performanceScore?data?.performanceScore:0}
+                                label={`Load Time (${data?.tti}s)`}
                                 icon={<Clock className="h-5 w-5 text-[hsl(var(--chart-2))]" />}
                                 color="stroke-[hsl(var(--chart-2))]"
                             />
 
                             <RadialProgress
                                 value={Math.min(100, Math.max(0, 100 - (performanceData.pageSize * 30)))}
-                                label={`Page Size (${performanceData.pageSize}MB)`}
+                                label={data?.pageSize?convertPageSizeToMB(data?.pageSize as string):""}
                                 icon={<FileType className="h-5 w-5 text-[hsl(var(--chart-3))]" />}
                                 color="stroke-[hsl(var(--chart-3))]"
                             />
 
                             <RadialProgress
-                                value={Math.min(100, Math.max(0, 100 - performanceData.requests))}
-                                label={`Requests (${performanceData.requests})`}
+                                value={data?.numberOfRequests?Math.min(100, Math.max(0, 100 - data?.numberOfRequests)):0}
+                                label={`Requests (${data?.numberOfRequests})`}
                                 icon={<Database className="h-5 w-5 text-[hsl(var(--chart-4))]" />}
                                 color="stroke-[hsl(var(--chart-4))]"
                             />
@@ -137,7 +161,7 @@ export function SpeedSection() {
 
                     <TabsContent value="issues" className="p-6">
                         <Accordion type="single" collapsible className="w-full">
-                            {issues.map((issue, index) => (
+                            {data?.issues.map((issue, index) => (
                                 <AccordionItem key={index} value={`issue-${index}`}>
                                     <AccordionTrigger className="hover:no-underline">
                                         <div className="flex items-center gap-2">
@@ -148,10 +172,10 @@ export function SpeedSection() {
                                     <AccordionContent>
                                         <div className="pl-6">
                                             <p className="mb-2 text-sm text-muted-foreground">{issue.description}</p>
-                                            <div className="mt-2">
+                                            {/* <div className="mt-2">
                                                 <strong className="text-sm">Solution:</strong>
-                                                <p className="text-sm text-muted-foreground">{issue.solution}</p>
-                                            </div>
+                                                <p className="text-sm text-muted-foreground">{issue.description}</p>
+                                            </div> */}
                                         </div>
                                     </AccordionContent>
                                 </AccordionItem>

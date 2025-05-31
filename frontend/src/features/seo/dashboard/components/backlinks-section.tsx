@@ -7,6 +7,9 @@ import {
 } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useBacklinkDomain, useTopanchor } from "@/service/seo";
+import { useEffect, useState } from "react";
+
 
 
 type AnchorData = {
@@ -48,6 +51,58 @@ const topReferringDomain: ReferringDomain[] = [
 ];
 
 export function BacklinksSection() {
+    const [topanchorData,setTopanchorData]=useState([])
+    const [backlinkData,setBacklinkData]=useState([])
+    const { mutate } = useTopanchor({
+            onSuccess(data:any, variables, context) {
+              console.log('data top', data.data?.tasks[0].result[0].items)
+              setTopanchorData(data.data?.tasks[0].result[0].items)
+            },
+          })
+
+        const { mutate:Backlink } = useBacklinkDomain({
+            onSuccess(data:any, variables, context) {
+              console.log('data back', data.data?.tasks[0].result[0].items)
+              setBacklinkData(data.data?.tasks[0].result[0].items)
+            },
+          })
+
+          useEffect(() => {
+                  mutate([
+    {
+        target: "forbes.com",
+        limit: 4,
+        order_by: [
+            "backlinks,desc"
+        ],
+        filters: [
+            "anchor",
+            "like",
+            "%news%"
+        ]
+    }
+]);
+Backlink([
+    {
+        target: "backlinko.com",
+        limit: 5,
+        order_by: [
+            "rank,desc"
+        ],
+        exclude_internal_backlinks: true,
+        backlinks_filters: [
+            "dofollow",
+            "=",
+            true
+        ],
+        filters: [
+            "backlinks",
+            ">",
+            100
+        ]
+    }
+])
+                }, [])
 
     return (
         <Card>
@@ -85,7 +140,7 @@ export function BacklinksSection() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {topAnchor.map((anchor, index) => (
+                                    {topanchorData.map((anchor:any, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{anchor.anchor}</TableCell>
                                             <TableCell>{anchor.backlinks}</TableCell>
@@ -114,14 +169,17 @@ export function BacklinksSection() {
                                     </TableRow>
                                 </TableHeader>
                                 <TableBody>
-                                    {topReferringDomain.map((domain, index) => (
+                                    {backlinkData.map((domain:any, index) => (
                                         <TableRow key={index}>
                                             <TableCell>{domain.domain}</TableCell>
                                             <TableCell>{domain.backlinks}</TableCell>
-                                            <TableCell>{domain.DA}</TableCell>
-                                            <TableCell>{domain.spam}</TableCell>
+                                            <TableCell>{domain.rank}</TableCell>
+                                            <TableCell>{domain.backlinks_spam_score}%</TableCell>
                                             <TableCell>{domain.dofollow}</TableCell>
-                                            <TableCell>{domain.firstSeen}</TableCell>
+                                            <TableCell>{new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    year: 'numeric'
+  }).format(new Date(domain.first_seen))}</TableCell>
                                             <TableCell>{domain.lastSeen}</TableCell>
                                         </TableRow>
                                     ))}

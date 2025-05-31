@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { useSEOKeywords } from "@/service/seo"
 
 export const description = "An interactive area chart and keyword table"
 
@@ -166,7 +167,13 @@ const tableData = [
 
 export function KeywordSection() {
     const [timeRange, setTimeRange] = React.useState<"1y" | "6m" | "30d">("30d")
-
+    const [keywordsData,setKeyowrdsData]=React.useState([])
+    const { mutate } = useSEOKeywords({
+        onSuccess(data:any, variables, context) {
+          console.log('data', data.data?.tasks[0].result[0].items)
+          setKeyowrdsData(data.data?.tasks[0].result[0].items)
+        },
+      })
     const filteredData = React.useMemo(() => {
         const now = new Date()
         let cutoffDate: Date
@@ -181,6 +188,21 @@ export function KeywordSection() {
 
         return chartData.filter((data) => new Date(data.date) >= cutoffDate)
     }, [timeRange])
+
+    
+    
+      React.useEffect(() => {
+        mutate([
+            {
+        target: "dataforseo.com",
+        language_name: "English",
+        location_name: "United States",
+        include_serp_info: true,
+        load_rank_absolute: true,
+        limit: 3
+    }
+        ])
+      }, [])
 
     return (
         <Card>
@@ -362,15 +384,15 @@ export function KeywordSection() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {tableData.map((row, index) => (
+                                {keywordsData && keywordsData.map((row:any, index) => (
                                     <TableRow key={index}>
-                                        <TableCell>{row.keyword}</TableCell>
-                                        <TableCell>{row.intent}</TableCell>
-                                        <TableCell>{row.searchVolume}</TableCell>
-                                        <TableCell>{row.competition}</TableCell>
-                                        <TableCell>{row.rankingPosition}</TableCell>
-                                        <TableCell>{row.cpc}</TableCell>
-                                        <TableCell>{row.traffic}</TableCell>
+                                        <TableCell>{row.keyword_data.keyword}</TableCell>
+                                        <TableCell>{row.keyword_data.search_intent_info.main_intent}</TableCell>
+                                        <TableCell>{row.keyword_data.keyword_info.search_volume}</TableCell>
+                                        <TableCell>{row.keyword_data.keyword_info.competition}</TableCell>
+                                        <TableCell>{row.ranked_serp_element.serp_item.rank_absolute}</TableCell>
+                                        <TableCell>{row.keyword_data.keyword_info.cpc}</TableCell>
+                                        <TableCell>{row.ranked_serp_element.serp_item.etv}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

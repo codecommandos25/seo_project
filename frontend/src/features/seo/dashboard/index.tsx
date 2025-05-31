@@ -1,18 +1,31 @@
-
+import { useEffect } from 'react'
+import { useSEODetails } from '@/service/seo'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
 import { Search } from '@/components/search'
 import { ThemeSwitch } from '@/components/theme-switch'
-import { Overview } from './components/overview'
-import { TrafficSection } from './components/traffic-section'
-import { KeywordSection } from './components/keyword-section'
-import { CompetitorsSection } from './components/competitors-section'
-import { TrafficDistribution } from './components/traffic-distribution'
 import { BacklinksSection } from './components/backlinks-section'
+import { CompetitorsSection } from './components/competitors-section'
+import { KeywordSection } from './components/keyword-section'
+import { Overview } from './components/overview'
 import { SpeedSection } from './components/speed-section'
+import { TrafficDistribution } from './components/traffic-distribution'
+import { TrafficSection } from './components/traffic-section'
 
 export default function Dashboard() {
+  const { mutate } = useSEODetails({
+    onSuccess(data, variables, context) {
+      console.log('data', data)
+    },
+  })
+
+  useEffect(() => {
+    mutate([{
+      limit: 2,
+      filters: [['registrar', '=', 'geeksforgeeks.org']],
+    }])
+  }, [])
   return (
     <>
       {/* ===== Top Heading ===== */}
@@ -26,7 +39,6 @@ export default function Dashboard() {
 
       {/* ===== Main ===== */}
       <Main className='space-y-4 px-4 py-4'>
-
         <Overview />
         <SpeedSection />
         <TrafficSection />
@@ -71,4 +83,3 @@ export default function Dashboard() {
     </>
   )
 }
-
