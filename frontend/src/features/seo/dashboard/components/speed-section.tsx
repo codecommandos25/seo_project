@@ -14,6 +14,7 @@ import {
     AccordionTrigger,
 } from "@/components/ui/accordion"
 import { useGetPageInsights } from "@/service/seo"
+import { Skeleton } from "@/components/ui/skeleton"
 
 // This is a simple radial progress component
 function RadialProgress({ value, label, icon, color }: { value: number, label: string, icon: React.ReactNode, color: string }) {
@@ -56,7 +57,7 @@ function RadialProgress({ value, label, icon, color }: { value: number, label: s
 
 export function SpeedSection() {
     // Sample data - replace with actual data
-    const { data,isSuccess } = useGetPageInsights({url:"https://google.com"},{
+    const { data,isSuccess,isLoading } = useGetPageInsights({url:"https://google.com"},{
         onSuccess(data) {
             console.log("web data",data)
         },
@@ -127,7 +128,15 @@ export function SpeedSection() {
                     </div>
 
                     <TabsContent value="overview" className="p-6">
-                        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                        {isLoading ?(
+                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                                <Skeleton className="h-[150px]"/>
+                                <Skeleton className="h-[150px]"/>
+                                <Skeleton className="h-[150px]"/>
+                                <Skeleton className="h-[150px]"/>
+                            </div>
+                        ):(
+                            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
                             <RadialProgress
                                 value={performanceData.performanceScore}
                                 label="Performance Score"
@@ -157,11 +166,24 @@ export function SpeedSection() {
                                 color="stroke-[hsl(var(--chart-4))]"
                             />
                         </div>
+                        )}
+                        
                     </TabsContent>
 
                     <TabsContent value="issues" className="p-6">
                         <Accordion type="single" collapsible className="w-full">
-                            {data?.issues.map((issue, index) => (
+                            {isLoading?(
+                                <div className="flex flex-col gap-2">
+                                    <Skeleton className="h-[30px]"/>
+                                    <Skeleton className="h-[30px]"/>
+                                    <Skeleton className="h-[30px]"/>
+                                    <Skeleton className="h-[30px]"/>
+                                    <Skeleton className="h-[30px]"/>
+                                    <Skeleton className="h-[30px]"/>
+                                </div>
+                            ):(
+                                <>
+                                    {data?.issues.map((issue, index) => (
                                 <AccordionItem key={index} value={`issue-${index}`}>
                                     <AccordionTrigger className="hover:no-underline">
                                         <div className="flex items-center gap-2">
@@ -180,6 +202,9 @@ export function SpeedSection() {
                                     </AccordionContent>
                                 </AccordionItem>
                             ))}
+                                </>
+                            )}
+                            
                         </Accordion>
                     </TabsContent>
                 </Tabs>

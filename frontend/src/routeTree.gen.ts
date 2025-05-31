@@ -39,8 +39,26 @@ const AuthenticatedSeoKeywordAnalysisLazyImport = createFileRoute(
 const AuthenticatedSeoBacklinkAnalysisLazyImport = createFileRoute(
   '/_authenticated/seo/backlink-analysis',
 )()
+const AuthenticatedSocialMediaYoutubeIndexLazyImport = createFileRoute(
+  '/_authenticated/social-media/youtube/',
+)()
+const AuthenticatedSocialMediaLinkedinIndexLazyImport = createFileRoute(
+  '/_authenticated/social-media/linkedin/',
+)()
+const AuthenticatedSocialMediaInstagramIndexLazyImport = createFileRoute(
+  '/_authenticated/social-media/instagram/',
+)()
+const AuthenticatedSocialMediaFacebookIndexLazyImport = createFileRoute(
+  '/_authenticated/social-media/facebook/',
+)()
 const AuthenticatedSeoTechnicalAnalysisIndexLazyImport = createFileRoute(
   '/_authenticated/seo/technical-analysis/',
+)()
+const AuthenticatedSeoOnPageIndexLazyImport = createFileRoute(
+  '/_authenticated/seo/on-page/',
+)()
+const AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyImport = createFileRoute(
+  '/_authenticated/seo/technical-analysis/website-speed',
 )()
 const AuthenticatedSeoTechnicalAnalysisCrawledPagesLazyImport = createFileRoute(
   '/_authenticated/seo/technical-analysis/crawled-pages',
@@ -165,6 +183,50 @@ const AuthenticatedSeoBacklinkAnalysisLazyRoute =
     ),
   )
 
+const AuthenticatedSocialMediaYoutubeIndexLazyRoute =
+  AuthenticatedSocialMediaYoutubeIndexLazyImport.update({
+    id: '/social-media/youtube/',
+    path: '/social-media/youtube/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/social-media/youtube/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedSocialMediaLinkedinIndexLazyRoute =
+  AuthenticatedSocialMediaLinkedinIndexLazyImport.update({
+    id: '/social-media/linkedin/',
+    path: '/social-media/linkedin/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/social-media/linkedin/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedSocialMediaInstagramIndexLazyRoute =
+  AuthenticatedSocialMediaInstagramIndexLazyImport.update({
+    id: '/social-media/instagram/',
+    path: '/social-media/instagram/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/social-media/instagram/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedSocialMediaFacebookIndexLazyRoute =
+  AuthenticatedSocialMediaFacebookIndexLazyImport.update({
+    id: '/social-media/facebook/',
+    path: '/social-media/facebook/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/social-media/facebook/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
 const AuthenticatedSeoTechnicalAnalysisIndexLazyRoute =
   AuthenticatedSeoTechnicalAnalysisIndexLazyImport.update({
     id: '/seo/technical-analysis/',
@@ -174,6 +236,28 @@ const AuthenticatedSeoTechnicalAnalysisIndexLazyRoute =
     import('./routes/_authenticated/seo/technical-analysis/index.lazy').then(
       (d) => d.Route,
     ),
+  )
+
+const AuthenticatedSeoOnPageIndexLazyRoute =
+  AuthenticatedSeoOnPageIndexLazyImport.update({
+    id: '/seo/on-page/',
+    path: '/seo/on-page/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import('./routes/_authenticated/seo/on-page/index.lazy').then(
+      (d) => d.Route,
+    ),
+  )
+
+const AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyRoute =
+  AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyImport.update({
+    id: '/seo/technical-analysis/website-speed',
+    path: '/seo/technical-analysis/website-speed',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any).lazy(() =>
+    import(
+      './routes/_authenticated/seo/technical-analysis/website-speed.lazy'
+    ).then((d) => d.Route),
   )
 
 const AuthenticatedSeoTechnicalAnalysisCrawledPagesLazyRoute =
@@ -303,11 +387,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSeoTechnicalAnalysisCrawledPagesLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
+    '/_authenticated/seo/technical-analysis/website-speed': {
+      id: '/_authenticated/seo/technical-analysis/website-speed'
+      path: '/seo/technical-analysis/website-speed'
+      fullPath: '/seo/technical-analysis/website-speed'
+      preLoaderRoute: typeof AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/seo/on-page/': {
+      id: '/_authenticated/seo/on-page/'
+      path: '/seo/on-page'
+      fullPath: '/seo/on-page'
+      preLoaderRoute: typeof AuthenticatedSeoOnPageIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
     '/_authenticated/seo/technical-analysis/': {
       id: '/_authenticated/seo/technical-analysis/'
       path: '/seo/technical-analysis'
       fullPath: '/seo/technical-analysis'
       preLoaderRoute: typeof AuthenticatedSeoTechnicalAnalysisIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/social-media/facebook/': {
+      id: '/_authenticated/social-media/facebook/'
+      path: '/social-media/facebook'
+      fullPath: '/social-media/facebook'
+      preLoaderRoute: typeof AuthenticatedSocialMediaFacebookIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/social-media/instagram/': {
+      id: '/_authenticated/social-media/instagram/'
+      path: '/social-media/instagram'
+      fullPath: '/social-media/instagram'
+      preLoaderRoute: typeof AuthenticatedSocialMediaInstagramIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/social-media/linkedin/': {
+      id: '/_authenticated/social-media/linkedin/'
+      path: '/social-media/linkedin'
+      fullPath: '/social-media/linkedin'
+      preLoaderRoute: typeof AuthenticatedSocialMediaLinkedinIndexLazyImport
+      parentRoute: typeof AuthenticatedRouteImport
+    }
+    '/_authenticated/social-media/youtube/': {
+      id: '/_authenticated/social-media/youtube/'
+      path: '/social-media/youtube'
+      fullPath: '/social-media/youtube'
+      preLoaderRoute: typeof AuthenticatedSocialMediaYoutubeIndexLazyImport
       parentRoute: typeof AuthenticatedRouteImport
     }
   }
@@ -321,7 +447,13 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedSeoKeywordAnalysisLazyRoute: typeof AuthenticatedSeoKeywordAnalysisLazyRoute
   AuthenticatedSeoIndexLazyRoute: typeof AuthenticatedSeoIndexLazyRoute
   AuthenticatedSeoTechnicalAnalysisCrawledPagesLazyRoute: typeof AuthenticatedSeoTechnicalAnalysisCrawledPagesLazyRoute
+  AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyRoute: typeof AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyRoute
+  AuthenticatedSeoOnPageIndexLazyRoute: typeof AuthenticatedSeoOnPageIndexLazyRoute
   AuthenticatedSeoTechnicalAnalysisIndexLazyRoute: typeof AuthenticatedSeoTechnicalAnalysisIndexLazyRoute
+  AuthenticatedSocialMediaFacebookIndexLazyRoute: typeof AuthenticatedSocialMediaFacebookIndexLazyRoute
+  AuthenticatedSocialMediaInstagramIndexLazyRoute: typeof AuthenticatedSocialMediaInstagramIndexLazyRoute
+  AuthenticatedSocialMediaLinkedinIndexLazyRoute: typeof AuthenticatedSocialMediaLinkedinIndexLazyRoute
+  AuthenticatedSocialMediaYoutubeIndexLazyRoute: typeof AuthenticatedSocialMediaYoutubeIndexLazyRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
@@ -333,8 +465,19 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedSeoIndexLazyRoute: AuthenticatedSeoIndexLazyRoute,
   AuthenticatedSeoTechnicalAnalysisCrawledPagesLazyRoute:
     AuthenticatedSeoTechnicalAnalysisCrawledPagesLazyRoute,
+  AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyRoute:
+    AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyRoute,
+  AuthenticatedSeoOnPageIndexLazyRoute: AuthenticatedSeoOnPageIndexLazyRoute,
   AuthenticatedSeoTechnicalAnalysisIndexLazyRoute:
     AuthenticatedSeoTechnicalAnalysisIndexLazyRoute,
+  AuthenticatedSocialMediaFacebookIndexLazyRoute:
+    AuthenticatedSocialMediaFacebookIndexLazyRoute,
+  AuthenticatedSocialMediaInstagramIndexLazyRoute:
+    AuthenticatedSocialMediaInstagramIndexLazyRoute,
+  AuthenticatedSocialMediaLinkedinIndexLazyRoute:
+    AuthenticatedSocialMediaLinkedinIndexLazyRoute,
+  AuthenticatedSocialMediaYoutubeIndexLazyRoute:
+    AuthenticatedSocialMediaYoutubeIndexLazyRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -356,7 +499,13 @@ export interface FileRoutesByFullPath {
   '/seo/keyword-analysis': typeof AuthenticatedSeoKeywordAnalysisLazyRoute
   '/seo': typeof AuthenticatedSeoIndexLazyRoute
   '/seo/technical-analysis/crawled-pages': typeof AuthenticatedSeoTechnicalAnalysisCrawledPagesLazyRoute
+  '/seo/technical-analysis/website-speed': typeof AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyRoute
+  '/seo/on-page': typeof AuthenticatedSeoOnPageIndexLazyRoute
   '/seo/technical-analysis': typeof AuthenticatedSeoTechnicalAnalysisIndexLazyRoute
+  '/social-media/facebook': typeof AuthenticatedSocialMediaFacebookIndexLazyRoute
+  '/social-media/instagram': typeof AuthenticatedSocialMediaInstagramIndexLazyRoute
+  '/social-media/linkedin': typeof AuthenticatedSocialMediaLinkedinIndexLazyRoute
+  '/social-media/youtube': typeof AuthenticatedSocialMediaYoutubeIndexLazyRoute
 }
 
 export interface FileRoutesByTo {
@@ -374,7 +523,13 @@ export interface FileRoutesByTo {
   '/seo/keyword-analysis': typeof AuthenticatedSeoKeywordAnalysisLazyRoute
   '/seo': typeof AuthenticatedSeoIndexLazyRoute
   '/seo/technical-analysis/crawled-pages': typeof AuthenticatedSeoTechnicalAnalysisCrawledPagesLazyRoute
+  '/seo/technical-analysis/website-speed': typeof AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyRoute
+  '/seo/on-page': typeof AuthenticatedSeoOnPageIndexLazyRoute
   '/seo/technical-analysis': typeof AuthenticatedSeoTechnicalAnalysisIndexLazyRoute
+  '/social-media/facebook': typeof AuthenticatedSocialMediaFacebookIndexLazyRoute
+  '/social-media/instagram': typeof AuthenticatedSocialMediaInstagramIndexLazyRoute
+  '/social-media/linkedin': typeof AuthenticatedSocialMediaLinkedinIndexLazyRoute
+  '/social-media/youtube': typeof AuthenticatedSocialMediaYoutubeIndexLazyRoute
 }
 
 export interface FileRoutesById {
@@ -395,7 +550,13 @@ export interface FileRoutesById {
   '/_authenticated/seo/keyword-analysis': typeof AuthenticatedSeoKeywordAnalysisLazyRoute
   '/_authenticated/seo/': typeof AuthenticatedSeoIndexLazyRoute
   '/_authenticated/seo/technical-analysis/crawled-pages': typeof AuthenticatedSeoTechnicalAnalysisCrawledPagesLazyRoute
+  '/_authenticated/seo/technical-analysis/website-speed': typeof AuthenticatedSeoTechnicalAnalysisWebsiteSpeedLazyRoute
+  '/_authenticated/seo/on-page/': typeof AuthenticatedSeoOnPageIndexLazyRoute
   '/_authenticated/seo/technical-analysis/': typeof AuthenticatedSeoTechnicalAnalysisIndexLazyRoute
+  '/_authenticated/social-media/facebook/': typeof AuthenticatedSocialMediaFacebookIndexLazyRoute
+  '/_authenticated/social-media/instagram/': typeof AuthenticatedSocialMediaInstagramIndexLazyRoute
+  '/_authenticated/social-media/linkedin/': typeof AuthenticatedSocialMediaLinkedinIndexLazyRoute
+  '/_authenticated/social-media/youtube/': typeof AuthenticatedSocialMediaYoutubeIndexLazyRoute
 }
 
 export interface FileRouteTypes {
@@ -416,7 +577,13 @@ export interface FileRouteTypes {
     | '/seo/keyword-analysis'
     | '/seo'
     | '/seo/technical-analysis/crawled-pages'
+    | '/seo/technical-analysis/website-speed'
+    | '/seo/on-page'
     | '/seo/technical-analysis'
+    | '/social-media/facebook'
+    | '/social-media/instagram'
+    | '/social-media/linkedin'
+    | '/social-media/youtube'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/500'
@@ -433,7 +600,13 @@ export interface FileRouteTypes {
     | '/seo/keyword-analysis'
     | '/seo'
     | '/seo/technical-analysis/crawled-pages'
+    | '/seo/technical-analysis/website-speed'
+    | '/seo/on-page'
     | '/seo/technical-analysis'
+    | '/social-media/facebook'
+    | '/social-media/instagram'
+    | '/social-media/linkedin'
+    | '/social-media/youtube'
   id:
     | '__root__'
     | '/_authenticated'
@@ -452,7 +625,13 @@ export interface FileRouteTypes {
     | '/_authenticated/seo/keyword-analysis'
     | '/_authenticated/seo/'
     | '/_authenticated/seo/technical-analysis/crawled-pages'
+    | '/_authenticated/seo/technical-analysis/website-speed'
+    | '/_authenticated/seo/on-page/'
     | '/_authenticated/seo/technical-analysis/'
+    | '/_authenticated/social-media/facebook/'
+    | '/_authenticated/social-media/instagram/'
+    | '/_authenticated/social-media/linkedin/'
+    | '/_authenticated/social-media/youtube/'
   fileRoutesById: FileRoutesById
 }
 
@@ -515,7 +694,13 @@ export const routeTree = rootRoute
         "/_authenticated/seo/keyword-analysis",
         "/_authenticated/seo/",
         "/_authenticated/seo/technical-analysis/crawled-pages",
-        "/_authenticated/seo/technical-analysis/"
+        "/_authenticated/seo/technical-analysis/website-speed",
+        "/_authenticated/seo/on-page/",
+        "/_authenticated/seo/technical-analysis/",
+        "/_authenticated/social-media/facebook/",
+        "/_authenticated/social-media/instagram/",
+        "/_authenticated/social-media/linkedin/",
+        "/_authenticated/social-media/youtube/"
       ]
     },
     "/(auth)/500": {
@@ -568,8 +753,32 @@ export const routeTree = rootRoute
       "filePath": "_authenticated/seo/technical-analysis/crawled-pages.lazy.tsx",
       "parent": "/_authenticated"
     },
+    "/_authenticated/seo/technical-analysis/website-speed": {
+      "filePath": "_authenticated/seo/technical-analysis/website-speed.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/seo/on-page/": {
+      "filePath": "_authenticated/seo/on-page/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
     "/_authenticated/seo/technical-analysis/": {
       "filePath": "_authenticated/seo/technical-analysis/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/social-media/facebook/": {
+      "filePath": "_authenticated/social-media/facebook/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/social-media/instagram/": {
+      "filePath": "_authenticated/social-media/instagram/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/social-media/linkedin/": {
+      "filePath": "_authenticated/social-media/linkedin/index.lazy.tsx",
+      "parent": "/_authenticated"
+    },
+    "/_authenticated/social-media/youtube/": {
+      "filePath": "_authenticated/social-media/youtube/index.lazy.tsx",
       "parent": "/_authenticated"
     }
   }

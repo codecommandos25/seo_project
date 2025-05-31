@@ -69,12 +69,43 @@ export const sidebarData: SidebarData = {
             //   title: 'Indexability',
             //   url: '/seo/technical-analysis/indexability',
             // },
-            // {
-            //   title: 'Site Speed',
-            //   url: '/seo/technical-analysis/site-speed',
-            // }
+            {
+              title: 'Website Speed',
+              url: '/seo/technical-analysis/website-speed',
+            }
           ]
         },
+        {
+          title: 'On Page SEO',
+          url: '/seo/on-page',
+          icon: IconTool,
+        }
+      ],
+    },
+    {
+      title: 'Social Media',
+      items: [
+        {
+          title: 'Instagram',
+          icon: IconLayoutDashboard,
+          url: '/social-media/instagram',
+        },
+        {
+          title: 'Facebook',
+          icon: IconLayoutDashboard,
+          url: '/social-media/facebook',
+        },
+        {
+          title: 'LinkedIn',
+          icon: IconLayoutDashboard,
+          url: '/social-media/linkedin'
+        },
+        {
+          title: 'YouTube',
+          icon: IconLayoutDashboard,
+          url: '/social-media/youtube',
+        }
+
       ],
     },
     {
