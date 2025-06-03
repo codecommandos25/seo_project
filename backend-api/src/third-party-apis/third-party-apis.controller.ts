@@ -116,7 +116,7 @@ export class ThirdPartyApisController {
   async get_domain_authority_score(
     @Body() payload: GetDomainAuthorityScoreDto[],
   ): Promise<DomainAuthorityScoreResponse> {
-    return await this.thirdPartyApisService.get_bulk_refering_domain(payload);
+    return await this.thirdPartyApisService.get_domain_authority_score(payload);
   }
 
   @Post('get_compititors_website')
