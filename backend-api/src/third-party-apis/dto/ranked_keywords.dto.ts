@@ -43,4 +43,11 @@ export class RankedKeywordsDto {
   })
   @IsNumber()
   limit: number;
+
+  @ApiProperty({
+    description: 'Offset of results to return',
+    example: 100,
+  })
+  @IsNumber()
+  offset: number;
 }

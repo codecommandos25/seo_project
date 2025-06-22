@@ -46,6 +46,14 @@ export class ThirdPartyApisController {
     return await this.thirdPartyApisService.get_ranked_keywords(payload);
   }
 
+  @Post('ranked_keywords/table')
+  @ApiBody({ type: [RankedKeywordsDto] })
+  async get_ranked_keywords_table(
+    @Body() payload: RankedKeywordsDto[],
+  ): Promise<RankedKeywordsResponse['tasks'][0]['result'][0]['items']> {
+    return await this.thirdPartyApisService.get_ranked_keywords_table(payload);
+  }
+
   @Post('domain_analytics')
   @ApiBody({ type: [DomainAnalyticsDto] })
   async get_domain_analytics(

@@ -17,6 +17,7 @@ import { DomainAuthorityScoreResponse } from './models/get_domain_authority_scor
 import { PageInsightsResponse } from './models/page_insights.response';
 import { GetCompetitorsWebsiteDto } from './dto/get_compititors_website.dto';
 import { CompititorsWebsiteResponse } from './models/get_compititors_website.response';
+import { RankedKeywordsResponse } from './models/ranked_keywords.response';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -57,6 +58,43 @@ export class ThirdPartyApisService {
       return await this.api_request(url, {
         body: JSON.stringify(payload),
       });
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async get_ranked_keywords_table(payload: RankedKeywordsDto[]) {
+    try {
+      const url =
+        'https://sandbox.dataforseo.com/v3/dataforseo_labs/google/ranked_keywords/live';
+
+      const response: RankedKeywordsResponse = await this.api_request(url, {
+        body: JSON.stringify(payload),
+      });
+
+      let data = [];
+
+      response.tasks.map((task) => {
+        task.result.map((result) => {
+          data = [
+            ...data,
+            ...result.items.map((v) => ({
+              keyword: v.keyword_data.keyword,
+              main_intent: v.keyword_data.search_intent_info.main_intent,
+              rank_absolute: v.ranked_serp_element.serp_item.rank_absolute,
+              search_volume: v.keyword_data.keyword_info.search_volume,
+              keyword_difficulty:
+                v.keyword_data.keyword_properties.keyword_difficulty,
+              etv: v.ranked_serp_element.serp_item.etv,
+              cpc: v.keyword_data.keyword_info.cpc,
+              url: v.ranked_serp_element.serp_item.url,
+              last_updated_time: v.keyword_data.keyword_info.last_updated_time,
+            })),
+          ];
+        });
+      });
+
+      return data;
     } catch (error) {
       throw new HttpException(error, 500);
     }
