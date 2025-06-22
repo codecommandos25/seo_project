@@ -18,6 +18,10 @@ import { PageInsightsResponse } from './models/page_insights.response';
 import { GetCompetitorsWebsiteDto } from './dto/get_compititors_website.dto';
 import { CompititorsWebsiteResponse } from './models/get_compititors_website.response';
 import { RankedKeywordsResponse } from './models/ranked_keywords.response';
+import { GetCrawledIdDto } from './dto/get_crawled_id.dto';
+import { GetCrawledPageDataDto } from './dto/get_crawled_page_data.dto';
+import { GetCrawledIdResponse } from './models/get_crawled_id.response';
+import { GetCrawledPageDataResponse } from './models/get_crawled_page_data.response';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -344,6 +348,111 @@ export class ThirdPartyApisService {
       return domains;
     } catch (error) {
       console.log(error);
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async get_crawled_id(
+    payload: GetCrawledIdDto[],
+  ): Promise<GetCrawledIdResponse> {
+    try {
+      const url = `https://sandbox.dataforseo.com/v3/on_page/task_post`;
+      // Add a timeout of 6000 ms to the fetch request
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+
+      try {
+        return await this.api_request(url, {
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timeout);
+      }
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async get_crawled_page_data(
+    payload: GetCrawledPageDataDto[],
+  ): Promise<GetCrawledPageDataResponse> {
+    try {
+      const url = `https://sandbox.dataforseo.com/v3/on_page/pages`;
+      return await this.api_request(url, {
+        body: JSON.stringify(payload),
+      });
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async get_crawled_page_data_table(payload: {
+    target: string;
+    limit: number;
+    offset: number;
+  }) {
+    try {
+      // Add a timeout of 10000 ms to the get_crawled_id request
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+
+      let tasks;
+      try {
+        const result = await this.get_crawled_id([
+          {
+            max_crawl_pages: 6,
+            target: payload.target,
+          },
+        ]);
+        tasks = result.tasks;
+      } finally {
+        clearTimeout(timeout);
+      }
+
+      const crawl_id = tasks.at(0).id;
+
+      const response = await this.get_crawled_page_data([
+        {
+          id: crawl_id,
+          filters: [
+            ['resource_type', '=', 'html'],
+            'and',
+            ['meta.description', 'like', '%OnPage%'],
+          ],
+          limit: payload.limit || 10,
+          offset: payload.offset || 0,
+        },
+      ]);
+
+      let data = [];
+
+      response.tasks.map((task) => {
+        task.result.map((result) => {
+          data = [
+            ...data,
+            ...result.items.map((v) => ({
+              url: v.url,
+              title: v.meta.title,
+              status_code: v.status_code,
+              duration_time: v.page_timing.duration_time,
+              inbound_links_count: v.meta.inbound_links_count,
+              internal_links_count: v.meta.internal_links_count,
+              external_links_count: v.meta.external_links_count,
+              description: v.meta.description,
+              canonical: v.meta.canonical,
+              structured_data: null,
+              fetch_time: v.fetch_time,
+            })),
+          ];
+        });
+      });
+
+      return data;
+    } catch (error) {
+      console.log(error);
+
       throw new HttpException(error, 500);
     }
   }

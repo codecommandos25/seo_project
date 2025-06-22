@@ -24,6 +24,10 @@ import { PageInsightsCustomResponse } from './models/page_insights.response';
 import { RankedKeywordsResponse } from './models/ranked_keywords.response';
 import { TrafficGraphResponse } from './models/traffic_by_time.response';
 import { ThirdPartyApisService } from './third-party-apis.service';
+import { GetCrawledIdDto } from './dto/get_crawled_id.dto';
+import { GetCrawledPageDataDto } from './dto/get_crawled_page_data.dto';
+import { GetCrawledIdResponse } from './models/get_crawled_id.response';
+import { GetCrawledPageDataResponse } from './models/get_crawled_page_data.response';
 
 @ApiTags('Third Party Apis')
 @Controller('third-party-apis')
@@ -132,5 +136,28 @@ export class ThirdPartyApisController {
     @Body() payload: GetCompetitorsWebsiteDto,
   ): Promise<CompititorsWebsiteResponse[]> {
     return await this.thirdPartyApisService.get_compititors_website(payload);
+  }
+
+  @Post('get_crawled_id')
+  async get_crawled_id(
+    @Body() payload: GetCrawledIdDto[],
+  ): Promise<GetCrawledIdResponse> {
+    return await this.thirdPartyApisService.get_crawled_id(payload);
+  }
+
+  @Post('get_crawled_page_data')
+  async get_crawled_page_data(
+    @Body() payload: GetCrawledPageDataDto[],
+  ): Promise<GetCrawledPageDataResponse> {
+    return await this.thirdPartyApisService.get_crawled_page_data(payload);
+  }
+
+  @Post('get_crawled_page_data/table')
+  async get_crawled_page_data_table(
+    @Body() payload: { target: string; limit: number; offset: number },
+  ): Promise<GetCrawledPageDataResponse['tasks'][0]['result'][0]['items']> {
+    return await this.thirdPartyApisService.get_crawled_page_data_table(
+      payload,
+    );
   }
 }
