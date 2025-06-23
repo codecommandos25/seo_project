@@ -28,6 +28,8 @@ import { GetCrawledIdDto } from './dto/get_crawled_id.dto';
 import { GetCrawledPageDataDto } from './dto/get_crawled_page_data.dto';
 import { GetCrawledIdResponse } from './models/get_crawled_id.response';
 import { GetCrawledPageDataResponse } from './models/get_crawled_page_data.response';
+import { BacklinkDetailedDto } from './dto/backlink_detailed.dto';
+import { BacklinkDetailedResponse } from './models/backlink_detailed.response';
 
 @ApiTags('Third Party Apis')
 @Controller('third-party-apis')
@@ -159,5 +161,19 @@ export class ThirdPartyApisController {
     return await this.thirdPartyApisService.get_crawled_page_data_table(
       payload,
     );
+  }
+
+  @Post('backlink-detailed/table')
+  async backlink_detailed_table(
+    @Body() payload: BacklinkDetailedDto[],
+  ): Promise<BacklinkDetailedResponse['tasks'][0]['result'][0]['items']> {
+    return await this.thirdPartyApisService.backlink_detailed_table(payload);
+  }
+
+  @Post('on-page-seo')
+  async on_page_seo(
+    @Body() payload: { target: string; limit: number; offset: number },
+  ): Promise<GetCrawledPageDataResponse['tasks'][0]['result'][0]['items']> {
+    return await this.thirdPartyApisService.on_page_seo(payload);
   }
 }

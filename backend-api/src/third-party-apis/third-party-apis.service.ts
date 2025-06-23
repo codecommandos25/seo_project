@@ -22,6 +22,8 @@ import { GetCrawledIdDto } from './dto/get_crawled_id.dto';
 import { GetCrawledPageDataDto } from './dto/get_crawled_page_data.dto';
 import { GetCrawledIdResponse } from './models/get_crawled_id.response';
 import { GetCrawledPageDataResponse } from './models/get_crawled_page_data.response';
+import { BacklinkDetailedDto } from './dto/backlink_detailed.dto';
+import { BacklinkDetailedResponse } from './models/backlink_detailed.response';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -444,6 +446,115 @@ export class ThirdPartyApisService {
               canonical: v.meta.canonical,
               structured_data: null,
               fetch_time: v.fetch_time,
+            })),
+          ];
+        });
+      });
+
+      return data;
+    } catch (error) {
+      console.log(error);
+
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async backlink_detailed_table(
+    payload: BacklinkDetailedDto[],
+  ): Promise<BacklinkDetailedResponse['tasks'][0]['result'][0]['items']> {
+    try {
+      const url = `https://sandbox.dataforseo.com/v3/backlinks/backlinks/live`;
+      const response: BacklinkDetailedResponse = await this.api_request(url, {
+        body: JSON.stringify(payload),
+      });
+
+      let data = [];
+
+      response.tasks.map((task) => {
+        task.result.map((result) => {
+          data = [
+            ...data,
+            ...result.items.map((v) => ({
+              source_page: v.page_from_title,
+              source_url: v.url_from,
+              target_url: v.url_to_redirect_target,
+              anchor_text: v.anchor,
+              linked_type: v.attributes,
+              external_links: v.page_from_external_links,
+              internal_links: v.page_from_internal_links,
+              domain_authority: v.domain_from_rank,
+              page_authority: v.page_from_rank,
+              status: v.page_from_status_code,
+              first_seen: v.first_seen,
+              last_seen: v.last_seen,
+            })),
+          ];
+        });
+      });
+
+      return data;
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async on_page_seo(payload: {
+    target: string;
+    limit: number;
+    offset: number;
+  }) {
+    try {
+      // Add a timeout of 10000 ms to the get_crawled_id request
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 10000);
+
+      let tasks;
+      try {
+        const result = await this.get_crawled_id([
+          {
+            max_crawl_pages: 6,
+            target: payload.target,
+          },
+        ]);
+        tasks = result.tasks;
+      } finally {
+        clearTimeout(timeout);
+      }
+
+      const crawl_id = tasks.at(0).id;
+
+      const response = await this.get_crawled_page_data([
+        {
+          id: crawl_id,
+          filters: [
+            ['resource_type', '=', 'html'],
+            'and',
+            ['meta.description', 'like', '%OnPage%'],
+          ],
+          limit: payload.limit || 10,
+          offset: payload.offset || 0,
+        },
+      ]);
+
+      let data = [];
+
+      response.tasks.map((task) => {
+        task.result.map((result) => {
+          data = [
+            ...data,
+            ...result.items.map((v) => ({
+              url: v.url,
+              title: v.meta.title,
+              h1: v.meta.htags.h1,
+              description: v.meta.description,
+              plain_text_word_count: v.meta.content.plain_text_word_count,
+              images: v.meta.images_count,
+              internal_links_count: v.meta.internal_links_count,
+              external_links_count: v.meta.external_links_count,
+              h2: v.meta.htags.h2.length,
+              keyword: null,
+              canonical: !!v.meta.canonical,
+              schema: !!v.checks.has_micromarkup,
             })),
           ];
         });
