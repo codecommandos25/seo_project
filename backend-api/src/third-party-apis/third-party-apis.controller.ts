@@ -30,6 +30,7 @@ import { GetCrawledIdResponse } from './models/get_crawled_id.response';
 import { GetCrawledPageDataResponse } from './models/get_crawled_page_data.response';
 import { BacklinkDetailedDto } from './dto/backlink_detailed.dto';
 import { BacklinkDetailedResponse } from './models/backlink_detailed.response';
+import { GetCrawledPageDataTableDto } from './dto/get_crawled_page_data_table.dto';
 
 @ApiTags('Third Party Apis')
 @Controller('third-party-apis')
@@ -141,6 +142,7 @@ export class ThirdPartyApisController {
   }
 
   @Post('get_crawled_id')
+  @ApiBody({ type: [GetCrawledIdDto] })
   async get_crawled_id(
     @Body() payload: GetCrawledIdDto[],
   ): Promise<GetCrawledIdResponse> {
@@ -148,6 +150,7 @@ export class ThirdPartyApisController {
   }
 
   @Post('get_crawled_page_data')
+  @ApiBody({ type: [GetCrawledPageDataDto] })
   async get_crawled_page_data(
     @Body() payload: GetCrawledPageDataDto[],
   ): Promise<GetCrawledPageDataResponse> {
@@ -156,7 +159,7 @@ export class ThirdPartyApisController {
 
   @Post('get_crawled_page_data/table')
   async get_crawled_page_data_table(
-    @Body() payload: { target: string; limit: number; offset: number },
+    @Body() payload: GetCrawledPageDataTableDto,
   ): Promise<GetCrawledPageDataResponse['tasks'][0]['result'][0]['items']> {
     return await this.thirdPartyApisService.get_crawled_page_data_table(
       payload,
@@ -164,6 +167,7 @@ export class ThirdPartyApisController {
   }
 
   @Post('backlink-detailed/table')
+  @ApiBody({ type: [BacklinkDetailedDto] })
   async backlink_detailed_table(
     @Body() payload: BacklinkDetailedDto[],
   ): Promise<BacklinkDetailedResponse['tasks'][0]['result'][0]['items']> {
@@ -172,7 +176,8 @@ export class ThirdPartyApisController {
 
   @Post('on-page-seo')
   async on_page_seo(
-    @Body() payload: { target: string; limit: number; offset: number },
+    @Body()
+    payload: GetCrawledPageDataTableDto,
   ): Promise<GetCrawledPageDataResponse['tasks'][0]['result'][0]['items']> {
     return await this.thirdPartyApisService.on_page_seo(payload);
   }
