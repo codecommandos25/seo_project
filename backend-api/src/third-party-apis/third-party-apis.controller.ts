@@ -31,6 +31,8 @@ import { GetCrawledPageDataResponse } from './models/get_crawled_page_data.respo
 import { BacklinkDetailedDto } from './dto/backlink_detailed.dto';
 import { BacklinkDetailedResponse } from './models/backlink_detailed.response';
 import { GetCrawledPageDataTableDto } from './dto/get_crawled_page_data_table.dto';
+import { WebsiteSpeedDto } from './dto/website_speed.dto';
+import { WebsiteSpeedResponse } from './models/website_speed.response';
 
 @ApiTags('Third Party Apis')
 @Controller('third-party-apis')
@@ -180,5 +182,14 @@ export class ThirdPartyApisController {
     payload: GetCrawledPageDataTableDto,
   ): Promise<GetCrawledPageDataResponse['tasks'][0]['result'][0]['items']> {
     return await this.thirdPartyApisService.on_page_seo(payload);
+  }
+
+  @Post('website-speed')
+  @ApiBody({ type: [WebsiteSpeedDto] })
+  async website_speed(
+    @Body()
+    payload: WebsiteSpeedDto[],
+  ): Promise<WebsiteSpeedResponse['tasks'][0]['result']> {
+    return await this.thirdPartyApisService.website_speed(payload);
   }
 }

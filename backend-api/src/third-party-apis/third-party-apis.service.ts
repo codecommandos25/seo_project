@@ -24,6 +24,8 @@ import { GetCrawledIdResponse } from './models/get_crawled_id.response';
 import { GetCrawledPageDataResponse } from './models/get_crawled_page_data.response';
 import { BacklinkDetailedDto } from './dto/backlink_detailed.dto';
 import { BacklinkDetailedResponse } from './models/backlink_detailed.response';
+import { WebsiteSpeedResponse } from './models/website_speed.response';
+import { WebsiteSpeedDto } from './dto/website_speed.dto';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -564,6 +566,43 @@ export class ThirdPartyApisService {
     } catch (error) {
       console.log(error);
 
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async website_speed(
+    payload: WebsiteSpeedDto[],
+  ): Promise<WebsiteSpeedResponse['tasks'][0]['result']> {
+    try {
+      const url = `https://sandbox.dataforseo.com/v3/on_page/lighthouse/live/json`;
+      const response: WebsiteSpeedResponse = await this.api_request(url, {
+        body: JSON.stringify(payload),
+      });
+
+      let data = [];
+
+      response.tasks.map((task) => {
+        task.result.map((result) => {
+          data = [
+            ...data,
+            {
+              performance_score: result.categories.performance.score * 100,
+              load_time: result.audits['server-response-time'].numericValue,
+              page_size: result.audits['total-byte-weight'].numericValue,
+              request: result.audits['network-requests'].details.items.length,
+              full_ttfb: result.audits['server-response-time'].numericValue,
+              fcp: result.audits['first-contentful-paint'].numericValue,
+              lcp: result.audits['largest-contentful-paint'].numericValue,
+              speed_index: result.audits['speed-index'].numericValue,
+              tbt: result.audits['total-blocking-time'].numericValue,
+              page_weight: result.audits['total-byte-weight'].numericValue,
+            },
+          ];
+        });
+      });
+
+      return data;
+    } catch (error) {
       throw new HttpException(error, 500);
     }
   }
