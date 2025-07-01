@@ -576,30 +576,49 @@ export class ThirdPartyApisService {
     payload: WebsiteSpeedDto[],
   ): Promise<WebsiteSpeedResponse['tasks'][0]['result']> {
     try {
+      // Add a timeout to handle ETIMEDOUT errors
       const url = `https://sandbox.dataforseo.com/v3/on_page/lighthouse/live/json`;
-      const response: WebsiteSpeedResponse = await this.api_request(url, {
-        body: JSON.stringify(payload),
-      });
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 15000); // 15 seconds timeout
 
-      let data = [];
+      let response: WebsiteSpeedResponse;
+      try {
+        response = await this.api_request(url, {
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        });
+      } finally {
+        clearTimeout(timeout);
+      }
+
+      let data: any = {};
 
       response.tasks.map((task) => {
         task.result.map((result) => {
-          data = [
-            ...data,
-            {
-              performance_score: result.categories.performance.score * 100,
-              load_time: result.audits['server-response-time'].numericValue,
-              page_size: result.audits['total-byte-weight'].numericValue,
-              request: result.audits['network-requests'].details.items.length,
-              full_ttfb: result.audits['server-response-time'].numericValue,
-              fcp: result.audits['first-contentful-paint'].numericValue,
-              lcp: result.audits['largest-contentful-paint'].numericValue,
-              speed_index: result.audits['speed-index'].numericValue,
-              tbt: result.audits['total-blocking-time'].numericValue,
-              page_weight: result.audits['total-byte-weight'].numericValue,
-            },
-          ];
+          const audits = result.audits;
+          const improvementSuggestions = Object.values(audits)
+            .filter((audit) => audit.score !== null && audit.score < 1)
+            .map((audit) => ({
+              id: audit.id,
+              title: audit.title,
+              description: audit.description || '',
+              score: audit.score !== null ? audit.score : null,
+              scoreDisplayMode: audit.scoreDisplayMode,
+            }));
+
+          data = {
+            performance_score: result.categories.performance.score * 100,
+            load_time: result.audits['server-response-time'].numericValue,
+            page_size: result.audits['total-byte-weight'].numericValue,
+            request: result.audits['network-requests'].details.items.length,
+            full_ttfb: result.audits['server-response-time'].numericValue,
+            fcp: result.audits['first-contentful-paint'].numericValue,
+            lcp: result.audits['largest-contentful-paint'].numericValue,
+            speed_index: result.audits['speed-index'].numericValue,
+            tbt: result.audits['total-blocking-time'].numericValue,
+            page_weight: result.audits['total-byte-weight'].numericValue,
+            improvementSuggestions,
+          };
         });
       });
 
