@@ -33,6 +33,8 @@ import { BacklinkDetailedResponse } from './models/backlink_detailed.response';
 import { GetCrawledPageDataTableDto } from './dto/get_crawled_page_data_table.dto';
 import { WebsiteSpeedDto } from './dto/website_speed.dto';
 import { WebsiteSpeedResponse } from './models/website_speed.response';
+import { RankedKeywordsGraphDto } from './dto/ranked_keywords_graph.dto';
+import { RankedKeywordsGraphResponse } from './models/ranked_keywords_graph.response';
 
 @ApiTags('Third Party Apis')
 @Controller('third-party-apis')
@@ -191,5 +193,13 @@ export class ThirdPartyApisController {
     payload: WebsiteSpeedDto[],
   ): Promise<WebsiteSpeedResponse['tasks'][0]['result']> {
     return await this.thirdPartyApisService.website_speed(payload);
+  }
+
+  @Post('ranked_keywords_graph')
+  @ApiBody({ type: [RankedKeywordsGraphDto] })
+  async ranked_keywords_graph(
+    @Body() payload: RankedKeywordsGraphDto[],
+  ): Promise<RankedKeywordsGraphResponse['tasks'][0]['result'][0]['items']> {
+    return await this.thirdPartyApisService.ranked_keywords_graph(payload);
   }
 }

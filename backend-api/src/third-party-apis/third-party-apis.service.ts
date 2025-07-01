@@ -26,6 +26,8 @@ import { BacklinkDetailedDto } from './dto/backlink_detailed.dto';
 import { BacklinkDetailedResponse } from './models/backlink_detailed.response';
 import { WebsiteSpeedResponse } from './models/website_speed.response';
 import { WebsiteSpeedDto } from './dto/website_speed.dto';
+import { RankedKeywordsGraphDto } from './dto/ranked_keywords_graph.dto';
+import { RankedKeywordsGraphResponse } from './models/ranked_keywords_graph.response';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -619,6 +621,32 @@ export class ThirdPartyApisService {
             page_weight: result.audits['total-byte-weight'].numericValue,
             improvementSuggestions,
           };
+        });
+      });
+
+      return data;
+    } catch (error) {
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async ranked_keywords_graph(
+    payload: RankedKeywordsGraphDto[],
+  ): Promise<RankedKeywordsGraphResponse['tasks'][0]['result'][0]['items']> {
+    try {
+      const url = `https://sandbox.dataforseo.com/v3/dataforseo_labs/google/historical_rank_overview/live`;
+      const response: RankedKeywordsGraphResponse = await this.api_request(
+        url,
+        {
+          body: JSON.stringify(payload),
+        },
+      );
+
+      let data = [];
+
+      response.tasks.map((task) => {
+        task.result.map((result) => {
+          data = [...data, ...result.items];
         });
       });
 
