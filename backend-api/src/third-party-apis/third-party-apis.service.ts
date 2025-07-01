@@ -272,6 +272,7 @@ export class ThirdPartyApisService {
         backlinks?: number;
         referring_domains?: number;
         domain_authority?: number;
+        content_type?: string;
       }[] = [];
 
       for (const task of all_competetors.tasks) {
@@ -281,6 +282,7 @@ export class ThirdPartyApisService {
               domain: item.domain,
               intersections: item.intersections,
               etv: item.competitor_metrics.organic.etv,
+              content_type: null,
             });
           }
         }
