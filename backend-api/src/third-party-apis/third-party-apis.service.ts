@@ -705,65 +705,47 @@ export class ThirdPartyApisService {
       throw new HttpException(error, 500);
     }
   }
-
   async getYoutubeVideos(payload: GetYoutubeVideosDto) {
     try {
+      const headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${payload.accessToken}`,
+      };
+      const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics,contentDetails&mine=true`;
+      const channelResponse = await this.api_request(channelUrl, { method: 'GET', headers });
 
-      const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics,contentDetails&mine=true`;
-      const response = await this.api_request(url, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Bearer ' + payload.accessToken,  // ⚠ Add space after 'Bearer'
-        },
-
-      },);
-      if (!response.items || response.items.length === 0) {
+      if (!channelResponse.items || channelResponse.items.length === 0) {
         throw new HttpException('Channel not found.', 404);
       }
 
-      // If found, return channelId (or full response if needed)
-      const channelId = response.items[0].contentDetails.relatedPlaylists.uploads;
-      let videoUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${channelId}&maxResults=${payload.maxResults}`;
+      const uploadsPlaylistId = channelResponse.items[0].contentDetails.relatedPlaylists.uploads;
+      let playlistUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${uploadsPlaylistId}&maxResults=${payload.maxResults || 10}`;
+
       if (payload.pageToken) {
-        videoUrl += `&pageToken=${payload.pageToken}`;
+        playlistUrl += `&pageToken=${payload.pageToken}`;
       }
-      const videos = await this.api_request(videoUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Bearer ' + payload.accessToken,  // ⚠ Add space after 'Bearer'
-        },
 
-      },);
-      let videoIds = [];
-      if (videos.items) {
-        videoIds = videos.items.map(item => item.snippet.resourceId.videoId)
+      const playlistResponse = await this.api_request(playlistUrl, { method: 'GET', headers });
+
+      if (!playlistResponse.items || playlistResponse.items.length === 0) {
+        return { channelId: uploadsPlaylistId, next_page: null, prev_page: null, videos: [] };
       }
-      let videoDetailUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoIds.join(",")}`;
-      if (payload.pageToken) {
-        videoUrl += `&pageToken=${payload.pageToken}`;
-      }
-      const videoDetail = await this.api_request(videoDetailUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Bearer ' + payload.accessToken,  // ⚠ Add space after 'Bearer'
-        },
 
-      },);
-      const data = videoDetail.items;
-      const next_page = videos.nextPageToken;
-      const prev_page = videos.prevPageToken;
-      return { channelId, next_page, prev_page, video: data };
+      const videoIds = playlistResponse.items.map(item => item.snippet.resourceId.videoId).join(',');
+      const videoDetailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoIds}`;
+      const videoDetailsResponse = await this.api_request(videoDetailsUrl, { method: 'GET', headers });
 
+      return {
+        channelId: uploadsPlaylistId,
+        next_page: playlistResponse.nextPageToken || null,
+        prev_page: playlistResponse.prevPageToken || null,
+        videos: videoDetailsResponse.items || [],
+      };
 
-      // return response;
     } catch (error) {
-      console.log(error);
-      throw new HttpException(error, 500);
+      console.error('YouTube video fetch error:', error?.response?.data || error.message);
+      throw new HttpException('Failed to fetch YouTube videos.', 500);
     }
   }
-
 
 }
