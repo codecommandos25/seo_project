@@ -14,7 +14,7 @@ import { CompetitorsDomainTrafficKeywordResponse } from './models/competetors_do
 import { BacklinkAllDomainsResponse } from './models/get_backlink_all_domains.response';
 import { BulkReferingDomainResponse } from './models/get_bulk_refering_domain.response';
 import { DomainAuthorityScoreResponse } from './models/get_domain_authority_score.response';
-import { PageInsightsResponse } from './models/page_insights.response';
+import { GoogleOAuthTokenResponse, GoogleORefreshTokenResponse, PageInsightsResponse } from './models/page_insights.response';
 import { GetCompetitorsWebsiteDto } from './dto/get_compititors_website.dto';
 import { CompititorsWebsiteResponse } from './models/get_compititors_website.response';
 import { RankedKeywordsResponse } from './models/ranked_keywords.response';
@@ -28,6 +28,7 @@ import { WebsiteSpeedResponse } from './models/website_speed.response';
 import { WebsiteSpeedDto } from './dto/website_speed.dto';
 import { RankedKeywordsGraphDto } from './dto/ranked_keywords_graph.dto';
 import { RankedKeywordsGraphResponse } from './models/ranked_keywords_graph.response';
+import { GetAccessTokenDto, GetYoutubeVideosDto, updateAccessTokenDto } from './dto/accesstoken.dto';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -655,4 +656,114 @@ export class ThirdPartyApisService {
       throw new HttpException(error, 500);
     }
   }
+  async get_access_token(payload: GetAccessTokenDto) {
+    try {
+      const body = new URLSearchParams({
+        client_id: process.env.GoogleClientId,
+        client_secret: process.env.Google_Client_SECRET,
+        code: payload.code,
+        grant_type: 'authorization_code',
+        redirect_uri: process.env.YOUR_REDIRECT_URI,
+      });
+      const url = `https://oauth2.googleapis.com/token`;
+      const response: GoogleOAuthTokenResponse = await this.api_request(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: body.toString(),
+      },);
+
+
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(error, 500);
+    }
+  }
+  async update_access_token(payload: updateAccessTokenDto) {
+    try {
+      const body = new URLSearchParams({
+        client_id: process.env.GoogleClientId,
+        client_secret: process.env.Google_Client_SECRET,
+        refresh_token: payload.refreshToken,
+        grant_type: 'refresh_token',
+      });
+      const url = `https://oauth2.googleapis.com/token`;
+      const response: GoogleORefreshTokenResponse = await this.api_request(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: body.toString(),
+      },);
+
+
+      return response;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(error, 500);
+    }
+  }
+
+  async getYoutubeVideos(payload: GetYoutubeVideosDto) {
+    try {
+
+      const url = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics,contentDetails&mine=true`;
+      const response = await this.api_request(url, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ' + payload.accessToken,  // ⚠ Add space after 'Bearer'
+        },
+
+      },);
+      if (!response.items || response.items.length === 0) {
+        throw new HttpException('Channel not found.', 404);
+      }
+
+      // If found, return channelId (or full response if needed)
+      const channelId = response.items[0].contentDetails.relatedPlaylists.uploads;
+      let videoUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${channelId}&maxResults=${payload.maxResults}`;
+      if (payload.pageToken) {
+        videoUrl += `&pageToken=${payload.pageToken}`;
+      }
+      const videos = await this.api_request(videoUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ' + payload.accessToken,  // ⚠ Add space after 'Bearer'
+        },
+
+      },);
+      let videoIds = [];
+      if (videos.items) {
+        videoIds = videos.items.map(item => item.snippet.resourceId.videoId)
+      }
+      let videoDetailUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoIds.join(",")}`;
+      if (payload.pageToken) {
+        videoUrl += `&pageToken=${payload.pageToken}`;
+      }
+      const videoDetail = await this.api_request(videoDetailUrl, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ' + payload.accessToken,  // ⚠ Add space after 'Bearer'
+        },
+
+      },);
+      const data = videoDetail.items;
+      const next_page = videos.nextPageToken;
+      const prev_page = videos.prevPageToken;
+      return { channelId, next_page, prev_page, video: data };
+
+
+      // return response;
+    } catch (error) {
+      console.log(error);
+      throw new HttpException(error, 500);
+    }
+  }
+
+
 }

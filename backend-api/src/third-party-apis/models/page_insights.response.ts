@@ -17,6 +17,18 @@ export interface PageInsightsResponse {
   lighthouseResult: LighthouseResult;
   analysisUTCTimestamp: Date;
 }
+export interface GoogleOAuthTokenResponse {
+  access_token: string;
+  expires_in: number;
+  refresh_token: string;
+  token_type: string;
+  refresh_token_expires_in: number; // This field is not always returned
+}
+export interface GoogleORefreshTokenResponse {
+  access_token: string;
+  expires_in: number;
+}
+
 
 export interface LighthouseResult {
   requestedUrl: string;
