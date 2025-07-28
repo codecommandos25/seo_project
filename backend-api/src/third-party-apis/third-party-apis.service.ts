@@ -802,7 +802,7 @@ export class ThirdPartyApisService {
       };
     } catch (error) {
       console.error(
-        'YouTube video fetch error:',
+        'Error in fetching youtube videos:',
         error?.response?.data || error.message,
       );
       throw new HttpException('Failed to fetch YouTube videos.', 500);
