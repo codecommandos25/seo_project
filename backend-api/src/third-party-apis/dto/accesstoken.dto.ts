@@ -41,4 +41,11 @@ export class GetYoutubeVideosDto {
     @IsOptional()
     @IsString()
     pageToken?: string;
+   @ApiPropertyOptional({
+        description: 'Type of Video like Short or Long(optional)',
+        example: 'Short',
+    })
+    @IsOptional()
+    @IsString()
+    type?: string;
 }

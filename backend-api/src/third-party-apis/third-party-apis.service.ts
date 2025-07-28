@@ -14,7 +14,11 @@ import { CompetitorsDomainTrafficKeywordResponse } from './models/competetors_do
 import { BacklinkAllDomainsResponse } from './models/get_backlink_all_domains.response';
 import { BulkReferingDomainResponse } from './models/get_bulk_refering_domain.response';
 import { DomainAuthorityScoreResponse } from './models/get_domain_authority_score.response';
-import { GoogleOAuthTokenResponse, GoogleORefreshTokenResponse, PageInsightsResponse } from './models/page_insights.response';
+import {
+  GoogleOAuthTokenResponse,
+  GoogleORefreshTokenResponse,
+  PageInsightsResponse,
+} from './models/page_insights.response';
 import { GetCompetitorsWebsiteDto } from './dto/get_compititors_website.dto';
 import { CompititorsWebsiteResponse } from './models/get_compititors_website.response';
 import { RankedKeywordsResponse } from './models/ranked_keywords.response';
@@ -28,7 +32,12 @@ import { WebsiteSpeedResponse } from './models/website_speed.response';
 import { WebsiteSpeedDto } from './dto/website_speed.dto';
 import { RankedKeywordsGraphDto } from './dto/ranked_keywords_graph.dto';
 import { RankedKeywordsGraphResponse } from './models/ranked_keywords_graph.response';
-import { GetAccessTokenDto, GetYoutubeVideosDto, updateAccessTokenDto } from './dto/accesstoken.dto';
+import {
+  GetAccessTokenDto,
+  GetYoutubeVideosDto,
+  updateAccessTokenDto,
+} from './dto/accesstoken.dto';
+import { log } from 'console';
 
 @Injectable()
 export class ThirdPartyApisService {
@@ -672,8 +681,7 @@ export class ThirdPartyApisService {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: body.toString(),
-      },);
-
+      });
 
       return response;
     } catch (error) {
@@ -690,14 +698,16 @@ export class ThirdPartyApisService {
         grant_type: 'refresh_token',
       });
       const url = `https://oauth2.googleapis.com/token`;
-      const response: GoogleORefreshTokenResponse = await this.api_request(url, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
+      const response: GoogleORefreshTokenResponse = await this.api_request(
+        url,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: body.toString(),
         },
-        body: body.toString(),
-      },);
-
+      );
 
       return response;
     } catch (error) {
@@ -705,47 +715,97 @@ export class ThirdPartyApisService {
       throw new HttpException(error, 500);
     }
   }
+
   async getYoutubeVideos(payload: GetYoutubeVideosDto) {
+    function parseISODurationToSeconds(duration) {
+      const regex = /PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/;
+      const matches = duration.match(regex);
+
+      const hours = parseInt(matches[1] || '0', 10);
+      const minutes = parseInt(matches[2] || '0', 10);
+      const seconds = parseInt(matches[3] || '0', 10);
+
+      return hours * 3600 + minutes * 60 + seconds;
+    }
     try {
       const headers = {
         'Content-Type': 'application/x-www-form-urlencoded',
         Authorization: `Bearer ${payload.accessToken}`,
       };
       const channelUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics,contentDetails&mine=true`;
-      const channelResponse = await this.api_request(channelUrl, { method: 'GET', headers });
+      const channelResponse = await this.api_request(channelUrl, {
+        method: 'GET',
+        headers,
+      });
 
       if (!channelResponse.items || channelResponse.items.length === 0) {
         throw new HttpException('Channel not found.', 404);
       }
 
-      const uploadsPlaylistId = channelResponse.items[0].contentDetails.relatedPlaylists.uploads;
+      const uploadsPlaylistId =
+        channelResponse.items[0].contentDetails.relatedPlaylists.uploads;
       let playlistUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId=${uploadsPlaylistId}&maxResults=${payload.maxResults || 10}`;
 
       if (payload.pageToken) {
         playlistUrl += `&pageToken=${payload.pageToken}`;
       }
 
-      const playlistResponse = await this.api_request(playlistUrl, { method: 'GET', headers });
+      const playlistResponse = await this.api_request(playlistUrl, {
+        method: 'GET',
+        headers,
+      });
+      // console.log("playlistResponse=>",playlistResponse)
 
       if (!playlistResponse.items || playlistResponse.items.length === 0) {
-        return { channelId: uploadsPlaylistId, next_page: null, prev_page: null, videos: [] };
+        return {
+          channelId: uploadsPlaylistId,
+          next_page: null,
+          prev_page: null,
+          videos: [],
+        };
       }
 
-      const videoIds = playlistResponse.items.map(item => item.snippet.resourceId.videoId).join(',');
+      const videoIds = playlistResponse.items
+        .map((item) => item.snippet.resourceId.videoId)
+        .join(',');
       const videoDetailsUrl = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics&id=${videoIds}`;
-      const videoDetailsResponse = await this.api_request(videoDetailsUrl, { method: 'GET', headers });
+      const videoDetailsResponse = await this.api_request(videoDetailsUrl, {
+        method: 'GET',
+        headers,
+      });
+      const videoData = [];
+      for (const video of videoDetailsResponse.items) {
+        const durationISO = video.contentDetails.duration;
+        const durationInSeconds = parseISODurationToSeconds(durationISO);
+        const viewCount = parseInt(video.statistics.viewCount || 0);
+        const likeCount = parseInt(video.statistics.likeCount || 0);
+        const commentCount = parseInt(video.statistics.commentCount || 0);
 
+        // Avoid divide by zero
+        const engagementRate =
+          viewCount > 0 ? ((likeCount + commentCount) / viewCount) * 100 : 0;
+        video.engagementRate = parseFloat(engagementRate.toFixed(2));
+        if (payload.type === 'Short' && durationInSeconds <= 60) {
+          videoData.push(video);
+        } else if (payload.type === 'Long' && durationInSeconds > 60) {
+          videoData.push(video);
+        } else if (!payload.type) {
+          videoData.push(video);
+        }
+      }
+      // console.log("videoData=>",videoData.length)
       return {
         channelId: uploadsPlaylistId,
         next_page: playlistResponse.nextPageToken || null,
         prev_page: playlistResponse.prevPageToken || null,
-        videos: videoDetailsResponse.items || [],
+        videos: videoData || [],
       };
-
     } catch (error) {
-      console.error('YouTube video fetch error:', error?.response?.data || error.message);
+      console.error(
+        'YouTube video fetch error:',
+        error?.response?.data || error.message,
+      );
       throw new HttpException('Failed to fetch YouTube videos.', 500);
     }
   }
-
 }
