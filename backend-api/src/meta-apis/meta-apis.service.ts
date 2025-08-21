@@ -163,6 +163,8 @@ export class MetaApisService {
       throw new HttpException(error, error.response?.status || 500);
     }
   }
+  // Fetch Facebook Page Insights
+  // This function fetches insights like page views, engagement, and reach for a Facebook page
   async getFacebookPageInsights(payload: MetaFacebookInsightsDto) {
     try {
       const now = new Date();
@@ -202,6 +204,8 @@ export class MetaApisService {
       throw new HttpException(err, 500);
     }
   }
+  // Fetch country distribution of page fans
+  // This function fetches the country distribution of page fans using the Facebook Graph API
   async countryDistributionGraph(payload: MetaFacebookCountryDistributionDto) {
     try {
       const params = new URLSearchParams({
@@ -240,6 +244,9 @@ export class MetaApisService {
       throw new HttpException(err, 500);
     }
   }
+
+  // Fetch top 3 posts based on engagement
+  // This function fetches the top 3 posts based on engagement metrics like reach and engagement
   async getTopPosts(payload: MetaFacebookPagePostsDto) {
     try {
       // Step 1: Fetch recent posts
