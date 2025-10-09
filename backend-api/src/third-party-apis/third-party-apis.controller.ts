@@ -20,7 +20,7 @@ import { BacklinkAllDomainsResponse } from './models/get_backlink_all_domains.re
 import { BulkReferingDomainResponse } from './models/get_bulk_refering_domain.response';
 import { CompititorsWebsiteResponse } from './models/get_compititors_website.response';
 import { DomainAuthorityScoreResponse } from './models/get_domain_authority_score.response';
-import { PageInsightsCustomResponse } from './models/page_insights.response';
+import { GoogleOAuthTokenResponse, GoogleORefreshTokenResponse, PageInsightsCustomResponse } from './models/page_insights.response';
 import { RankedKeywordsResponse } from './models/ranked_keywords.response';
 import { TrafficGraphResponse } from './models/traffic_by_time.response';
 import { ThirdPartyApisService } from './third-party-apis.service';
@@ -35,11 +35,12 @@ import { WebsiteSpeedDto } from './dto/website_speed.dto';
 import { WebsiteSpeedResponse } from './models/website_speed.response';
 import { RankedKeywordsGraphDto } from './dto/ranked_keywords_graph.dto';
 import { RankedKeywordsGraphResponse } from './models/ranked_keywords_graph.response';
+import { GetAccessTokenDto, GetYoutubeVideosDto, updateAccessTokenDto } from './dto/accesstoken.dto';
 
 @ApiTags('Third Party Apis')
 @Controller('third-party-apis')
 export class ThirdPartyApisController {
-  constructor(private readonly thirdPartyApisService: ThirdPartyApisService) {}
+  constructor(private readonly thirdPartyApisService: ThirdPartyApisService) { }
 
   @Post('competitors_domain')
   @ApiBody({ type: [CompetitorsDomainDto] })
@@ -201,5 +202,24 @@ export class ThirdPartyApisController {
     @Body() payload: RankedKeywordsGraphDto[],
   ): Promise<RankedKeywordsGraphResponse['tasks'][0]['result'][0]['items']> {
     return await this.thirdPartyApisService.ranked_keywords_graph(payload);
+  }
+  @Get('get_access_token')
+  async get_access_token(
+    @Query() params: GetAccessTokenDto,
+  ): Promise<GoogleOAuthTokenResponse> {
+    return await this.thirdPartyApisService.get_access_token(params);
+  }
+  @Get('update_access_token')
+  async update_access_token(
+    @Query() params: updateAccessTokenDto,
+  ): Promise<GoogleORefreshTokenResponse> {
+    return await this.thirdPartyApisService.update_access_token(params);
+  }
+  @Get('getYoutubeVideos')
+  async getYoutubeVideos(
+    @Query() params: GetYoutubeVideosDto,
+
+  ): Promise<any> {
+    return await this.thirdPartyApisService.getYoutubeVideos(params);
   }
 }
