@@ -22,7 +22,9 @@ export default function KeywordsProvider({ children }: Props) {
   const [currentRow, setCurrentRow] = useState<Keyword | null>(null)
 
   return (
-    <KeywordContext.Provider value={{ open, setOpen, currentRow, setCurrentRow }}>
+    <KeywordContext.Provider
+      value={{ open, setOpen, currentRow, setCurrentRow }}
+    >
       {children}
     </KeywordContext.Provider>
   )

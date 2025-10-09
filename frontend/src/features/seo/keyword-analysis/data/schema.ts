@@ -11,16 +11,17 @@ export type SearchIntent = z.infer<typeof searchIntentSchema>
 const keywordSchema = z.object({
   id: z.string(),
   keyword: z.string(),
-  intent: searchIntentSchema,
-  position: z.number(),
-  traffic: z.number(),
+  main_intent: searchIntentSchema,
+  rank_absolute: z.number(),
+  // traffic: z.number(),
+  etv: z.number(),
   trafficPercentage: z.number(),
-  volume: z.number(),
-  keywordDifficulty: z.number(),
+  search_volume: z.number(),
+  keyword_difficulty: z.number(),
   cpc: z.number(),
   url: z.string().url(),
   prevPosition: z.number().optional(),
-  lastUpdate: z.coerce.date(),
+  last_updated_time: z.coerce.date(),
 })
 export type Keyword = z.infer<typeof keywordSchema>
 

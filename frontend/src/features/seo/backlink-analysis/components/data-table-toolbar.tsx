@@ -20,17 +20,17 @@ export function DataTableToolbar<TData>({
         <Input
           placeholder='Filter by anchor text...'
           value={
-            (table.getColumn('anchorText')?.getFilterValue() as string) ?? ''
+            (table.getColumn('anchor_text')?.getFilterValue() as string) ?? ''
           }
           onChange={(event) =>
-            table.getColumn('anchorText')?.setFilterValue(event.target.value)
+            table.getColumn('anchor_text')?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('linkType') && (
+          {table.getColumn('linked_type') && (
             <DataTableFacetedFilter
-              column={table.getColumn('linkType')}
+              column={table.getColumn('linked_type')}
               title='Link Type'
               options={[
                 { label: 'Follow', value: 'follow' },
@@ -40,9 +40,9 @@ export function DataTableToolbar<TData>({
               ]}
             />
           )}
-          {table.getColumn('isLive') && (
+          {table.getColumn('status') && (
             <DataTableFacetedFilter
-              column={table.getColumn('isLive')}
+              column={table.getColumn('status')}
               title='Status'
               options={[
                 { label: 'Live', value: 'true' },

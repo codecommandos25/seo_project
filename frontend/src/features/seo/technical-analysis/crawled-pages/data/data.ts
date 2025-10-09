@@ -79,7 +79,10 @@ export const crawledPageColumns = [
 
 // Helper function to get the appropriate status color
 export function getStatusColor(statusCode: number): string {
-  return httpStatusColors.get(statusCode) || 'bg-gray-100/30 text-gray-900 dark:text-gray-200 border-gray-200'
+  return (
+    httpStatusColors.get(statusCode) ||
+    'bg-gray-100/30 text-gray-900 dark:text-gray-200 border-gray-200'
+  )
 }
 
 // Re-export the types from the schema

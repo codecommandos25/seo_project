@@ -1,26 +1,23 @@
-import {
-  createQueryKeys,
-  mergeQueryKeys,
-} from "@lukemorales/query-key-factory";
+import { createQueryKeys, mergeQueryKeys } from '@lukemorales/query-key-factory'
 
-
-export const authQueries = createQueryKeys("auth", {
+export const authQueries = createQueryKeys('auth', {
   userLogin: null,
   getUserInfo: null,
   getSignUpInfo: null,
   getUser: null,
   getUserType: null,
   // verifyEmail: (email) => [email],
-});
+})
 
-export const seoQueries = createQueryKeys("seo", {
+export const seoQueries = createQueryKeys('seo', {
   getPageInsights: null,
   // getState: (id) => [id],
-});
+})
 
+export const youtubeQueries = createQueryKeys('youtube', {
+  getUpdateToken: null,
+  getYoutubeVideo: null,
+  // getState: (id) => [id],
+})
 
-
-export const queries = mergeQueryKeys(
-  seoQueries,
-  authQueries,
-);
+export const queries = mergeQueryKeys(seoQueries, authQueries, youtubeQueries)

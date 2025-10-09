@@ -1,12 +1,12 @@
-import type { AxiosError, AxiosRequestConfig } from 'axios';
-import axios from 'axios';
+import type { AxiosError, AxiosRequestConfig } from 'axios'
+import axios from 'axios'
 
-const axiosClient = axios.create();
+const axiosClient = axios.create()
 
 // axiosClient.defaults.baseURL = process.env.PUBLIC_BASE_URL;
-axiosClient.defaults.baseURL = "";
-axiosClient.defaults.timeout = 30 * 1000; 
-axiosClient.defaults.headers.Accept = 'application/json';
+axiosClient.defaults.baseURL = ''
+axiosClient.defaults.timeout = 30 * 1000
+axiosClient.defaults.headers.Accept = 'application/json'
 
 // Request Interceptor
 axiosClient.interceptors.request.use(
@@ -18,7 +18,7 @@ axiosClient.interceptors.request.use(
   },
   (error: AxiosError) => {
     return Promise.reject(error)
-  },
+  }
 )
 
 // Response Interceptor
@@ -32,15 +32,20 @@ axiosClient.interceptors.response.use(
       window.location.href = '/sign-in'
     }
     return Promise.reject(error)
-  },
+  }
 )
 
-export const GET = (config: AxiosRequestConfig) => axiosClient({ method: 'GET', ...config });
+export const GET = (config: AxiosRequestConfig) =>
+  axiosClient({ method: 'GET', ...config })
 
-export const POST = (config: AxiosRequestConfig) => axiosClient({ method: 'POST', ...config });
+export const POST = (config: AxiosRequestConfig) =>
+  axiosClient({ method: 'POST', ...config })
 
-export const PUT = (config: AxiosRequestConfig) => axiosClient({ method: 'PUT', ...config });
+export const PUT = (config: AxiosRequestConfig) =>
+  axiosClient({ method: 'PUT', ...config })
 
-export const PATCH = (config: AxiosRequestConfig) => axiosClient({ method: 'PATCH', ...config });
+export const PATCH = (config: AxiosRequestConfig) =>
+  axiosClient({ method: 'PATCH', ...config })
 
-export const DELETE = (config: AxiosRequestConfig) => axiosClient({ method: 'DELETE', ...config });
+export const DELETE = (config: AxiosRequestConfig) =>
+  axiosClient({ method: 'DELETE', ...config })

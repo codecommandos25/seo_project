@@ -52,12 +52,12 @@ export const sidebarData: SidebarData = {
           icon: IconChecklist,
         },
         {
-          title: "Backlink Analysis",
+          title: 'Backlink Analysis',
           url: '/seo/backlink-analysis',
           icon: IconBrowserCheck,
         },
         {
-          title: "Technical Analysis",
+          title: 'Technical Analysis',
           // url: '/seo/technical-analysis',
           icon: IconTool,
           items: [
@@ -72,14 +72,14 @@ export const sidebarData: SidebarData = {
             {
               title: 'Website Speed',
               url: '/seo/technical-analysis/website-speed',
-            }
-          ]
+            },
+          ],
         },
         {
           title: 'On Page SEO',
           url: '/seo/on-page',
           icon: IconTool,
-        }
+        },
       ],
     },
     {
@@ -98,14 +98,13 @@ export const sidebarData: SidebarData = {
         {
           title: 'LinkedIn',
           icon: IconLayoutDashboard,
-          url: '/social-media/linkedin'
+          url: '/social-media/linkedin',
         },
         {
           title: 'YouTube',
           icon: IconLayoutDashboard,
           url: '/social-media/youtube',
-        }
-
+        },
       ],
     },
     {

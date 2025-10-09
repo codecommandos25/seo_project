@@ -1,11 +1,12 @@
+import { format } from 'date-fns'
 import { ColumnDef } from '@tanstack/react-table'
+import { ExternalLink, Check, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import LongText from '@/components/long-text'
 import { Backlink, LinkType } from '../data/schema'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { ExternalLink, Check, X } from 'lucide-react'
 
 export const columns: ColumnDef<Backlink>[] = [
   {
@@ -39,12 +40,12 @@ export const columns: ColumnDef<Backlink>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'sourcePageTitle',
+    accessorKey: 'source_page',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Source Page' />
     ),
     cell: ({ row }) => (
-      <LongText className='max-w-36'>{row.getValue('sourcePageTitle')}</LongText>
+      <LongText className='max-w-36'>{row.getValue('source_page')}</LongText>
     ),
     meta: {
       className: cn(
@@ -56,61 +57,77 @@ export const columns: ColumnDef<Backlink>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'sourceUrl',
+    accessorKey: 'source_url',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Source URL' />
     ),
     cell: ({ row }) => (
       <LongText className='max-w-36 text-blue-600 hover:underline'>
-        <a href={row.getValue('sourceUrl') as string} target="_blank" rel="noopener noreferrer">
-          {row.getValue('sourceUrl')}
-          <ExternalLink className="h-3 w-3 ml-1 inline" />
+        <a
+          href={row.getValue('source_url') as string}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          {row.getValue('source_url')}
+          <ExternalLink className='ml-1 inline h-3 w-3' />
         </a>
       </LongText>
     ),
   },
   {
-    accessorKey: 'targetUrl',
+    accessorKey: 'target_url',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Target URL' />
     ),
     cell: ({ row }) => (
       <LongText className='max-w-36 text-blue-600 hover:underline'>
-        <a href={row.getValue('targetUrl') as string} target="_blank" rel="noopener noreferrer">
-          {row.getValue('targetUrl')}
+        <a
+          href={row.getValue('target_url') as string}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          {row.getValue('target_url')}
         </a>
       </LongText>
     ),
   },
   {
-    accessorKey: 'anchorText',
+    accessorKey: 'anchor_text',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Anchor Text' />
     ),
     cell: ({ row }) => (
-      <LongText className='max-w-36'>{row.getValue('anchorText')}</LongText>
+      <LongText className='max-w-36'>{row.getValue('anchor_text')}</LongText>
     ),
   },
   {
-    accessorKey: 'linkType',
+    accessorKey: 'linked_type',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Link Type' />
     ),
     cell: ({ row }) => {
-      const linkType = row.getValue('linkType') as LinkType
+      const linkType = row.getValue('linked_type') as LinkType
 
       const getLinkTypeColor = (type: LinkType) => {
         switch (type) {
-          case 'follow': return 'bg-green-100 text-green-800'
-          case 'nofollow': return 'bg-yellow-100 text-yellow-800'
-          case 'sponsored': return 'bg-blue-100 text-blue-800'
-          case 'ugc': return 'bg-purple-100 text-purple-800'
-          default: return ''
+          case 'follow':
+            return 'bg-green-100 text-green-800'
+          case 'nofollow':
+            return 'bg-yellow-100 text-yellow-800'
+          case 'sponsored':
+            return 'bg-blue-100 text-blue-800'
+          case 'ugc':
+            return 'bg-purple-100 text-purple-800'
+          default:
+            return ''
         }
       }
 
       return (
-        <Badge variant='outline' className={cn('capitalize', getLinkTypeColor(linkType))}>
+        <Badge
+          variant='outline'
+          className={cn('capitalize', getLinkTypeColor(linkType))}
+        >
           {linkType}
         </Badge>
       )
@@ -120,78 +137,82 @@ export const columns: ColumnDef<Backlink>[] = [
     },
   },
   {
-    accessorKey: 'externalLinks',
+    accessorKey: 'external_links',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='External Links' />
     ),
-    cell: ({ row }) => <div>{row.getValue('externalLinks')}</div>,
+    cell: ({ row }) => <div>{row.getValue('external_links')}</div>,
   },
   {
-    accessorKey: 'internalLinks',
+    accessorKey: 'internal_links',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Internal Links' />
     ),
-    cell: ({ row }) => <div>{row.getValue('internalLinks')}</div>,
+    cell: ({ row }) => <div>{row.getValue('internal_links')}</div>,
   },
   {
-    accessorKey: 'domainAuthority',
+    accessorKey: 'domain_authority',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Domain Authority' />
     ),
     cell: ({ row }) => {
-      const da = row.getValue('domainAuthority') as number | undefined
+      const da = row.getValue('domain_authority') as number | undefined
       return <div>{da ?? 'N/A'}</div>
     },
   },
   {
-    accessorKey: 'pageAuthority',
+    accessorKey: 'page_authority',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Page Authority' />
     ),
     cell: ({ row }) => {
-      const pa = row.getValue('pageAuthority') as number | undefined
+      const pa = row.getValue('page_authority') as number | undefined
       return <div>{pa ?? 'N/A'}</div>
     },
   },
   {
-    accessorKey: 'isLive',
+    accessorKey: 'status',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Status' />
     ),
     cell: ({ row }) => {
-      const isLive = row.getValue('isLive') as boolean | undefined
-      const statusCode = row.original.statusCode
+      const isLive = row.getValue('status') as boolean | undefined
+      const statusCode = row.original.status
 
       return (
-        <div className="flex items-center gap-1">
+        <div className='flex items-center gap-1'>
           {isLive === true ? (
-            <Check className="h-4 w-4 text-green-500" />
+            <Check className='h-4 w-4 text-green-500' />
           ) : isLive === false ? (
-            <X className="h-4 w-4 text-red-500" />
+            <X className='h-4 w-4 text-red-500' />
           ) : null}
-          {statusCode && <span className="text-xs text-muted-foreground ml-1">{statusCode}</span>}
+          {statusCode && (
+            <span className='ml-1 text-xs text-muted-foreground'>
+              {statusCode}
+            </span>
+          )}
         </div>
       )
     },
   },
   {
-    accessorKey: 'firstSeen',
+    accessorKey: 'first_seen',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='First Seen' />
     ),
     cell: ({ row }) => {
-      const date = row.getValue('firstSeen') as Date
-      return <div>{date.toLocaleDateString()}</div>
+      const date = row.getValue('first_seen') as Date
+      return <div>{format(date, 'dd/MM/yyyy')}</div>
     },
   },
   {
-    accessorKey: 'lastSeen',
+    accessorKey: 'last_seen',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Last Seen' />
     ),
     cell: ({ row }) => {
-      const date = row.getValue('lastSeen') as Date
-      return <div>{date.toLocaleDateString()}</div>
+      const date = row.getValue('last_seen') as Date
+      return <div>{format(date, 'dd/MM/yyyy')}</div>
     },
   },
 ]

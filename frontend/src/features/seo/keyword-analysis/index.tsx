@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+import { useSEOKeywordsTable } from '@/service/seo'
 import { Header } from '@/components/layout/header'
 import { Main } from '@/components/layout/main'
 import { ProfileDropdown } from '@/components/profile-dropdown'
@@ -6,16 +8,34 @@ import { ThemeSwitch } from '@/components/theme-switch'
 import { columns } from './components/keywords-columns'
 import { KeywordsTable } from './components/keywords-table'
 import KeywordsProvider from './context/keyword-context'
-import { keywordListSchema } from './data/schema'
 import { keywords } from './data/keywords'
+import { keywordListSchema } from './data/schema'
 
 export default function KeywordAnaysis() {
   // Parse keyword list
-  const keywordList = keywordListSchema.parse(keywords)
+  // const keywordList = keywordListSchema.parse(keywords)
+  const [keywordsData, setKeyowrdsData] = useState([])
+  const { mutate } = useSEOKeywordsTable({
+    onSuccess(data: any, variables, context) {
+      console.log('data', data.data)
+      setKeyowrdsData(data.data)
+    },
+  })
 
+  useEffect(() => {
+    mutate([
+      {
+        target: 'dataforseo.com',
+        language_name: 'English',
+        location_name: 'United States',
+        include_serp_info: true,
+        load_rank_absolute: true,
+        limit: 3,
+      },
+    ])
+  }, [])
   return (
     <KeywordsProvider>
-
       <Header fixed>
         <Search />
         <div className='ml-auto flex items-center space-x-4'>
@@ -34,11 +54,9 @@ export default function KeywordAnaysis() {
           </div>
         </div>
         <div className='-mx-4 flex-1 overflow-auto px-4 py-1 lg:flex-row lg:space-x-12 lg:space-y-0'>
-          <KeywordsTable data={keywordList} columns={columns} />
+          <KeywordsTable data={keywordsData} columns={columns} />
         </div>
       </Main>
     </KeywordsProvider>
-
-
   )
 }

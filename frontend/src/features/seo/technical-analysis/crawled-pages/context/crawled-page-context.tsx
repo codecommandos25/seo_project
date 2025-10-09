@@ -11,7 +11,9 @@ interface CrawledPageContextType {
   setCurrentRow: React.Dispatch<React.SetStateAction<CrawledPage | null>>
 }
 
-const CrawledPageContext = React.createContext<CrawledPageContextType | null>(null)
+const CrawledPageContext = React.createContext<CrawledPageContextType | null>(
+  null
+)
 
 interface Props {
   children: React.ReactNode
@@ -22,7 +24,9 @@ export default function CrawledPageProvider({ children }: Props) {
   const [currentRow, setCurrentRow] = useState<CrawledPage | null>(null)
 
   return (
-    <CrawledPageContext.Provider value={{ open, setOpen, currentRow, setCurrentRow }}>
+    <CrawledPageContext.Provider
+      value={{ open, setOpen, currentRow, setCurrentRow }}
+    >
       {children}
     </CrawledPageContext.Provider>
   )
@@ -33,7 +37,9 @@ export const useCrawledPage = () => {
   const crawledPageContext = React.useContext(CrawledPageContext)
 
   if (!crawledPageContext) {
-    throw new Error('useCrawledPage has to be used within <CrawledPageProvider>')
+    throw new Error(
+      'useCrawledPage has to be used within <CrawledPageProvider>'
+    )
   }
 
   return crawledPageContext

@@ -34,7 +34,7 @@ export type QueryOptionsType<TData = unknown> = Omit<
 //   TError = AxiosError,
 // > = Omit<UseQueryOptions<TData, TError, TData, any[]>, 'queryKey' | 'queryFn'>
 
-export type QueryOptionsGenricType<T, E> = UseQueryOptions<T, E>;
+export type QueryOptionsGenricType<T, E> = UseQueryOptions<T, E>
 
 // Additional helper type for query results
 export type QueryResultType<TData = unknown> = UseQueryResult<TData, AxiosError>

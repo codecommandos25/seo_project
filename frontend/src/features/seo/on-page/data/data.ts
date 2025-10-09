@@ -90,21 +90,21 @@ export const onPageAnalysisColumns = [
 // Helper function to format content length with appropriate unit
 export function formatContentLength(length: number): string {
   if (length < 1000) {
-    return `${length} chars`;
+    return `${length} chars`
   }
-  return `${(length / 1000).toFixed(1)}k chars`;
+  return `${(length / 1000).toFixed(1)}k chars`
 }
 
 // Helper function to format boolean values for display
 export function formatBoolean(value: boolean): string {
-  return value ? 'Yes' : 'No';
+  return value ? 'Yes' : 'No'
 }
 
 // Helper function to format array data for display
 export function formatArray(arr: string[]): string {
-  if (!arr.length) return 'None';
-  if (arr.length <= 2) return arr.join(', ');
-  return `${arr.slice(0, 2).join(', ')} +${arr.length - 2}`;
+  if (!arr.length) return 'None'
+  if (arr.length <= 2) return arr.join(', ')
+  return `${arr.slice(0, 2).join(', ')} +${arr.length - 2}`
 }
 
 // Re-export the types from the schema

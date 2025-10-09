@@ -1,8 +1,4 @@
-import {
-  useMutation,
-  useQuery,
-  UseQueryOptions,
-} from '@tanstack/react-query'
+import { useMutation, useQuery, UseQueryOptions } from '@tanstack/react-query'
 import { MutationOptionsType, QueryOptionsGenricType } from '@/lib/query'
 import { queries } from '../queryKeys'
 import * as API from './api'
@@ -66,37 +62,66 @@ export const useSEODetails = (options?: MutationOptionsType) =>
     ...options,
   })
 
-  export const useSEOKeywords = (options?: MutationOptionsType) =>
+export const useSEOKeywords = (options?: MutationOptionsType) =>
   useMutation({
     mutationFn: API.SEOKeywords,
     ...options,
   })
 
-  export const useSEOGraph = (options?: MutationOptionsType) =>
+export const useSEOGraph = (options?: MutationOptionsType) =>
   useMutation({
     mutationFn: API.SEOGraph,
     ...options,
   })
 
-  export const useGetPageInsights = (
-  data: {url:string},
+export const useGetPageInsights = (
+  data: { url: string },
   options?: QueryOptionsGenricType<API.PerformanceMetrics, Error>
 ) =>
   useQuery<API.PerformanceMetrics, Error>(
     queries?.seo.getPageInsights.queryKey,
-     ()=>API.PageInsights(data),
+    () => API.PageInsights(data),
     options
-  );
+  )
 
-  export const useTopanchor = (options?: MutationOptionsType) =>
+export const useTopanchor = (options?: MutationOptionsType) =>
   useMutation({
     mutationFn: API.Topanchor,
     ...options,
   })
 
-  export const useBacklinkDomain = (options?: MutationOptionsType) =>
+export const useBacklinkDomain = (options?: MutationOptionsType) =>
   useMutation({
     mutationFn: API.BacklinkDomain,
     ...options,
   })
 
+export const useSEOKeywordsTable = (options?: MutationOptionsType) =>
+  useMutation({
+    mutationFn: API.SEOKeywordsTable,
+    ...options,
+  })
+
+export const useOnPageSEOTable = (options?: MutationOptionsType) =>
+  useMutation({
+    mutationFn: API.pageOnSEO,
+    ...options,
+  })
+
+export const useCrawledSEOTable = (options?: MutationOptionsType) =>
+  useMutation({
+    mutationFn: API.CrawledSEOTable,
+    ...options,
+  })
+
+export const useBacklinkSEOTable = (options?: MutationOptionsType) =>
+  useMutation({
+    mutationFn: API.BacklinkSEOTable,
+    ...options,
+  })
+
+export const useCompetitorsSEOTable = (options?: MutationOptionsType) =>
+  useMutation({
+    mutationFn: API.CompetitorsSEOTable,
+    ...options,
+  })

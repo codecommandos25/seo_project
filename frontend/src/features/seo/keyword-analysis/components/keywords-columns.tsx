@@ -1,4 +1,6 @@
+import { format, parseISO } from 'date-fns'
 import { ColumnDef } from '@tanstack/react-table'
+import { ArrowDown, ArrowUp, Minus } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
@@ -6,7 +8,6 @@ import LongText from '@/components/long-text'
 import { searchIntentTypes } from '../data/data'
 import { Keyword, SearchIntent } from '../data/schema'
 import { DataTableColumnHeader } from './data-table-column-header'
-import { ArrowDown, ArrowUp, Minus } from 'lucide-react'
 
 export const columns: ColumnDef<Keyword>[] = [
   {
@@ -57,17 +58,20 @@ export const columns: ColumnDef<Keyword>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'intent',
+    accessorKey: 'main_intent',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Search Intent' />
     ),
     cell: ({ row }) => {
-      const intent = row.getValue('intent') as SearchIntent
-      const intentType = searchIntentTypes.find(type => type.value === intent)
+      const intent = row.getValue('main_intent') as SearchIntent
+      const intentType = searchIntentTypes.find((type) => type.value === intent)
 
       return (
         <div className='flex space-x-2'>
-          <Badge variant='outline' className={cn('capitalize', intentType?.color)}>
+          <Badge
+            variant='outline'
+            className={cn('capitalize', intentType?.color)}
+          >
             {intent}
           </Badge>
         </div>
@@ -78,28 +82,28 @@ export const columns: ColumnDef<Keyword>[] = [
     },
   },
   {
-    accessorKey: 'position',
+    accessorKey: 'rank_absolute',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Position' />
     ),
     cell: ({ row }) => {
-      const position = row.getValue('position') as number
+      const position = row.getValue('rank_absolute') as number
       const prevPosition = row.original.prevPosition
 
       let positionChange = null
       if (prevPosition !== undefined) {
         const diff = prevPosition - position
         if (diff > 0) {
-          positionChange = <ArrowUp className="text-green-500 h-4 w-4" />
+          positionChange = <ArrowUp className='h-4 w-4 text-green-500' />
         } else if (diff < 0) {
-          positionChange = <ArrowDown className="text-red-500 h-4 w-4" />
+          positionChange = <ArrowDown className='h-4 w-4 text-red-500' />
         } else {
-          positionChange = <Minus className="text-gray-500 h-4 w-4" />
+          positionChange = <Minus className='h-4 w-4 text-gray-500' />
         }
       }
 
       return (
-        <div className="flex items-center gap-2">
+        <div className='flex items-center gap-2'>
           <span>{position}</span>
           {positionChange}
         </div>
@@ -107,19 +111,19 @@ export const columns: ColumnDef<Keyword>[] = [
     },
   },
   {
-    accessorKey: 'volume',
+    accessorKey: 'search_volume',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Volume' />
     ),
-    cell: ({ row }) => <div>{row.getValue('volume')}</div>,
+    cell: ({ row }) => <div>{row.getValue('search_volume')}</div>,
   },
   {
-    accessorKey: 'keywordDifficulty',
+    accessorKey: 'keyword_difficulty',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Difficulty' />
     ),
     cell: ({ row }) => {
-      const difficulty = row.getValue('keywordDifficulty') as number
+      const difficulty = row.getValue('keyword_difficulty') as number
       let color = 'bg-green-100 text-green-800'
 
       if (difficulty > 70) {
@@ -129,25 +133,31 @@ export const columns: ColumnDef<Keyword>[] = [
       }
 
       return (
-        <Badge variant="outline" className={cn(color)}>
+        <Badge variant='outline' className={cn(color)}>
           {difficulty}
         </Badge>
       )
     },
   },
   {
-    accessorKey: 'traffic',
+    accessorKey: 'etv',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Traffic' />
     ),
-    cell: ({ row }) => <div>{row.getValue('traffic')}</div>,
+    cell: ({ row }) => <div>{(row.getValue('etv') as number).toFixed(2)}</div>,
   },
   {
     accessorKey: 'cpc',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='CPC ($)' />
     ),
-    cell: ({ row }) => <div>${(row.getValue('cpc') as number).toFixed(2)}</div>,
+    cell: ({ row }) => (
+      <div>
+        {row.getValue('cpc')
+          ? `$${(row.getValue('cpc') as number).toFixed(2)}`
+          : ''}
+      </div>
+    ),
   },
   {
     accessorKey: 'url',
@@ -156,20 +166,25 @@ export const columns: ColumnDef<Keyword>[] = [
     ),
     cell: ({ row }) => (
       <LongText className='max-w-36 text-blue-600 hover:underline'>
-        <a href={row.getValue('url') as string} target="_blank" rel="noopener noreferrer">
+        <a
+          href={row.getValue('url') as string}
+          target='_blank'
+          rel='noopener noreferrer'
+        >
           {row.getValue('url')}
         </a>
       </LongText>
     ),
   },
   {
-    accessorKey: 'lastUpdate',
+    accessorKey: 'last_updated_time',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Last Updated' />
     ),
     cell: ({ row }) => {
-      const date = row.getValue('lastUpdate') as Date
-      return <div>{date.toLocaleDateString()}</div>
+      const date: string = row.getValue('last_updated_time')
+      const isoDate = date.replace(' ', 'T')
+      return <div>{format(date, 'dd/MM/yyyy')}</div>
     },
   },
 ]

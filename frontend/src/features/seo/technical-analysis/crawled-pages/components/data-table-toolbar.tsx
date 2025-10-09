@@ -19,18 +19,16 @@ export function DataTableToolbar<TData>({
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
           placeholder='Filter URLs...'
-          value={
-            (table.getColumn('pageUrl')?.getFilterValue() as string) ?? ''
-          }
+          value={(table.getColumn('url')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
-            table.getColumn('pageUrl')?.setFilterValue(event.target.value)
+            table.getColumn('url')?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('httpStatusCode') && (
+          {table.getColumn('status_code') && (
             <DataTableFacetedFilter
-              column={table.getColumn('httpStatusCode')}
+              column={table.getColumn('status_code')}
               title='HTTP Status'
               options={[
                 { label: '200 OK', value: '200' },

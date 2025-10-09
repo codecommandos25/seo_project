@@ -22,3 +22,19 @@ export function handleServerError(error: unknown) {
 
   toast({ variant: 'destructive', title: errMsg })
 }
+
+// utils/auth.ts
+export const isTokenExpired = (token: string): boolean => {
+  try {
+    const payloadBase64 = token.split(".")[1];
+    const decoded = JSON.parse(atob(payloadBase64));
+
+    if (!decoded.exp) return true; // no expiry means invalid
+
+    const expiry = decoded.exp * 1000; // exp is in seconds
+    return Date.now() > expiry;
+  } catch (err) {
+    return true; // if decoding fails, treat as expired
+  }
+};
+

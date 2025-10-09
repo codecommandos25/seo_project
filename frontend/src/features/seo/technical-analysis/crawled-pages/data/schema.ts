@@ -17,21 +17,27 @@ const structuredDataItemSchema = z.object({
 
 const crawledPageSchema = z.object({
   id: z.string(),
-  pageUrl: z.string().url(),
-  pageTitle: z.string(),
-  metaDescription: z.string().nullable(),
-  httpStatusCode: httpStatusCodeSchema,
-  pageLoadTime: z.number(), // in milliseconds
-  structuredDataItems: z.array(structuredDataItemSchema),
-  incomingInternalLinks: z.number(),
-  outgoingInternalLinks: z.number(),
-  outgoingExternalLinks: z.number(),
-  hreflangUsage: z.array(z.object({
-    lang: z.string(),
-    url: z.string().url(),
-  })).optional(),
-  canonicalUrl: z.string().url().optional(),
-  lastCrawled: z.coerce.date(),
+
+  url: z.string().url(),
+  title: z.string(),
+  description: z.string().nullable(),
+  status_code: httpStatusCodeSchema,
+  duration_time: z.number(), // in milliseconds
+  structured_data: z.array(structuredDataItemSchema),
+  // incomingInternalLinks: z.number(),
+  internal_links_count: z.number(),
+  inbound_links_count: z.number(),
+  external_links_count: z.number(),
+  hreflangUsage: z
+    .array(
+      z.object({
+        lang: z.string(),
+        url: z.string().url(),
+      })
+    )
+    .optional(),
+  canonical: z.string().url().optional(),
+  fetch_time: z.coerce.date(),
 })
 
 export type CrawledPage = z.infer<typeof crawledPageSchema>

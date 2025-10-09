@@ -5,15 +5,15 @@ export const onPageAnalysisSchema = z.object({
   url: z.string(),
   title: z.string(),
   description: z.string().nullable(),
-  imageCount: z.number(),
+  images: z.number(),
   h1: z.string().nullable(),
-  h2Tags: z.array(z.string()),
-  contentLength: z.number(),
-  internalLinks: z.number(),
-  externalLinks: z.number(),
-  keywords: z.array(z.string()),
-  hasCanonical: z.boolean(),
-  hasSchema: z.boolean(),
+  h2: z.array(z.string()),
+  plain_text_word_count: z.number(),
+  internal_links_count: z.number(),
+  external_links_count: z.number(),
+  keyword: z.array(z.string()),
+  canonical: z.boolean(),
+  schema: z.boolean(),
 })
 
 export const onPageAnalysisListSchema = z.array(onPageAnalysisSchema)

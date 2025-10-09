@@ -32,6 +32,7 @@ import { RankedKeywordsGraphResponse } from './models/ranked_keywords_graph.resp
 @Injectable()
 export class ThirdPartyApisService {
   private async api_request(url: string, options?: RequestInit) {
+    console.log(process.env.ACCESS_USERNAME,process.env.ACCESS_PASSWORD)
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -39,7 +40,7 @@ export class ThirdPartyApisService {
         Authorization:
           'Basic ' +
           Buffer.from(
-            `${process.env.USERNAME}:${process.env.PASSWORD}`,
+            `${process.env.ACCESS_USERNAME}:${process.env.ACCESS_PASSWORD}`,
           ).toString('base64'),
       },
       ...options,
@@ -257,6 +258,7 @@ export class ThirdPartyApisService {
     payload: GetCompetitorsWebsiteDto,
   ): Promise<CompititorsWebsiteResponse[]> {
     try {
+      console.log("payload",payload.domain)
       const all_competetors =
         await this.get_all_competetors_domain_traffic_keyword_overlap([
           {
@@ -266,6 +268,8 @@ export class ThirdPartyApisService {
             limit: 10,
           },
         ]);
+
+        console.log("comp",all_competetors)
 
       const domains: {
         domain: string;
@@ -277,9 +281,9 @@ export class ThirdPartyApisService {
         content_type?: string;
       }[] = [];
 
-      for (const task of all_competetors.tasks) {
-        for (const rs of task.result) {
-          for (const item of rs.items) {
+      for (const task of all_competetors?.tasks) {
+        for (const rs of task?.result) {
+          for (const item of rs?.items) {
             domains.push({
               domain: item.domain,
               intersections: item.intersections,

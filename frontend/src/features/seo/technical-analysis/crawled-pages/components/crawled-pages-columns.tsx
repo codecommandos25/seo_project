@@ -1,11 +1,12 @@
+import { format } from 'date-fns'
 import { ColumnDef } from '@tanstack/react-table'
+import { ExternalLink, Clock, AlertCircle } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import LongText from '@/components/long-text'
-import { DataTableColumnHeader } from './data-table-column-header'
-import { ExternalLink, Clock, AlertCircle } from 'lucide-react'
 import { CrawledPage } from '../data/schema'
+import { DataTableColumnHeader } from './data-table-column-header'
 
 export const columns: ColumnDef<CrawledPage>[] = [
   {
@@ -39,14 +40,14 @@ export const columns: ColumnDef<CrawledPage>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'pageUrl',
+    accessorKey: 'url',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Page URL' />
     ),
     cell: ({ row }) => (
       <LongText className='max-w-36 text-blue-600 hover:underline'>
-        <a href={row.getValue('pageUrl')} target="_blank" rel="noopener noreferrer">
-          {row.getValue('pageUrl')}
+        <a href={row.getValue('url')} target='_blank' rel='noopener noreferrer'>
+          {row.getValue('url')}
         </a>
       </LongText>
     ),
@@ -60,21 +61,21 @@ export const columns: ColumnDef<CrawledPage>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'pageTitle',
+    accessorKey: 'title',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Page Title' />
     ),
     cell: ({ row }) => (
-      <LongText className='max-w-36'>{row.getValue('pageTitle')}</LongText>
+      <LongText className='max-w-36'>{row.getValue('title')}</LongText>
     ),
   },
   {
-    accessorKey: 'httpStatusCode',
+    accessorKey: 'status_code',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Status' />
     ),
     cell: ({ row }) => {
-      const status = row.getValue('httpStatusCode') as number
+      const status = row.getValue('status_code') as number
       let color = 'bg-green-100 text-green-800'
 
       if (status === 404 || status === 500) {
@@ -84,7 +85,7 @@ export const columns: ColumnDef<CrawledPage>[] = [
       }
 
       return (
-        <Badge variant="outline" className={cn(color)}>
+        <Badge variant='outline' className={cn(color)}>
           {status}
         </Badge>
       )
@@ -94,12 +95,12 @@ export const columns: ColumnDef<CrawledPage>[] = [
     },
   },
   {
-    accessorKey: 'pageLoadTime',
+    accessorKey: 'duration_time',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Load Time' />
     ),
     cell: ({ row }) => {
-      const loadTime = row.getValue('pageLoadTime') as number
+      const loadTime = row.getValue('duration_time') as number
       let color = 'text-green-600'
 
       if (loadTime > 3000) {
@@ -110,50 +111,50 @@ export const columns: ColumnDef<CrawledPage>[] = [
 
       return (
         <div className={cn('flex items-center gap-1', color)}>
-          <Clock className="h-3 w-3" />
+          <Clock className='h-3 w-3' />
           <span>{(loadTime / 1000).toFixed(2)}s</span>
         </div>
       )
     },
   },
   {
-    accessorKey: 'incomingInternalLinks',
+    accessorKey: 'inbound_links_count',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Internal Links (In)' />
     ),
-    cell: ({ row }) => <div>{row.getValue('incomingInternalLinks')}</div>,
+    cell: ({ row }) => <div>{row.getValue('inbound_links_count')}</div>,
   },
   {
-    accessorKey: 'outgoingInternalLinks',
+    accessorKey: 'internal_links_count',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Internal Links (Out)' />
     ),
-    cell: ({ row }) => <div>{row.getValue('outgoingInternalLinks')}</div>,
+    cell: ({ row }) => <div>{row.getValue('internal_links_count')}</div>,
   },
   {
-    accessorKey: 'outgoingExternalLinks',
+    accessorKey: 'external_links_count',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='External Links' />
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-1">
-        <span>{row.getValue('outgoingExternalLinks')}</span>
-        <ExternalLink className="h-3 w-3 text-gray-500" />
+      <div className='flex items-center gap-1'>
+        <span>{row.getValue('external_links_count')}</span>
+        <ExternalLink className='h-3 w-3 text-gray-500' />
       </div>
     ),
   },
   {
-    accessorKey: 'metaDescription',
+    accessorKey: 'description',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Meta Description' />
     ),
     cell: ({ row }) => {
-      const metaDescription = row.getValue('metaDescription') as string | null
+      const metaDescription = row.getValue('description') as string | null
 
       if (!metaDescription) {
         return (
-          <div className="flex items-center gap-1 text-amber-600">
-            <AlertCircle className="h-3 w-3" />
+          <div className='flex items-center gap-1 text-amber-600'>
+            <AlertCircle className='h-3 w-3' />
             <span>Missing</span>
           </div>
         )
@@ -163,20 +164,20 @@ export const columns: ColumnDef<CrawledPage>[] = [
     },
   },
   {
-    accessorKey: 'canonicalUrl',
+    accessorKey: 'canonical',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Canonical URL' />
     ),
     cell: ({ row }) => {
-      const canonicalUrl = row.original.canonicalUrl
+      const canonicalUrl = row.original.canonical
 
       if (!canonicalUrl) {
-        return <span className="text-gray-500">-</span>
+        return <span className='text-gray-500'>-</span>
       }
 
       return (
         <LongText className='max-w-36 text-blue-600 hover:underline'>
-          <a href={canonicalUrl} target="_blank" rel="noopener noreferrer">
+          <a href={canonicalUrl} target='_blank' rel='noopener noreferrer'>
             {canonicalUrl}
           </a>
         </LongText>
@@ -184,36 +185,38 @@ export const columns: ColumnDef<CrawledPage>[] = [
     },
   },
   {
-    accessorKey: 'structuredDataItems',
+    accessorKey: 'structured_data',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Structured Data' />
     ),
-    cell: ({ row }) => {
-      const items = row.original.structuredDataItems
+    // cell: ({ row }) => {
+    //   const items = row.original.structured_data
 
-      return (
-        <div>
-          {items.length > 0 ? (
-            <Badge variant="outline" className="bg-blue-100 text-blue-800">
-              {items.length} {items.length === 1 ? 'type' : 'types'}
-            </Badge>
-          ) : (
-            <span className="text-gray-500">None</span>
-          )}
-        </div>
-      )
-    },
+    //   return (
+    //     <div>
+    //       {items.length > 0 ? (
+    //         <Badge variant="outline" className="bg-blue-100 text-blue-800">
+    //           {items.length} {items.length === 1 ? 'type' : 'types'}
+    //         </Badge>
+    //       ) : (
+    //         <span className="text-gray-500">None</span>
+    //       )}
+    //     </div>
+    //   )
+    // },
   },
   {
-    accessorKey: 'lastCrawled',
+    accessorKey: 'fetch_time',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Last Crawled' />
     ),
     cell: ({ row }) => {
-      const date = row.getValue('lastCrawled') as Date
+      const date = row.getValue('fetch_time') as Date
       return (
-        <div className="text-gray-600">
-          {date.toLocaleDateString()} {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+        <div className='text-gray-600'>
+          {/* {date.toLocaleDateString()} {date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+           */}
+          {format(date, 'dd/MM/yyyy')}
         </div>
       )
     },

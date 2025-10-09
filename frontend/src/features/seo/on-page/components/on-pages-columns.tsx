@@ -1,11 +1,18 @@
 import { ColumnDef } from '@tanstack/react-table'
+import {
+  ExternalLink,
+  ImageIcon,
+  Link2,
+  Code2,
+  FileText,
+  Hash,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Badge } from '@/components/ui/badge'
 import { Checkbox } from '@/components/ui/checkbox'
 import LongText from '@/components/long-text'
-import { DataTableColumnHeader } from './data-table-column-header'
-import { ExternalLink, ImageIcon, Link2, Code2, FileText, Hash } from 'lucide-react'
 import { onPageAnalysis } from '../data/schema'
+import { DataTableColumnHeader } from './data-table-column-header'
 
 export const columns: ColumnDef<onPageAnalysis>[] = [
   {
@@ -45,7 +52,7 @@ export const columns: ColumnDef<onPageAnalysis>[] = [
     ),
     cell: ({ row }) => (
       <LongText className='max-w-36 text-blue-600 hover:underline'>
-        <a href={row.getValue('url')} target="_blank" rel="noopener noreferrer">
+        <a href={row.getValue('url')} target='_blank' rel='noopener noreferrer'>
           {row.getValue('url')}
         </a>
       </LongText>
@@ -77,7 +84,7 @@ export const columns: ColumnDef<onPageAnalysis>[] = [
       const h1 = row.getValue('h1') as string | null
 
       if (!h1) {
-        return <span className="text-red-500">Missing</span>
+        return <span className='text-red-500'>Missing</span>
       }
 
       return <LongText className='max-w-36'>{h1}</LongText>
@@ -92,19 +99,19 @@ export const columns: ColumnDef<onPageAnalysis>[] = [
       const description = row.getValue('description') as string | null
 
       if (!description) {
-        return <span className="text-red-500">Missing</span>
+        return <span className='text-red-500'>Missing</span>
       }
 
       return <LongText className='max-w-36'>{description}</LongText>
     },
   },
   {
-    accessorKey: 'contentLength',
+    accessorKey: 'plain_text_word_count',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Content Length' />
     ),
     cell: ({ row }) => {
-      const contentLength = row.getValue('contentLength') as number
+      const contentLength = row.getValue('plain_text_word_count') as number
       let color = 'text-green-600'
 
       if (contentLength < 300) {
@@ -115,61 +122,61 @@ export const columns: ColumnDef<onPageAnalysis>[] = [
 
       return (
         <div className={cn('flex items-center gap-1', color)}>
-          <FileText className="h-3 w-3" />
+          <FileText className='h-3 w-3' />
           <span>{contentLength} words</span>
         </div>
       )
     },
   },
   {
-    accessorKey: 'imageCount',
+    accessorKey: 'images',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Images' />
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-1">
-        <ImageIcon className="h-3 w-3 text-gray-500" />
-        <span>{row.getValue('imageCount')}</span>
+      <div className='flex items-center gap-1'>
+        <ImageIcon className='h-3 w-3 text-gray-500' />
+        <span>{row.getValue('images')}</span>
       </div>
     ),
   },
   {
-    accessorKey: 'internalLinks',
+    accessorKey: 'internal_links_count',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Internal Links' />
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-1">
-        <Link2 className="h-3 w-3 text-gray-500" />
-        <span>{row.getValue('internalLinks')}</span>
+      <div className='flex items-center gap-1'>
+        <Link2 className='h-3 w-3 text-gray-500' />
+        <span>{row.getValue('internal_links_count')}</span>
       </div>
     ),
   },
   {
-    accessorKey: 'externalLinks',
+    accessorKey: 'external_links_count',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='External Links' />
     ),
     cell: ({ row }) => (
-      <div className="flex items-center gap-1">
-        <ExternalLink className="h-3 w-3 text-gray-500" />
-        <span>{row.getValue('externalLinks')}</span>
+      <div className='flex items-center gap-1'>
+        <ExternalLink className='h-3 w-3 text-gray-500' />
+        <span>{row.getValue('external_links_count')}</span>
       </div>
     ),
   },
   {
-    accessorKey: 'h2Tags',
+    accessorKey: 'h2',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='H2 Tags' />
     ),
     cell: ({ row }) => {
-      const h2Tags = row.getValue('h2Tags') as string[]
+      const h2Tags = row.getValue('h2') as number
 
       return (
-        <div className="flex items-center gap-1">
-          <span>{h2Tags.length}</span>
-          {h2Tags.length > 0 ? (
-            <Badge variant="outline" className="bg-blue-100 text-blue-800">
+        <div className='flex items-center gap-1'>
+          <span>{h2Tags}</span>
+          {h2Tags > 0 ? (
+            <Badge variant='outline' className='bg-blue-100 text-blue-800'>
               View
             </Badge>
           ) : null}
@@ -178,48 +185,63 @@ export const columns: ColumnDef<onPageAnalysis>[] = [
     },
   },
   {
-    accessorKey: 'keywords',
+    accessorKey: 'keyword',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Keywords' />
     ),
     cell: ({ row }) => {
-      const keywords = row.getValue('keywords') as string[]
+      const keywords = row.getValue('keyword') as number
 
       return (
-        <div className="flex items-center gap-1">
-          <Hash className="h-3 w-3 text-gray-500" />
-          <span>{keywords.length}</span>
+        <div className='flex items-center gap-1'>
+          {keywords ? (
+            <>
+              <Hash className='h-3 w-3 text-gray-500' />
+              <span>{keywords}</span>
+            </>
+          ) : (
+            ''
+          )}
         </div>
       )
     },
   },
   {
-    accessorKey: 'hasCanonical',
+    accessorKey: 'canonical',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Canonical' />
     ),
     cell: ({ row }) => {
-      const hasCanonical = row.getValue('hasCanonical') as boolean
+      const hasCanonical = row.getValue('canonical') as boolean
 
       return (
-        <Badge variant="outline" className={hasCanonical ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}>
-          {hasCanonical ? "Yes" : "No"}
+        <Badge
+          variant='outline'
+          className={
+            hasCanonical
+              ? 'bg-green-100 text-green-800'
+              : 'bg-red-100 text-red-800'
+          }
+        >
+          {hasCanonical ? 'Yes' : 'No'}
         </Badge>
       )
     },
   },
   {
-    accessorKey: 'hasSchema',
+    accessorKey: 'schema',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title='Schema' />
     ),
     cell: ({ row }) => {
-      const hasSchema = row.getValue('hasSchema') as boolean
+      const hasSchema = row.getValue('schema') as boolean
 
       return (
-        <div className="flex items-center gap-1">
-          <Code2 className={`h-3 w-3 ${hasSchema ? "text-green-500" : "text-red-500"}`} />
-          <span>{hasSchema ? "Yes" : "No"}</span>
+        <div className='flex items-center gap-1'>
+          <Code2
+            className={`h-3 w-3 ${hasSchema ? 'text-green-500' : 'text-red-500'}`}
+          />
+          <span>{hasSchema ? 'Yes' : 'No'}</span>
         </div>
       )
     },

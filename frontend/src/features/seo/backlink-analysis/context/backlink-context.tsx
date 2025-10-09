@@ -22,7 +22,9 @@ export default function BacklinkProvider({ children }: Props) {
   const [currentRow, setCurrentRow] = useState<Backlink | null>(null)
 
   return (
-    <BacklinkContext.Provider value={{ open, setOpen, currentRow, setCurrentRow }}>
+    <BacklinkContext.Provider
+      value={{ open, setOpen, currentRow, setCurrentRow }}
+    >
       {children}
     </BacklinkContext.Provider>
   )

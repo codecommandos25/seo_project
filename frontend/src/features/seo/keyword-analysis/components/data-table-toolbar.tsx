@@ -19,18 +19,16 @@ export function DataTableToolbar<TData>({
       <div className='flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2'>
         <Input
           placeholder='Filter keywords...'
-          value={
-            (table.getColumn('keyword')?.getFilterValue() as string) ?? ''
-          }
+          value={(table.getColumn('keyword')?.getFilterValue() as string) ?? ''}
           onChange={(event) =>
             table.getColumn('keyword')?.setFilterValue(event.target.value)
           }
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('intent') && (
+          {table.getColumn('main_intent') && (
             <DataTableFacetedFilter
-              column={table.getColumn('intent')}
+              column={table.getColumn('main_intent')}
               title='Search Intent'
               options={[
                 { label: 'Informational', value: 'informational' },

@@ -15,6 +15,7 @@ import { ThemeProvider } from './context/theme-context'
 import './index.css'
 // Generated Routes
 import { routeTree } from './routeTree.gen'
+
 // import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 const queryClient = new QueryClient({
@@ -99,8 +100,8 @@ if (!rootElement.innerHTML) {
   root.render(
     <StrictMode>
       <QueryClientProvider client={queryClient}>
-      {/* {IS_DEV_MODE && <ReactQueryDevtools initialIsOpen={false} />} */}
-      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
+        {/* {IS_DEV_MODE && <ReactQueryDevtools initialIsOpen={false} />} */}
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
         <ThemeProvider defaultTheme='light' storageKey='vite-ui-theme'>
           <FontProvider>
             <RouterProvider router={router} />

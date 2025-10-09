@@ -26,9 +26,9 @@ export function DataTableToolbar<TData>({
           className='h-8 w-[150px] lg:w-[250px]'
         />
         <div className='flex gap-x-2'>
-          {table.getColumn('hasCanonical') && (
+          {table.getColumn('canonical') && (
             <DataTableFacetedFilter
-              column={table.getColumn('hasCanonical')}
+              column={table.getColumn('canonical')}
               title='Canonical'
               options={[
                 { label: 'Has Canonical', value: 'true' },
@@ -36,9 +36,9 @@ export function DataTableToolbar<TData>({
               ]}
             />
           )}
-          {table.getColumn('hasSchema') && (
+          {table.getColumn('schema') && (
             <DataTableFacetedFilter
-              column={table.getColumn('hasSchema')}
+              column={table.getColumn('schema')}
               title='Schema'
               options={[
                 { label: 'Has Schema', value: 'true' },

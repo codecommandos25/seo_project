@@ -21,10 +21,12 @@ export default function Dashboard() {
   })
 
   useEffect(() => {
-    mutate([{
-      limit: 2,
-      filters: [['registrar', '=', 'geeksforgeeks.org']],
-    }])
+    mutate([
+      {
+        limit: 2,
+        filters: [['registrar', '=', 'geeksforgeeks.org']],
+      },
+    ])
   }, [])
   return (
     <>
