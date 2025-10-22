@@ -10,7 +10,8 @@ import {
 @Controller('youtube-apis')
 export class YoutubeApisController {
   constructor(private readonly youtubeApisService: YoutubeApisService) {}
-
+  ///
+  //get
   @Get('get-youtube-insights')
   async getYoutubeInsights(
     @Query() params: YoutubeVideoInsightDto,
@@ -56,13 +57,13 @@ export class YoutubeApisController {
   ): Promise<any> {
     return await this.youtubeApisService.getAgeAndGenderGraphdata(params);
   }
-   @Get('get-contry-graph-data')
+  @Get('get-contry-graph-data')
   async getCountryAudienceData(
     @Query() params: SubscriberGrowthGraphDto,
   ): Promise<any> {
     return await this.youtubeApisService.countryWiseViewsGraphData(params);
   }
-     @Get('get-audience-aquisition-data')
+  @Get('get-audience-aquisition-data')
   async getAudienceAquisitionData(
     @Query() params: SubscriberGrowthGraphDto,
   ): Promise<any> {
