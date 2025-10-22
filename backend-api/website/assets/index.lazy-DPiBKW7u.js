@@ -1,0 +1,1 @@
+import{c as e,j as t}from"./index-By8YJrdC.js";const a=e("/_authenticated/seo/technical-analysis/")({component:n});function n(){return t.jsx("div",{children:'Hello "/_authenticated/seo/technical-analysis/"!'})}export{a as Route};
